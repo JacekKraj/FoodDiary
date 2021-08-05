@@ -7,6 +7,8 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import { theme } from '../../utils/breakpoints';
 import Button from '../UI/button/Button';
 import UsageInstructionStep from './usageInstructionStep/UsageInstructionStep';
+import SignUp from './signUp/SignUp';
+import SignIn from './signIn/SignIn';
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -23,6 +25,9 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Authentication: React.FC = () => {
+  const [showSignUp, setShowSignUp] = React.useState(false);
+  const [showSignIn, setShowSignIn] = React.useState(false);
+
   const iconStyle = useStyles();
 
   const stepOne = React.useMemo(() => {
@@ -44,29 +49,44 @@ const Authentication: React.FC = () => {
     return {
       number: 3,
       title: 'Find your problem',
-      text: 'Compare with our help condition of your skin with food you ate and find out what factors that may cause your atopic dermatitis.',
+      text: 'Compare with our help condition of your skin with food you ate and find out what factors may cause your atopic dermatitis.',
     };
   }, []);
+
+  const handleShowSignUp = () => {
+    setShowSignUp((currVal) => !currVal);
+  };
+
+  const handleShowSignIn = () => {
+    setShowSignIn((currVal) => !currVal);
+  };
+
   return (
-    <div className={classes.authentication}>
-      <Header />
-      <div className={classes.authenticationInfo}>
-        <h1>Hi. Let's get Started!</h1>
-        <div className={classes.authenticationMainContent}>
-          <UsageInstructionStep step={stepOne}>
-            <div className={classes.iconContainer}>
-              <AccountCircleOutlinedIcon className={iconStyle.icon} />
-            </div>
-            <Button className={classes.buttonAdditional}>Sign In</Button>
-            <Button className={classes.buttonAdditional} typeLight>
-              Sign Up
-            </Button>
-          </UsageInstructionStep>
-          <UsageInstructionStep step={stepTwo} />
-          <UsageInstructionStep step={stepThree} />
+    <React.Fragment>
+      {showSignUp && <SignUp handleShowSignUp={handleShowSignUp} />}
+      {showSignIn && <SignIn handleShowSignIn={handleShowSignIn} />}
+      <div className={classes.authentication}>
+        <Header />
+        <div className={classes.authenticationInfo}>
+          <h1>Hi. Let's get Started!</h1>
+          <div className={classes.authenticationMainContent}>
+            <UsageInstructionStep step={stepOne}>
+              <div className={classes.iconContainer}>
+                <AccountCircleOutlinedIcon className={iconStyle.icon} />
+              </div>
+              <Button className={classes.buttonAdditional} onClick={handleShowSignIn}>
+                Sign In
+              </Button>
+              <Button className={classes.buttonAdditional} typeLight onClick={handleShowSignUp}>
+                Sign Up
+              </Button>
+            </UsageInstructionStep>
+            <UsageInstructionStep step={stepTwo} />
+            <UsageInstructionStep step={stepThree} />
+          </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

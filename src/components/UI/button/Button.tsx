@@ -12,7 +12,7 @@ interface Props {
 
 const Button: React.FC<Props> = ({ onClick, typeLight, children, className }) => {
   return (
-    <button onClick={onClick} className={classnames(classes.button, typeLight && classes.buttonLight, className)}>
+    <button type='submit' onClick={onClick} className={classnames(classes.button, typeLight && classes.buttonLight, className)}>
       {children}
     </button>
   );
