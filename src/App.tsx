@@ -17,13 +17,8 @@ const App = () => {
 
   React.useEffect(() => {
     fire.auth().onAuthStateChanged((authUser) => {
-      if (authUser) {
-        if (fire.auth().currentUser?.emailVerified) {
-          authenticationEnd();
-        } else {
-          signOut();
-          authenticationFail("This email address hasn't been verified yet.");
-        }
+      if (authUser && fire.auth().currentUser?.emailVerified) {
+        authenticationEnd();
       } else {
         signOut();
       }

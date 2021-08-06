@@ -23,13 +23,13 @@ interface FormValues {
 
 const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
   const [errorMessage, setErrorMessage] = React.useState('');
-  const { register } = useActions();
+  const { register, unsetError } = useActions();
   const { error } = useTypedSelector((state) => state.auth);
 
   const handleSubmit = (formValues: FormValues) => {
     if (formValues.email === formValues.repeatEmail) {
       if (formValues.password === formValues.repeatPassword) {
-        register(formValues.email, formValues.password);
+        register(formValues.email, formValues.password, handleShowSignUp);
       } else {
         setErrorMessage('Both passwords must be indentical.');
       }
@@ -45,7 +45,12 @@ const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
     repeatPassword: '',
   };
   return (
-    <AuthModal onClick={handleShowSignUp}>
+    <AuthModal
+      onClick={() => {
+        handleShowSignUp();
+        unsetError();
+      }}
+    >
       <h3 className={classes.header}>Sign Up</h3>
       <Formik
         initialValues={initialValues}

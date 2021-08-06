@@ -38,8 +38,8 @@ export const authenticate = (emailAddress: string, password: string) => {
       .auth()
       .signInWithEmailAndPassword(emailAddress, password)
       .then(() => {
-        if (fire.auth().currentUser?.emailVerified) {
-          // dispatch(authenticationEnd());
+        if (!fire.auth().currentUser?.emailVerified) {
+          dispatch(authenticationFail("This email address hasn't been verified yet."));
         }
       })
       .catch((error) => {
@@ -67,7 +67,7 @@ const registerFail = (error: string): any => {
   };
 };
 
-export const register = (emailAddress: string, password: string) => {
+export const register = (emailAddress: string, password: string, hideModal: () => void) => {
   return (dispatch: any) => {
     dispatch(registerStart());
     fire
@@ -78,6 +78,7 @@ export const register = (emailAddress: string, password: string) => {
           .auth()
           .currentUser?.sendEmailVerification()
           .then(() => {
+            hideModal();
             dispatch(registerEnd());
           });
       })

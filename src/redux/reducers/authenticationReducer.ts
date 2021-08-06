@@ -53,8 +53,8 @@ const authenticationReducer = (state: InitialState = initialState, action: Actio
     case ActionTypes.SING_OUT:
       return {
         ...state,
-        error: '',
         isAuthenticated: false,
+        isLoading: false,
       };
     case ActionTypes.UNSET_ERROR:
       return {

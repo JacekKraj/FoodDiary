@@ -21,14 +21,20 @@ interface FormValues {
 
 const SignIn: React.FC<Props> = ({ handleShowSignIn }) => {
   const { error } = useTypedSelector((state) => state.auth);
-  const { authenticate } = useActions();
+  const { authenticate, unsetError } = useActions();
 
   const initialValues: FormValues = {
     email: '',
     password: '',
   };
+
   return (
-    <AuthModal onClick={handleShowSignIn}>
+    <AuthModal
+      onClick={() => {
+        handleShowSignIn();
+        unsetError();
+      }}
+    >
       <h3 className={classes.header}>Sign In</h3>
       <Formik
         initialValues={initialValues}
