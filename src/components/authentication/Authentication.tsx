@@ -9,6 +9,7 @@ import Button from '../UI/button/Button';
 import UsageInstructionStep from './usageInstructionStep/UsageInstructionStep';
 import SignUp from './signUp/SignUp';
 import SignIn from './signIn/SignIn';
+import { useActions } from '../../redux/hooks/useActions';
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -27,6 +28,8 @@ const useStyles = makeStyles(() => ({
 const Authentication: React.FC = () => {
   const [showSignUp, setShowSignUp] = React.useState(false);
   const [showSignIn, setShowSignIn] = React.useState(false);
+
+  const { unsetError } = useActions();
 
   const iconStyle = useStyles();
 
@@ -55,10 +58,12 @@ const Authentication: React.FC = () => {
 
   const handleShowSignUp = () => {
     setShowSignUp((currVal) => !currVal);
+    unsetError();
   };
 
   const handleShowSignIn = () => {
     setShowSignIn((currVal) => !currVal);
+    unsetError();
   };
 
   return (

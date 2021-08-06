@@ -1,6 +1,7 @@
 import firebase from 'firebase';
+
 var firebaseConfig = {
-  apiKey: 'AIzaSyCVUKZXUSCJZah-10RhPiIxqgPV2E30RDk',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: 'fooddiary-ee0a0.firebaseapp.com',
   projectId: 'fooddiary-ee0a0',
   storageBucket: 'fooddiary-ee0a0.appspot.com',
@@ -9,4 +10,4 @@ var firebaseConfig = {
   measurementId: 'G-N42YZT7NHK',
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+export const fire = firebase.initializeApp(firebaseConfig);

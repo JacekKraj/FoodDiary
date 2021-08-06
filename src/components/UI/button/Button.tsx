@@ -10,7 +10,8 @@ interface Props {
   className?: string;
 }
 
-const Button: React.FC<Props> = ({ onClick, typeLight, children, className }) => {
+const Button: React.FC<Props> = (props) => {
+  const { onClick, typeLight, children, className } = props;
   return (
     <button type='submit' onClick={onClick} className={classnames(classes.button, typeLight && classes.buttonLight, className)}>
       {children}

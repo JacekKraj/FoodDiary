@@ -6,6 +6,9 @@ import AuthModal from './../authModal/AuthModal';
 import Input from './../../UI/input/Input';
 import MyFormikInput from './../../../utils/myFormikInput/MyFormikInput';
 import Button from './../../UI/button/Button';
+import { useActions } from './../../../redux/hooks/useActions';
+import Error from './../../UI/error/Error';
+import { useTypedSelector } from './../../../redux/hooks/useTypedSelector';
 
 interface Props {
   handleShowSignUp: () => void;
@@ -19,6 +22,22 @@ interface FormValues {
 }
 
 const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const { register } = useActions();
+  const { error } = useTypedSelector((state) => state.auth);
+
+  const handleSubmit = (formValues: FormValues) => {
+    if (formValues.email === formValues.repeatEmail) {
+      if (formValues.password === formValues.repeatPassword) {
+        register(formValues.email, formValues.password);
+      } else {
+        setErrorMessage('Both passwords must be indentical.');
+      }
+    } else {
+      setErrorMessage('Both emails must be indentical.');
+    }
+  };
+
   const initialValues: FormValues = {
     email: '',
     repeatEmail: '',
@@ -28,15 +47,21 @@ const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
   return (
     <AuthModal onClick={handleShowSignUp}>
       <h3 className={classes.header}>Sign Up</h3>
-      <Formik initialValues={initialValues} onSubmit={() => {}}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values) => {
+          handleSubmit({ ...values });
+        }}
+      >
         {() => {
           return (
             <Form className={classes.form}>
               <div className={classes.inputsContainer}>
                 <MyFormikInput name='email' type='email' placeholder='Email address' as={Input} />
-                <MyFormikInput name='emailRepeat' type='email' placeholder='Repeat email address' as={Input} />
-                <MyFormikInput name='password' type='email' placeholder='Password' as={Input} />
-                <MyFormikInput name='passwordRepeat' type='email' placeholder='Repeat password' as={Input} />
+                <MyFormikInput name='repeatEmail' type='email' placeholder='Repeat email address' as={Input} />
+                <MyFormikInput name='password' type='password' placeholder='Password' as={Input} />
+                <MyFormikInput name='repeatPassword' type='password' placeholder='Repeat password' as={Input} />
+                {(error || errorMessage) && <Error errorMessage={error || errorMessage} />}
               </div>
               <Button className={classes.buttonAdditional} typeLight>
                 Create account
