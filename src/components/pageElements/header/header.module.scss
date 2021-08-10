@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0.7em 1em;
+  border-bottom: 1px solid #ccc;
+}
+
+.logoContainer {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.logoFontSize {
+  font-size: 22px;
+}
+
+@media (min-width: 500px) and (orientation: portrait) {
+  .logoFontSize {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .header {
+    padding: 0.6em 1em;
+  }
+
+  .logoFontSize {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .header {
+    border: none;
+    padding: 1em 2em;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .logoContainer {
+    flex-grow: unset;
+    justify-content: flex-start;
+    padding-right: 1.5em;
+    border-right: 2px solid #777;
+  }
+}

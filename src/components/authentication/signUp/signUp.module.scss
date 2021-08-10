@@ -1,0 +1,51 @@
+.header {
+  padding: 0.6em 0;
+  text-align: center;
+  font-size: 18px;
+  border-bottom: 1px solid #ccc;
+  color: #333;
+}
+
+.form {
+  padding: 1em 2em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.buttonAdditional {
+  font-size: 16px;
+}
+
+@media (min-width: 500px) and (orientation: portrait) {
+  .form {
+    padding: 0em 3em 1.5em;
+  }
+
+  .inputsContainer {
+    margin: 1.5em 0 2em;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .form {
+    padding: 0em 3em 1.5em;
+  }
+  .inputsContainer {
+    margin: 1em 0 1.5em;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .header {
+    padding: 0.7em 0;
+    font-size: 19px;
+  }
+  .form {
+    padding: 0em 3em 2em;
+  }
+  .inputsContainer {
+    margin: 2em 0;
+  }
+}

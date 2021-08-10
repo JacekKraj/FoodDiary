@@ -1,0 +1,85 @@
+.authenticationInfo {
+  padding: 1.5em 1em;
+}
+
+.authenticationInfo > h1 {
+  font-size: 34px;
+  font-weight: 300;
+  text-align: center;
+  color: #555;
+}
+
+.authenticationMainContent {
+  padding: 2em 2.5em 0;
+}
+
+.title {
+  font-weight: normal;
+  color: #555;
+  font-size: 26px;
+}
+
+.iconContainer {
+  margin: 1em 0;
+}
+
+.buttonAdditional {
+  width: 150px;
+  font-size: 15px;
+  margin: 0.5em 0;
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .authenticationInfo {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .authenticationMainContent {
+    padding: 2em 1.5em 0;
+  }
+
+  .iconContainer {
+    margin: 0.75em 0;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  .authenticationInfo {
+    max-width: 400px;
+  }
+
+  .authenticationInfo > h1 {
+    font-size: 38px;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .authenticationInfo {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .authenticationInfo > h1 {
+    font-size: 40px;
+  }
+
+  .authenticationMainContent {
+    padding: 3em 2em 0;
+  }
+
+  .iconContainer {
+    margin: 1.5em 0;
+  }
+
+  .buttonAdditional {
+    width: 180px;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .authenticationInfo {
+    padding: 0.5em 1em;
+  }
+}

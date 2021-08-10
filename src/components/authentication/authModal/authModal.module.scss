@@ -1,0 +1,31 @@
+.authModal {
+  position: fixed;
+  z-index: 11;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80vh;
+  background-color: #fff;
+  border-radius: 6px;
+  -webkit-box-shadow: -1px 1px 12px -1px #cccccc;
+  box-shadow: -1px 1px 12px -1px #cccccc;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 500px) and (orientation: portrait) {
+  .authModal {
+    width: 400px;
+    height: auto;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .authModal {
+    max-height: 80vh;
+    overflow-y: auto;
+    width: 400px;
+    height: auto;
+  }
+}
