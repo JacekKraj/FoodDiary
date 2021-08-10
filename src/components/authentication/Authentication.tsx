@@ -74,10 +74,10 @@ const Authentication: React.FC = () => {
               <div className={classes.iconContainer}>
                 <AccountCircleOutlinedIcon className={iconStyle.icon} />
               </div>
-              <Button className={classes.buttonAdditional} onClick={handleShowSignIn}>
+              <Button className={classes.buttonAdditional} onClick={handleShowSignIn} dataTest='sign-in-button'>
                 Sign In
               </Button>
-              <Button className={classes.buttonAdditional} typeLight onClick={handleShowSignUp}>
+              <Button className={classes.buttonAdditional} typeLight onClick={handleShowSignUp} dataTest='sign-up-button'>
                 Sign Up
               </Button>
             </UsageInstructionStep>

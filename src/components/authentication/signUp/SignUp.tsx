@@ -14,16 +14,15 @@ interface Props {
   handleShowSignUp: () => void;
 }
 
-interface FormValues {
+export interface FormValues {
   email: string;
   repeatEmail: string;
   password: string;
   repeatPassword: string;
 }
 
-const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
-  const [errorMessage, setErrorMessage] = React.useState('');
-  const { register, unsetError } = useActions();
+export const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
+  const { unsetError, register, registerFail } = useActions();
   const { error } = useTypedSelector((state) => state.auth);
 
   const handleSubmit = (formValues: FormValues) => {
@@ -31,10 +30,10 @@ const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
       if (formValues.password === formValues.repeatPassword) {
         register(formValues.email, formValues.password, handleShowSignUp);
       } else {
-        setErrorMessage('Both passwords must be indentical.');
+        registerFail('Both passwords must be indentical');
       }
     } else {
-      setErrorMessage('Both emails must be indentical.');
+      registerFail('Both emails must be indentical');
     }
   };
 
@@ -51,7 +50,9 @@ const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
         unsetError();
       }}
     >
-      <h3 className={classes.header}>Sign Up</h3>
+      <h3 className={classes.header} data-test='component-sign-up'>
+        Sign Up
+      </h3>
       <Formik
         initialValues={initialValues}
         onSubmit={(values) => {
@@ -60,15 +61,15 @@ const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
       >
         {() => {
           return (
-            <Form className={classes.form}>
+            <Form className={classes.form} data-test='sign-up-form'>
               <div className={classes.inputsContainer}>
                 <MyFormikInput name='email' type='email' placeholder='Email address' as={Input} />
                 <MyFormikInput name='repeatEmail' type='email' placeholder='Repeat email address' as={Input} />
                 <MyFormikInput name='password' type='password' placeholder='Password' as={Input} />
                 <MyFormikInput name='repeatPassword' type='password' placeholder='Repeat password' as={Input} />
-                {(error || errorMessage) && <Error errorMessage={error || errorMessage} />}
+                {error && <Error errorMessage={error} />}
               </div>
-              <Button className={classes.buttonAdditional} typeLight>
+              <Button className={classes.buttonAdditional} typeLight dataTest='submit-button'>
                 Create account
               </Button>
             </Form>

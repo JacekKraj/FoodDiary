@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import { fire } from '../../fireConfig';
 import { Action } from './../actions/authentication';
 import { ActionTypes } from './../actionTypes/actionTypes';
+import { successToast } from '../../utils/toasts/toasts';
 
 export const signOut = (): Action => {
   fire.auth().signOut();
@@ -12,7 +13,7 @@ export const signOut = (): Action => {
   };
 };
 
-const authenticationStart = (): Action => {
+export const authenticationStart = (): Action => {
   return {
     type: ActionTypes.AUTHENTICATION_START,
   };
@@ -48,7 +49,7 @@ export const authenticate = (emailAddress: string, password: string) => {
   };
 };
 
-const registerStart = (): Action => {
+export const registerStart = (): Action => {
   return {
     type: ActionTypes.REGISTER_START,
   };
@@ -60,7 +61,7 @@ const registerEnd = (): Action => {
   };
 };
 
-const registerFail = (error: string): any => {
+export const registerFail = (error: string): any => {
   return {
     type: ActionTypes.REGISTER_FAIL,
     error,
@@ -78,6 +79,8 @@ export const register = (emailAddress: string, password: string, hideModal: () =
           .auth()
           .currentUser?.sendEmailVerification()
           .then(() => {
+            const message = 'Your account has been created. Please verify your email to sign in.';
+            successToast(message);
             hideModal();
             dispatch(registerEnd());
           });

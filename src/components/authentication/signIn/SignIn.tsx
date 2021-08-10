@@ -14,14 +14,18 @@ interface Props {
   handleShowSignIn: () => void;
 }
 
-interface FormValues {
+export interface FormValues {
   email: string;
   password: string;
 }
 
 const SignIn: React.FC<Props> = ({ handleShowSignIn }) => {
   const { error } = useTypedSelector((state) => state.auth);
-  const { authenticate, unsetError } = useActions();
+  const { unsetError, authenticate } = useActions();
+
+  const handleSubmit = (formValues: FormValues) => {
+    authenticate(formValues.email, formValues.password);
+  };
 
   const initialValues: FormValues = {
     email: '',
@@ -35,11 +39,13 @@ const SignIn: React.FC<Props> = ({ handleShowSignIn }) => {
         unsetError();
       }}
     >
-      <h3 className={classes.header}>Sign In</h3>
+      <h3 className={classes.header} data-test='component-sign-in'>
+        Sign In
+      </h3>
       <Formik
         initialValues={initialValues}
         onSubmit={(values) => {
-          authenticate(values.email, values.password);
+          handleSubmit({ ...values });
         }}
       >
         {() => {

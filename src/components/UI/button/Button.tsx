@@ -8,12 +8,13 @@ interface Props {
   onClick?: () => void;
   children: React.ReactNode;
   className?: string;
+  dataTest?: string;
 }
 
 const Button: React.FC<Props> = (props) => {
-  const { onClick, typeLight, children, className } = props;
+  const { onClick, typeLight, children, className, dataTest } = props;
   return (
-    <button type='submit' onClick={onClick} className={classnames(classes.button, typeLight && classes.buttonLight, className)}>
+    <button type='submit' onClick={onClick} data-test={dataTest} className={classnames(classes.button, typeLight && classes.buttonLight, className)}>
       {children}
     </button>
   );

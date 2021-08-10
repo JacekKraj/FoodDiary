@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Switch } from 'react-router';
 import { Route } from 'react-router';
+import { toast } from 'react-toastify';
 
 import { fire } from './fireConfig';
 import Home from './components/home/Home';
@@ -12,13 +13,18 @@ import Spinner from './components/UI/spinner/Spinner';
 
 const App = () => {
   const { isAuthenticated } = useTypedSelector((state) => state.auth);
-  const { signOut, authenticationEnd, authenticationFail } = useActions();
+  const { signOut, authenticationEnd } = useActions();
   const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    toast.configure();
+  }, []);
 
   React.useEffect(() => {
     fire.auth().onAuthStateChanged((authUser) => {
       if (authUser && fire.auth().currentUser?.emailVerified) {
-        authenticationEnd();
+        // authenticationEnd();
+        signOut();
       } else {
         signOut();
       }
