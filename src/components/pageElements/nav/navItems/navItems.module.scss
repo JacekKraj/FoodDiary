@@ -1,0 +1,65 @@
+.navItems {
+  padding: 0.5em 1em 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+.button {
+  display: block;
+  color: #777;
+  padding: 0.5em;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(240, 240, 240);
+  width: 100%;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+@media (min-width: 400px) and (orientation: portrait) {
+  .navItems {
+    padding: 0.8em 1.5em 1.5em;
+  }
+  .button {
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .button {
+    width: 200px;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  .navItems {
+    padding: 0.8em 1.5em 1.5em;
+  }
+
+  .button {
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .navItems {
+    flex-direction: row;
+    padding: 0;
+    align-items: center;
+  }
+
+  .navItemsContainer {
+    display: flex;
+  }
+
+  .button {
+    font-size: 22px;
+    width: auto;
+    padding: 0.4em 1.5em;
+  }
+}

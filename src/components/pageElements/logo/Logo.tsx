@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import { NavLink } from 'react-router-dom';
 
 import classes from './logo.module.scss';
 
@@ -8,7 +9,11 @@ interface Props {
 }
 
 const Logo: React.FC<Props> = ({ className }) => {
-  return <p className={classnames(classes.logo, className)}>Food Diary</p>;
+  return (
+    <NavLink to='/' exact>
+      <p className={classnames(classes.logo, className)}>Food Diary</p>
+    </NavLink>
+  );
 };
 
 export default Logo;
