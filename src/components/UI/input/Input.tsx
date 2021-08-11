@@ -10,7 +10,8 @@ interface Props {
   onChange: () => void;
 }
 
-const Input: React.FC<Props> = ({ type, name, placeholder, value, onChange }) => {
+const Input: React.FC<Props> = (props) => {
+  const { type, name, placeholder, value, onChange } = props;
   return (
     <input
       name={name}

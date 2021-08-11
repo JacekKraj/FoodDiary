@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 
+import Nav from './../pageElements/nav/Nav';
 import Header from '../pageElements/header/Header';
 import classes from './authentication.module.scss';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -66,7 +67,7 @@ const Authentication: React.FC = () => {
       {showSignUp && <SignUp handleShowSignUp={handleShowSignUp} />}
       {showSignIn && <SignIn handleShowSignIn={handleShowSignIn} />}
       <div className={classes.authentication}>
-        <Header />
+        <Nav handleShowSignIn={handleShowSignIn} />
         <div className={classes.authenticationInfo}>
           <h1>Hi. Let's get Started!</h1>
           <div className={classes.authenticationMainContent}>

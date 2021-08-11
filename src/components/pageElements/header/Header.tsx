@@ -23,12 +23,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header: React.FC = () => {
+interface Props {
+  handleShowNav: () => void;
+}
+
+const Header: React.FC<Props> = ({ handleShowNav }) => {
   const iconStyle = useStyles();
   return (
     <div className={classes.header}>
       <div>
-        <MenuIcon className={iconStyle.icon} />
+        <MenuIcon className={iconStyle.icon} onClick={handleShowNav} />
       </div>
       <div className={classes.logoContainer}>
         <Logo className={classes.logoFontSize} />
