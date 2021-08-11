@@ -37,20 +37,15 @@ const SmallScreenNav: React.FC<Props> = ({ handleShowSignIn }) => {
     setShow((currVal) => !currVal);
   };
 
-  const handleCloseNav = () => {
-    setTimeout(() => {
-      setShow(false);
-    }, 150);
-  };
   return (
     <React.Fragment>
       <Header handleShowNav={handleShowNav} />
-      {show && <Backdrop onClick={handleCloseNav} />}
+      {show && <Backdrop onClick={handleShowNav} />}
 
-      <div className={classnames(classes.smallScreenNav, show && classes.active)}>
+      <div className={classnames(classes.smallScreenNav, show && classes.active)} data-test='component-small-screen-nav'>
         <div className={classes.navHeader}>
           <Logo className={classes.logo} />
-          <CloseIcon onClick={handleCloseNav} className={iconStyle.icon} />
+          <CloseIcon onClick={handleShowNav} className={iconStyle.icon} data-test='close-icon' />
         </div>
         <NavItems handleShowSignIn={handleShowSignIn} handleShowNav={handleShowNav} />
       </div>

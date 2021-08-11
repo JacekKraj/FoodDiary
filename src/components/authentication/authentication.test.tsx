@@ -1,5 +1,6 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 import { storeFactory, findByTestAttr } from '../../utils/tests/testHelperFunction';
 import Authentication from './Authentication';
@@ -8,7 +9,9 @@ const setup = () => {
   const store = storeFactory();
   return mount(
     <Provider store={store}>
-      <Authentication />
+      <BrowserRouter>
+        <Authentication />
+      </BrowserRouter>
     </Provider>
   );
 };

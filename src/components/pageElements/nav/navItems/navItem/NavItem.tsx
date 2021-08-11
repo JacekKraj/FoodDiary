@@ -10,7 +10,7 @@ interface Props {
 const NavItem: React.FC<Props> = ({ path }) => {
   return (
     <NavLink to={`/${path}`} exact className={classes.navItem} activeClassName={classes.activeClassName}>
-      {path}
+      <span data-test='component-nav-item'>{path}</span>
     </NavLink>
   );
 };

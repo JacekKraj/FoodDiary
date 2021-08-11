@@ -27,7 +27,7 @@ const NavItems: React.FC<Props> = ({ handleShowSignIn, handleShowNav }) => {
       text: isAuthenticated ? 'Sign out' : 'Sign in',
     };
     return (
-      <button onClick={props.onClick} className={classes.button}>
+      <button onClick={props.onClick} className={classes.button} data-test='authentication-button'>
         {props.text}
       </button>
     );
