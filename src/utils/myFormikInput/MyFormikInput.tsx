@@ -14,7 +14,6 @@ interface Props {
 
 const MyFormikInput: React.FC<Props> = (props) => {
   const [field] = useField(props);
-
   return (
     <div className={classnames(classes.inputContainer, props.className)}>
       <Field {...field} {...props} />

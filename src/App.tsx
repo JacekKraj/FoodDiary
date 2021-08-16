@@ -23,8 +23,7 @@ const App = () => {
   React.useEffect(() => {
     fire.auth().onAuthStateChanged((authUser) => {
       if (authUser && fire.auth().currentUser?.emailVerified) {
-        // authenticationEnd();
-        signOut();
+        authenticationEnd();
       } else {
         signOut();
       }

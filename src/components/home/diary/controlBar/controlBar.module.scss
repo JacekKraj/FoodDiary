@@ -1,0 +1,41 @@
+.controlBar {
+  background-color: #fafafa;
+  padding: 0.75em 1em;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #ccc;
+  justify-content: space-between;
+}
+
+.controlLeftSide {
+  display: flex;
+  align-items: center;
+}
+
+.controlRightSide {
+  display: flex;
+  align-items: center;
+}
+
+.controlIcons {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+}
+
+@media (min-width: 500px) {
+  .controlIcons {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  .dateInput {
+    margin-left: 2em;
+    font-size: 14px;
+  }
+
+  .controlIcons {
+    margin-right: 1.5em;
+  }
+}

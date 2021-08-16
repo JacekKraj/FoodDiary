@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 
 import Nav from './../pageElements/nav/Nav';
-import Header from '../pageElements/header/Header';
 import classes from './authentication.module.scss';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import { theme } from '../../utils/breakpoints';

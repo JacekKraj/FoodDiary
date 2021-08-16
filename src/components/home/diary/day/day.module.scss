@@ -1,0 +1,60 @@
+.day {
+  background-color: #fefefe;
+  padding: 0.5em 1em;
+}
+
+.slider {
+  width: 80% !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+.slider span {
+  font-size: 11px !important;
+}
+
+.sliderContainer {
+  margin: 2.5em 0 4em;
+}
+
+@media (min-width: 500px) and (orientation: portrait) {
+  .day {
+    padding: 0.75em 1.25em;
+  }
+
+  .slider span {
+    font-size: 12px !important;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .day {
+    padding: 0.5em 1.5em;
+  }
+
+  .slider span {
+    font-size: 13px !important;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  .day {
+    padding: 0.75em 2em;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .slidersContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 3em 0 4em;
+  }
+
+  .sliderContainer {
+    margin: 0;
+  }
+
+  .sliderContainer {
+    flex-basis: 42%;
+  }
+}
