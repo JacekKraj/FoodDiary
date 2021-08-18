@@ -17,25 +17,9 @@
   align-items: center;
 }
 
-.controlIcons {
-  display: flex;
-  flex-direction: column;
-  margin-right: 1em;
-}
-
-@media (min-width: 500px) {
-  .controlIcons {
-    flex-direction: row;
-  }
-}
-
 @media (min-width: 800px) and (orientation: landscape) {
   .dateInput {
     margin-left: 2em;
     font-size: 14px;
-  }
-
-  .controlIcons {
-    margin-right: 1.5em;
   }
 }

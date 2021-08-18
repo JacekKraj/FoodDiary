@@ -5,6 +5,7 @@ import Day from './day/Day';
 import ControlBar from './controlBar/ControlBar';
 import { getCurrentDate } from '../../../utils/helperFunctions/helperFunctions';
 import Footer from './footer/Footer';
+import ModuleWrapper from '../../UI/moduleWrapper/ModuleWrapper';
 
 const Diary: React.FC = () => {
   const [date, setDate] = React.useState(getCurrentDate());
@@ -13,11 +14,11 @@ const Diary: React.FC = () => {
     setDate(date);
   };
   return (
-    <div className={classes.diary}>
+    <ModuleWrapper title="Store products and skin's condition">
       <ControlBar date={date} handleDateChange={handleDateChange} />
       <Day />
       <Footer />
-    </div>
+    </ModuleWrapper>
   );
 };
 

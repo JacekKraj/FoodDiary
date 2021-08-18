@@ -14,22 +14,22 @@ const useStyles = makeStyles(() => ({
   active: { color: '#0078d4', cursor: 'pointer' },
   disabled: { color: '#ccc' },
   dateInput: { marginLeft: '0.75em' },
-  control: {
-    fontSize: 22,
+  remove: {
+    fontSize: 28,
     color: 'rgba(0,0,0,0.54)',
     cursor: 'pointer',
+    marginRight: '0.5em',
   },
 
   [theme.breakpoints.up('sm')]: {
-    control: {
-      fontSize: 26,
-      margin: '0 0.2em',
+    remove: {
+      fontSize: 30,
+      marginRight: '0.75em',
     },
   },
   [theme.breakpoints.up('md')]: {
-    control: {
-      margin: '0 0.4em',
-      fontSize: 28,
+    remove: {
+      marginRight: '1em',
     },
   },
   [theme.breakpoints.up('xl')]: {
@@ -56,14 +56,10 @@ const ControlBar: React.FC<Props> = ({ date, handleDateChange }) => {
         <TextField label='Date' type='date' defaultValue={date} onChange={(e) => handleDateChange(e.target.value)} className={iconStyle.dateInput} />
       </div>
       <div className={classes.controlRightSide}>
-        <div className={classes.controlIcons}>
-          <IconLabelContainer text='Add meal'>
-            <AddIcon className={iconStyle.control} />
-          </IconLabelContainer>
-          <IconLabelContainer text='Clear data'>
-            <DeleteForeverIcon className={iconStyle.control} />
-          </IconLabelContainer>
-        </div>
+        <IconLabelContainer text='Remove all products'>
+          <DeleteForeverIcon className={iconStyle.remove} />
+        </IconLabelContainer>
+
         <IconLabelContainer text='Next day'>
           <ArrowForwardIcon className={iconStyle.disabled} />
         </IconLabelContainer>
