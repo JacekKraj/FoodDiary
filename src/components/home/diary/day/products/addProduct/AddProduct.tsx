@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import classnames from 'classnames';
 
@@ -7,8 +7,9 @@ import Button from '../../../../../UI/button/Button';
 import InputAutoComplete from '../../../../../UI/inputAutoComplete/InputAutoComplete';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
-import { theme } from './../../../../../../utils/breakpoints';
+import { theme } from '../../../../../../utils/breakpoints/breakpoints';
 import useOnClickOutside from '../../../../../../utils/hooks/useOnClickOutside';
+import { useActions } from '../../../../../../redux/hooks/useActions';
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -38,17 +39,17 @@ const AddProduct: React.FC = () => {
   const productBrowserRef = React.useRef<HTMLDivElement>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  useOnClickOutside(productBrowserRef, () => setInputFocus(false));
+  const { addProduct } = useActions();
 
-  // string.replace(/\s+/g, ' ').trim()
+  useOnClickOutside(productBrowserRef, () => setInputFocus(false));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProductName(e.target.value);
   };
 
   const pickItemFromAutoComplete = (value: string) => {
-    setProductName(value);
-    setInputFocus(false);
+    addProduct(value);
+    setProductName('');
   };
 
   const handleCancelClick = () => {
@@ -56,9 +57,23 @@ const AddProduct: React.FC = () => {
     inputRef.current?.focus();
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const product = productName.replace(/\s+/g, ' ').trim().toLocaleLowerCase();
+    if (product) {
+      addProduct(product);
+      setProductName('');
+      inputRef.current?.focus();
+    }
+  };
+
   return (
-    <form className={classes.addProduct}>
-      <div className={classnames(classes.productBrowser, inputFocus && classes.focused)} ref={productBrowserRef}>
+    <form className={classes.addProduct} onSubmit={handleSubmit}>
+      <div
+        className={classnames(classes.productBrowser, inputFocus && classes.focused)}
+        ref={productBrowserRef}
+        onClick={() => inputRef.current?.focus()}
+      >
         <SearchIcon className={iconStyle.icon} />
         <input
           onFocus={() => setInputFocus(true)}

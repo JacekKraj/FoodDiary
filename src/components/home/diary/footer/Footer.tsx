@@ -4,7 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import classes from './footer.module.scss';
 import Button from './../../../UI/button/Button';
 import NewReleasesOutlinedIcon from '@material-ui/icons/NewReleasesOutlined';
-import { theme } from '../../../../utils/breakpoints';
+import { useActions } from '../../../../redux/hooks/useActions';
+import { useTypedSelector } from '../../../../redux/hooks/useTypedSelector';
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -15,6 +16,15 @@ const useStyles = makeStyles(() => ({
 
 const Footer: React.FC = () => {
   const iconStyle = useStyles();
+
+  const { saveDiary } = useActions();
+  const { currentDiary, downloadedDiary } = useTypedSelector((state) => state.diary);
+  const { userEmail } = useTypedSelector((state) => state.auth);
+
+  const handleSave = () => {
+    saveDiary(userEmail, currentDiary, downloadedDiary);
+  };
+
   return (
     <div className={classes.footer}>
       <div className={classes.reminderContainer}>
@@ -23,7 +33,9 @@ const Footer: React.FC = () => {
           Remember to add all the products you ate on that day. This is very important because only then will we be able to find your real problem.
         </p>
       </div>
-      <Button className={classes.buttonAdditional}>Save Changes</Button>
+      <Button className={classes.buttonAdditional} onClick={handleSave}>
+        Save Changes
+      </Button>
     </div>
   );
 };

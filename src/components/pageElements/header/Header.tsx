@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import classes from './header.module.scss';
-import { theme } from '../../../utils/breakpoints';
+import { theme } from '../../../utils/breakpoints/breakpoints';
 import Logo from '../logo/Logo';
 
 const useStyles = makeStyles(() => ({

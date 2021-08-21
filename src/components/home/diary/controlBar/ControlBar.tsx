@@ -1,14 +1,17 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import AddIcon from '@material-ui/icons/Add';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import classnames from 'classnames';
 
 import classes from './controlBar.module.scss';
-import { theme } from './../../../../utils/breakpoints';
+import { theme } from '../../../../utils/breakpoints/breakpoints';
 import IconLabelContainer from '../../../UI/iconLabelContainer/IconLabelContainer';
+import { useActions } from '../../../../redux/hooks/useActions';
+import { getModifiedDate } from '../../../../utils/helperFunctions/getModifiedDate';
+import { useTypedSelector } from '../../../../redux/hooks/useTypedSelector';
 
 const useStyles = makeStyles(() => ({
   active: { color: '#0078d4', cursor: 'pointer' },
@@ -39,29 +42,52 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface Props {
-  date: string;
-  handleDateChange: (date: string) => void;
-}
-
-const ControlBar: React.FC<Props> = ({ date, handleDateChange }) => {
+const ControlBar: React.FC = () => {
+  const [date, setDate] = React.useState(getModifiedDate());
   const iconStyle = useStyles();
+
+  const { clearDiary, changeDate } = useActions();
+  const { currentDiary } = useTypedSelector((state) => state.diary);
+
+  const handleChangeInputDate = (newDate: string) => {
+    setDate(newDate);
+    const loading = currentDiary[newDate] ? false : true;
+    changeDate(newDate, loading);
+  };
+
+  const handleChangeArrowDate = (type: '-' | '+') => {
+    const otherDay = new Date(date);
+    otherDay.setDate(type === '-' ? otherDay.getDate() - 1 : otherDay.getDate() + 1);
+    const newDate = getModifiedDate(otherDay);
+    handleChangeInputDate(newDate);
+  };
 
   return (
     <div className={classes.controlBar}>
       <div className={classes.controlLeftSide}>
         <IconLabelContainer text='Previous day'>
-          <ArrowBackIcon className={iconStyle.active} />
+          <ArrowBackIcon className={iconStyle.active} onClick={() => handleChangeArrowDate('-')} />
         </IconLabelContainer>
-        <TextField label='Date' type='date' defaultValue={date} onChange={(e) => handleDateChange(e.target.value)} className={iconStyle.dateInput} />
+        <TextField
+          inputProps={{ max: getModifiedDate() }}
+          label='Date'
+          type='date'
+          value={date}
+          onChange={(e) => handleChangeInputDate(e.target.value)}
+          className={iconStyle.dateInput}
+        />
       </div>
       <div className={classes.controlRightSide}>
         <IconLabelContainer text='Remove all products'>
-          <DeleteForeverIcon className={iconStyle.remove} />
+          <DeleteForeverIcon className={iconStyle.remove} onClick={clearDiary} />
         </IconLabelContainer>
-
         <IconLabelContainer text='Next day'>
-          <ArrowForwardIcon className={iconStyle.disabled} />
+          <ArrowForwardIcon
+            onClick={() => {
+              date !== getModifiedDate() && handleChangeArrowDate('+');
+            }}
+            className={classnames(date !== getModifiedDate() ? iconStyle.active : iconStyle.disabled)}
+          />
         </IconLabelContainer>
       </div>
     </div>

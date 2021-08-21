@@ -12,12 +12,12 @@ interface Props {
 
 const InputAutoComplete: React.FC<Props> = ({ value, pickItem, focus }) => {
   const [foundItems, setFoundItems] = React.useState<string[]>([]);
-
+  const trimmedValue = value.trim();
   React.useEffect(() => {
     axios.get<string[]>(`https://api.edamam.com/auto-complete?q=${value}`).then((response) => {
       setFoundItems(response.data.slice(0, 4));
     });
-  }, [value.trim()]);
+  }, [trimmedValue]);
 
   return (
     <React.Fragment>

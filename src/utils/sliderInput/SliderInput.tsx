@@ -11,34 +11,21 @@ interface Props {
   marks: Mark[];
   title: string;
   steps: number;
+  value: number;
   sliderClassName?: string;
   sliderContainerClassName?: string;
+  onChange: (e: React.ChangeEvent<{}>, value: number | number[]) => void;
 }
 
 const SliderInput: React.FC<Props> = (props) => {
-  const { marks, title, steps, sliderClassName, sliderContainerClassName } = props;
+  const { marks, title, steps, sliderClassName, sliderContainerClassName, onChange, value } = props;
 
-  const valuetext = (value: number) => {
-    return `${value}`;
-  };
-
-  const countDefaultValue = () => {
-    return 100 / +((steps - 1) / 2).toFixed();
-  };
   return (
     <div className={sliderContainerClassName}>
       <Typography id='discrete-slider-custom' gutterBottom>
         {title}
       </Typography>
-      <Slider
-        defaultValue={countDefaultValue()}
-        getAriaValueText={valuetext}
-        aria-labelledby='discrete-slider-custom'
-        step={100 / (steps - 1)}
-        // valueLabelDisplay='auto'
-        className={sliderClassName}
-        marks={marks}
-      />
+      <Slider value={value} step={100 / (steps - 1)} className={sliderClassName} marks={marks} onChange={onChange} />
     </div>
   );
 };

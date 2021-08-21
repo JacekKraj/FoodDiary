@@ -3,23 +3,21 @@ import React from 'react';
 import classes from './products.module.scss';
 import Product from './product/Product';
 import AddProduct from './addProduct/AddProduct';
+import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
 
 const Products: React.FC = () => {
+  const { currentDiary, currentDate } = useTypedSelector((state) => state.diary);
   return (
     <div>
       <AddProduct />
       <div className={classes.products}>
-        <Product text='chicken' />
-        <Product text='pear' />
-        <Product text='peperoncino' />
-        <Product text='pasta' />
-        <Product text='pepper' />
-        <Product text='apple' />
-        <Product text='macaronini' />
-        <Product text='lemon' />
-        <Product text='sugar' />
-        <Product text='macaronini' />
-        {/* <p className={classes.noProductsInfo}>You haven't added any products yet.</p> */}
+        {currentDiary[currentDate].products.length ? (
+          currentDiary[currentDate].products.map((el) => {
+            return <Product text={el} key={el} />;
+          })
+        ) : (
+          <p className={classes.noProductsInfo}>You haven't added any products yet.</p>
+        )}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 
 import classes from './product.module.scss';
+import { useActions } from '../../../../../../redux/hooks/useActions';
 
 const useStyles = makeStyles(() => ({
   remove: {
@@ -26,9 +27,15 @@ interface Props {
 const Product: React.FC<Props> = ({ text }) => {
   const iconStyle = useStyles();
 
+  const { removeProduct } = useActions();
+
+  const handleRemove = () => {
+    removeProduct(text);
+  };
+
   return (
     <div className={classes.product}>
-      <ClearIcon className={iconStyle.remove} />
+      <ClearIcon className={iconStyle.remove} onClick={handleRemove} />
       <p className={classes.productName}>{text}</p>
     </div>
   );

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import Nav from './../pageElements/nav/Nav';
 import classes from './authentication.module.scss';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import { theme } from '../../utils/breakpoints';
+import { theme } from '../../utils/breakpoints/breakpoints';
 import Button from '../UI/button/Button';
 import UsageInstructionStep from './usageInstructionStep/UsageInstructionStep';
 import SignUp from './signUp/SignUp';
