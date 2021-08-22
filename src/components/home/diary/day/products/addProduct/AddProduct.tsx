@@ -36,7 +36,7 @@ const AddProduct: React.FC = () => {
   const [productName, setProductName] = React.useState('');
   const [inputFocus, setInputFocus] = React.useState(false);
 
-  const productBrowserRef = React.useRef<HTMLDivElement>(null);
+  const productBrowserRef = React.useRef<HTMLFormElement>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const { addProduct } = useActions();
@@ -68,12 +68,8 @@ const AddProduct: React.FC = () => {
   };
 
   return (
-    <form className={classes.addProduct} onSubmit={handleSubmit}>
-      <div
-        className={classnames(classes.productBrowser, inputFocus && classes.focused)}
-        ref={productBrowserRef}
-        onClick={() => inputRef.current?.focus()}
-      >
+    <form className={classes.addProduct} onSubmit={handleSubmit} ref={productBrowserRef}>
+      <div className={classnames(classes.productBrowser, inputFocus && classes.focused)} onClick={() => inputRef.current?.focus()}>
         <SearchIcon className={iconStyle.icon} />
         <input
           onFocus={() => setInputFocus(true)}

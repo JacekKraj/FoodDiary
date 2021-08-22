@@ -43,11 +43,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ControlBar: React.FC = () => {
-  const [date, setDate] = React.useState(getModifiedDate());
+  const { currentDiary, currentDate } = useTypedSelector((state) => state.diary);
+
+  const [date, setDate] = React.useState(currentDate || getModifiedDate());
   const iconStyle = useStyles();
 
   const { clearDiary, changeDate } = useActions();
-  const { currentDiary } = useTypedSelector((state) => state.diary);
 
   const handleChangeInputDate = (newDate: string) => {
     setDate(newDate);
