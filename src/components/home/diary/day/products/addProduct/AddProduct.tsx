@@ -69,9 +69,14 @@ const AddProduct: React.FC = () => {
 
   return (
     <form className={classes.addProduct} onSubmit={handleSubmit} ref={productBrowserRef}>
-      <div className={classnames(classes.productBrowser, inputFocus && classes.focused)} onClick={() => inputRef.current?.focus()}>
+      <div
+        className={classnames(classes.productBrowser, inputFocus && classes.focused)}
+        data-test='add-product-browser-container'
+        onClick={() => inputRef.current?.focus()}
+      >
         <SearchIcon className={iconStyle.icon} />
         <input
+          data-test='add-product-browser'
           onFocus={() => setInputFocus(true)}
           type='text'
           ref={inputRef}
@@ -80,7 +85,11 @@ const AddProduct: React.FC = () => {
           onChange={(e) => handleInputChange(e)}
           className={classes.inputAdditional}
         />
-        <CancelIcon className={classnames(iconStyle.icon, iconStyle.clear, productName && iconStyle.clearVisible)} onClick={handleCancelClick} />
+        <CancelIcon
+          data-test={`clear-browser-icon-${productName && 'visible'}`}
+          className={classnames(iconStyle.icon, iconStyle.clear, productName && iconStyle.clearVisible)}
+          onClick={handleCancelClick}
+        />
         <InputAutoComplete focus={inputFocus} value={productName} pickItem={pickItemFromAutoComplete} />
       </div>
       <Button className={classes.buttonAdditional}>Add</Button>
