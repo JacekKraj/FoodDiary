@@ -63,11 +63,13 @@ const ControlBar: React.FC = () => {
     handleChangeInputDate(newDate);
   };
 
+  const isCurrentDate = date !== getModifiedDate();
+
   return (
     <div className={classes.controlBar}>
       <div className={classes.controlLeftSide}>
         <IconLabelContainer text='Previous day'>
-          <ArrowBackIcon className={iconStyle.active} onClick={() => handleChangeArrowDate('-')} />
+          <ArrowBackIcon className={iconStyle.active} data-test='arrow-back' onClick={() => handleChangeArrowDate('-')} />
         </IconLabelContainer>
         <TextField
           inputProps={{ max: getModifiedDate() }}
@@ -84,10 +86,11 @@ const ControlBar: React.FC = () => {
         </IconLabelContainer>
         <IconLabelContainer text='Next day'>
           <ArrowForwardIcon
+            data-test={`arrow-forward-${isCurrentDate ? 'active' : 'disabled'}`}
             onClick={() => {
-              date !== getModifiedDate() && handleChangeArrowDate('+');
+              isCurrentDate && handleChangeArrowDate('+');
             }}
-            className={classnames(date !== getModifiedDate() ? iconStyle.active : iconStyle.disabled)}
+            className={classnames(isCurrentDate ? iconStyle.active : iconStyle.disabled)}
           />
         </IconLabelContainer>
       </div>
