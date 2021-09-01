@@ -68,7 +68,7 @@ const AddProduct: React.FC = () => {
   };
 
   return (
-    <form className={classes.addProduct} onSubmit={handleSubmit} ref={productBrowserRef}>
+    <form className={classes.addProduct} onSubmit={handleSubmit} ref={productBrowserRef} data-test='component-add-product'>
       <div
         className={classnames(classes.productBrowser, inputFocus && classes.focused)}
         data-test='add-product-browser-container'

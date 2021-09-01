@@ -34,9 +34,11 @@ const Product: React.FC<Props> = ({ text }) => {
   };
 
   return (
-    <div className={classes.product}>
-      <ClearIcon className={iconStyle.remove} onClick={handleRemove} />
-      <p className={classes.productName}>{text}</p>
+    <div className={classes.product} data-test='component-product'>
+      <ClearIcon className={iconStyle.remove} onClick={handleRemove} data-test='remove-icon' />
+      <p className={classes.productName} data-test='product'>
+        {text}
+      </p>
     </div>
   );
 };
