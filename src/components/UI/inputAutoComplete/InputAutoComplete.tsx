@@ -20,7 +20,7 @@ const InputAutoComplete: React.FC<Props> = ({ value, pickItem, focus }) => {
   }, [trimmedValue]);
 
   return (
-    <React.Fragment>
+    <div>
       {foundItems.length && focus ? (
         <ul className={classes.inputAutoComplete}>
           {foundItems.map((el: string) => {
@@ -28,8 +28,7 @@ const InputAutoComplete: React.FC<Props> = ({ value, pickItem, focus }) => {
           })}
         </ul>
       ) : null}
-    </React.Fragment>
+    </div>
   );
 };
-
 export default InputAutoComplete;

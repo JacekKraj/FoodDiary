@@ -9,7 +9,7 @@ interface Props {
 
 const AutoCompleteItem: React.FC<Props> = ({ text, pickItem }) => {
   return (
-    <li className={classes.autoCompleteItem} onClick={() => pickItem(text)}>
+    <li className={classes.autoCompleteItem} onClick={() => pickItem(text)} data-test='component-auto-complete-item'>
       {text}
     </li>
   );

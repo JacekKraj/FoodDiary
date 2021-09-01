@@ -1,12 +1,8 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
-import axios from 'axios';
-import moxios from 'moxios';
-import { act } from 'react-dom/test-utils';
 
 import { findByTestAttr, storeFactory } from '../../../../../../utils/tests/testHelperFunction';
 import AddProduct from './AddProduct';
-import { Done } from '@material-ui/icons';
 
 const setup = () => {
   const store = storeFactory();
