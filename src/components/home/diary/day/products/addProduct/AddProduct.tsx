@@ -92,7 +92,9 @@ const AddProduct: React.FC = () => {
         />
         <InputAutoComplete focus={inputFocus} value={productName} pickItem={pickItemFromAutoComplete} />
       </div>
-      <Button className={classes.buttonAdditional}>Add</Button>
+      <Button dataTest='submit-button' className={classes.buttonAdditional}>
+        Add
+      </Button>
     </form>
   );
 };
