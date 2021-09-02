@@ -67,6 +67,7 @@ const Sliders: React.FC = () => {
     <React.Fragment>
       <div className={classes.sliders}>
         <SliderInput
+          dataTest='slider-current'
           value={currentDiary[currentDate].currentSkinCondition}
           marks={currSkinStateMarks}
           sliderContainerClassName={classes.sliderContainer}
@@ -76,6 +77,7 @@ const Sliders: React.FC = () => {
           onChange={handleCurrentChange}
         />
         <SliderInput
+          dataTest='slider-compared'
           value={currentDiary[currentDate].comparedSkinCondition}
           sliderContainerClassName={classes.sliderContainer}
           marks={skinStateChangesMarks}
