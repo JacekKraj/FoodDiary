@@ -81,8 +81,8 @@ const ControlBar: React.FC = () => {
         />
       </div>
       <div className={classes.controlRightSide}>
-        <IconLabelContainer text='Remove all products'>
-          <DeleteForeverIcon className={iconStyle.remove} onClick={clearDiary} />
+        <IconLabelContainer text='Remove content'>
+          <DeleteForeverIcon className={iconStyle.remove} onClick={clearDiary} data-test='remove-content-button' />
         </IconLabelContainer>
         <IconLabelContainer text='Next day'>
           <ArrowForwardIcon

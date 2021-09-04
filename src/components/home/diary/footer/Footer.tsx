@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
           Remember to add all the products you ate on that day. This is very important because only then will we be able to find your real problem.
         </p>
       </div>
-      <Button className={classes.buttonAdditional} onClick={handleSave}>
+      <Button dataTest='save-button' className={classes.buttonAdditional} onClick={handleSave}>
         Save Changes
       </Button>
     </div>
