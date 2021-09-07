@@ -1,0 +1,42 @@
+.footer {
+  background-color: #fafafa;
+  border-top: 2px solid #ccc;
+  padding: 0.5em 0.5em 0.8em;
+}
+
+.reminderContainer {
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.reminder {
+  font-size: 12px;
+  margin-left: 0.5em;
+  color: #999;
+  font-weight: 300;
+}
+
+.buttonAdditional {
+  width: 35%;
+  margin: 0 auto;
+  max-width: 150px;
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .footer {
+    display: flex;
+    padding: 0.8em;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .buttonAdditional {
+    margin: unset;
+    flex-basis: 25%;
+  }
+
+  .reminderContainer {
+    margin-bottom: unset;
+    flex-basis: 65%;
+  }
+}

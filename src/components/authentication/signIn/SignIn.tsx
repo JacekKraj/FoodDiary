@@ -52,8 +52,8 @@ const SignIn: React.FC<Props> = ({ handleShowSignIn }) => {
           return (
             <Form className={classes.form}>
               <div className={classes.inputsContainer}>
-                <MyFormikInput name='email' type='email' placeholder='Email address' as={Input} />
-                <MyFormikInput name='password' type='password' placeholder='Password' as={Input} />
+                <MyFormikInput className={classes.inputAdditional} name='email' type='email' placeholder='Email address' as={Input} />
+                <MyFormikInput className={classes.inputAdditional} name='password' type='password' placeholder='Password' as={Input} />
                 {error && <Error errorMessage={error} />}
               </div>
               <Button className={classes.buttonAdditional}>Log in</Button>

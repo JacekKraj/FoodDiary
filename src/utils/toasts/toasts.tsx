@@ -15,3 +15,16 @@ export const successToast = (message: string) => {
     progressClassName: classes.successProgress,
   });
 };
+
+export const failToast = (message: string) => {
+  toast(`${message}`, {
+    position: 'bottom-right',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    className: classes.fail,
+    progressClassName: classes.failProgress,
+  });
+};

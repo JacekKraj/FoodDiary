@@ -1,0 +1,24 @@
+.diary {
+  width: 90%;
+  margin: 2em auto;
+  box-shadow: 0 1px 2px 0 rgb(215, 215, 215), 0 1px 3px 1px rgb(215, 215, 215);
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .diary {
+    width: 80%;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  .diary {
+    width: 70%;
+    margin: 2.5em auto;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .diary {
+    max-width: 900px;
+  }
+}

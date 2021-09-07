@@ -6,19 +6,12 @@
   flex-grow: 1;
 }
 .button {
-  display: block;
-  color: #777;
-  padding: 0.5em;
-  border: none;
-  border-radius: 5px;
-  background-color: rgb(240, 240, 240);
   width: 100%;
   font-size: 18px;
-  cursor: pointer;
 }
 
 .button:hover {
-  background-color: rgb(230, 230, 230);
+  background-color: #2493e7;
 }
 
 @media (min-width: 400px) and (orientation: portrait) {
@@ -59,7 +52,8 @@
 
   .button {
     font-size: 22px;
-    width: auto;
-    padding: 0.4em 1.5em;
+    width: unset;
+    padding-left: 1.5em !important;
+    padding-right: 1.5em !important;
   }
 }

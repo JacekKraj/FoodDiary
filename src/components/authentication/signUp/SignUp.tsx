@@ -63,10 +63,10 @@ export const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
           return (
             <Form className={classes.form} data-test='sign-up-form'>
               <div className={classes.inputsContainer}>
-                <MyFormikInput name='email' type='email' placeholder='Email address' as={Input} />
-                <MyFormikInput name='repeatEmail' type='email' placeholder='Repeat email address' as={Input} />
-                <MyFormikInput name='password' type='password' placeholder='Password' as={Input} />
-                <MyFormikInput name='repeatPassword' type='password' placeholder='Repeat password' as={Input} />
+                <MyFormikInput className={classes.inputAdditional} name='email' type='email' placeholder='Email address' as={Input} />
+                <MyFormikInput className={classes.inputAdditional} name='repeatEmail' type='email' placeholder='Repeat email address' as={Input} />
+                <MyFormikInput className={classes.inputAdditional} name='password' type='password' placeholder='Password' as={Input} />
+                <MyFormikInput className={classes.inputAdditional} name='repeatPassword' type='password' placeholder='Repeat password' as={Input} />
                 {error && <Error errorMessage={error} />}
               </div>
               <Button className={classes.buttonAdditional} typeLight dataTest='submit-button'>

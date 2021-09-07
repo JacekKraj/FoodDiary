@@ -5,12 +5,14 @@ interface InitialState {
   isLoading: boolean;
   error: string;
   isAuthenticated: boolean;
+  userEmail: string;
 }
 
 const initialState = {
   isLoading: false,
   error: '',
   isAuthenticated: false,
+  userEmail: '',
 };
 
 const authenticationReducer = (state: InitialState = initialState, action: Action): InitialState => {
@@ -26,6 +28,7 @@ const authenticationReducer = (state: InitialState = initialState, action: Actio
         ...state,
         isAuthenticated: true,
         isLoading: false,
+        userEmail: action.userEmail,
       };
     case ActionTypes.AUTHENTICATION_FAIL:
       return {
@@ -55,6 +58,7 @@ const authenticationReducer = (state: InitialState = initialState, action: Actio
         ...state,
         isAuthenticated: false,
         isLoading: false,
+        userEmail: '',
       };
     case ActionTypes.UNSET_ERROR:
       return {

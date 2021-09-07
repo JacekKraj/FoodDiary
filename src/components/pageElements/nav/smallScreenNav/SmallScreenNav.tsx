@@ -8,7 +8,7 @@ import Backdrop from './../../../UI/backdrop/Backdrop';
 import NavItems from './../navItems/NavItems';
 import Logo from './../../logo/Logo';
 import CloseIcon from '@material-ui/icons/Close';
-import { theme } from './../../../../utils/breakpoints';
+import { theme } from '../../../../utils/breakpoints/breakpoints';
 
 interface Props {
   handleShowSignIn: () => void;

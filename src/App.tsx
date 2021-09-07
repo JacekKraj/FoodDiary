@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Switch } from 'react-router';
+import { Redirect, Switch } from 'react-router';
 import { Route } from 'react-router';
 import { toast } from 'react-toastify';
 
@@ -18,13 +18,9 @@ const App = () => {
 
   React.useEffect(() => {
     toast.configure();
-  }, []);
-
-  React.useEffect(() => {
     fire.auth().onAuthStateChanged((authUser) => {
       if (authUser && fire.auth().currentUser?.emailVerified) {
-        // authenticationEnd();
-        signOut();
+        authenticationEnd(fire.auth().currentUser?.email as string);
       } else {
         signOut();
       }
@@ -35,10 +31,12 @@ const App = () => {
   const routes = !isAuthenticated ? (
     <Switch>
       <Route path='/' exact render={() => <Authentication />} />
+      <Redirect to='/' exact />
     </Switch>
   ) : (
     <Switch>
-      <Route path='/' exact render={() => <Home />} />
+      <Route path='/diary' exact render={() => <Home />} />
+      <Redirect to='/diary' exact />
     </Switch>
   );
 

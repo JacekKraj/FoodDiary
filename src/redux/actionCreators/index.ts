@@ -9,3 +9,5 @@ export {
   registerStart,
   registerFail,
 } from './authentication';
+
+export { getDiary, setDiary, addProduct, removeProduct, saveDiary, clearDiary, setSkin, changeDate } from './diary';

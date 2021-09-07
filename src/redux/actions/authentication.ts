@@ -5,6 +5,7 @@ interface AuthenticationStart {
 
 interface AuthenticationEnd {
   type: ActionTypes.AUTHENTICATION_END;
+  userEmail: string;
 }
 
 interface AuthenticationFail {

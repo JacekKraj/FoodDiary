@@ -19,9 +19,10 @@ export const authenticationStart = (): Action => {
   };
 };
 
-export const authenticationEnd = (): Action => {
+export const authenticationEnd = (userEmail: string): Action => {
   return {
     type: ActionTypes.AUTHENTICATION_END,
+    userEmail,
   };
 };
 
