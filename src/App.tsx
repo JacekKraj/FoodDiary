@@ -28,6 +28,10 @@ const App = () => {
     });
   }, []);
 
+  const Analysys = React.lazy(() => {
+    return import('./components/analysys/Analysys');
+  });
+
   const routes = !isAuthenticated ? (
     <Switch>
       <Route path='/' exact render={() => <Authentication />} />
@@ -36,6 +40,7 @@ const App = () => {
   ) : (
     <Switch>
       <Route path='/diary' exact render={() => <Home />} />
+      <Route path='/analysys' exact render={() => <Analysys />} />
       <Redirect to='/diary' exact />
     </Switch>
   );
