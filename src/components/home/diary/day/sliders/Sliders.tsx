@@ -4,7 +4,7 @@ import classes from './sliders.module.scss';
 import SliderInput from './../../../../../utils/sliderInput/SliderInput';
 import { useActions } from '../../../../../redux/hooks/useActions';
 import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
-import { SkinConditionValues, SkinConditonTypes } from '../../../../../redux/actions/diary';
+import { SkinConditionValues } from '../../../../../redux/reducers/diaryReducer';
 
 const currSkinStateMarks = [
   {
@@ -57,11 +57,11 @@ const Sliders: React.FC = () => {
   const { currentDate, currentDiary } = useTypedSelector((state) => state.diary);
 
   const handleCurrentChange = (_: React.ChangeEvent<{}>, value: number | number[]) => {
-    setSkin(value as SkinConditionValues, 'currentSkinCondition' as SkinConditonTypes);
+    setSkin(value as SkinConditionValues, 'currentSkinCondition');
   };
 
   const handleComparedChange = (_: React.ChangeEvent<{}>, value: number | number[]) => {
-    setSkin(value as SkinConditionValues, 'comparedSkinCondition' as SkinConditonTypes);
+    setSkin(value as SkinConditionValues, 'comparedSkinCondition');
   };
   return (
     <React.Fragment>

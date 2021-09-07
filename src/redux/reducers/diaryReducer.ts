@@ -1,8 +1,22 @@
 import { ActionTypes } from './../actionTypes/actionTypes';
-import { Action, Day, SkinConditionValues } from './../actions/diary';
+import { Action } from './../actions/diary';
 import { getModifiedDate } from '../../utils/helperFunctions/getModifiedDate';
 
-interface DiaryDay {
+export enum SkinConditionValues {
+  lower = 0,
+  low = 25,
+  medium = 50,
+  high = 75,
+  higher = 100,
+}
+
+export interface Day {
+  products: string[];
+  currentSkinCondition: SkinConditionValues;
+  comparedSkinCondition: SkinConditionValues;
+}
+
+export interface DiaryDay {
   [index: string]: Day;
 }
 
@@ -15,13 +29,17 @@ interface InitialState {
   loading: boolean;
 }
 
+const customDay = {
+  products: [],
+  currentSkinCondition: SkinConditionValues.medium,
+  comparedSkinCondition: SkinConditionValues.medium,
+};
+
 const initialState: InitialState = {
   loading: true,
   currentDiary: {
     [getModifiedDate()]: {
-      products: [],
-      currentSkinCondition: 50,
-      comparedSkinCondition: 50,
+      ...customDay,
     },
   },
   currentDate: getModifiedDate(),
@@ -89,9 +107,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action) => {
         currentDiary: {
           ...state.currentDiary,
           [state.currentDate]: {
-            currentSkinCondition: 50 as SkinConditionValues,
-            comparedSkinCondition: 50 as SkinConditionValues,
-            products: [],
+            ...customDay,
           },
         },
       };
@@ -111,9 +127,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action) => {
         ? { [action.date]: { ...state.currentDiary[action.date] } }
         : {
             [action.date]: {
-              products: [],
-              currentSkinCondition: 50 as SkinConditionValues,
-              comparedSkinCondition: 50 as SkinConditionValues,
+              ...customDay,
             },
           };
       return {

@@ -1,7 +1,8 @@
 import { Dispatch } from 'redux';
 
 import { fire } from '../../fireConfig';
-import { Action, Day, SkinConditionValues, SkinConditonTypes } from './../actions/diary';
+import { Action, SkinConditonTypes } from './../actions/diary';
+import { SkinConditionValues, Day, DiaryDay } from '../reducers/diaryReducer';
 import { ActionTypes } from './../actionTypes/actionTypes';
 import { modifyString } from '../../utils/helperFunctions/modifyString';
 import { successToast, failToast } from '../../utils/toasts/toasts';
@@ -47,10 +48,6 @@ export const getDiary = (date: string, userEmail: string) => {
       });
   };
 };
-
-interface DiaryDay {
-  [index: string]: Day;
-}
 
 const findModifiedDays = (currentDiary: DiaryDay, downloadedDiary: DiaryDay) => {
   const modifiedDays: DiaryDay[] = [];

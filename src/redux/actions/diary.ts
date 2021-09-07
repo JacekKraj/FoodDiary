@@ -1,4 +1,5 @@
 import { ActionTypes } from '../actionTypes/actionTypes';
+import { Day, SkinConditionValues } from './../reducers/diaryReducer';
 
 interface ChangeDate {
   type: ActionTypes.CHANGE_DATE;
@@ -16,8 +17,7 @@ interface RemoveProduct {
   product: string;
 }
 
-export type SkinConditonTypes = 'currentSkinConditon' | 'comparedSkinCondition';
-export type SkinConditionValues = 0 | 25 | 50 | 75 | 100;
+export type SkinConditonTypes = 'currentSkinCondition' | 'comparedSkinCondition';
 
 interface SetSkin {
   type: ActionTypes.SET_SKIN;
@@ -31,12 +31,6 @@ interface SaveDiary {
 
 interface ClearDiary {
   type: ActionTypes.CLEAR_DIARY;
-}
-
-export interface Day {
-  products: string[];
-  currentSkinCondition: SkinConditionValues;
-  comparedSkinCondition: SkinConditionValues;
 }
 
 interface SetDiary {
