@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Day from './day/Day';
-import ControlBar from './controlBar/ControlBar';
+import ControlBarContainer from './controlBarConainer/ControlBarContainer';
 import Footer from './footer/Footer';
 import ModuleWrapper from '../../wrappers/moduleWrapper/ModuleWrapper';
 import { useActions } from '../../../redux/hooks/useActions';
@@ -23,7 +23,7 @@ const Diary: React.FC = () => {
   return (
     <div className={classes.diary}>
       <ModuleWrapper title="Store products and skin's condition">
-        <ControlBar />
+        <ControlBarContainer />
         <Day />
         <Footer />
       </ModuleWrapper>

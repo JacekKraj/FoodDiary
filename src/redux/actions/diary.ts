@@ -39,4 +39,10 @@ interface SetDiary {
   date: string;
 }
 
+interface ChangeDate {
+  type: ActionTypes.CHANGE_DATE;
+  date: string;
+  loading: boolean;
+}
+
 export type Action = AddProduct | ChangeDate | RemoveProduct | SetSkin | SaveDiary | ClearDiary | SetDiary;

@@ -1,9 +1,9 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
 
-import { findByTestAttr, storeFactory } from '../../../../utils/tests/testHelperFunction';
+import { findByTestAttr, storeFactory } from './../../../utils/tests/testHelperFunction';
 import ControlBar from './ControlBar';
-import { getModifiedDate } from '../../../../utils/helperFunctions/getModifiedDate';
+import { getModifiedDate } from '../../../utils/helperFunctions/getModifiedDate';
 
 interface InitialState {
   diary: {
@@ -13,22 +13,25 @@ interface InitialState {
 }
 
 let store: any;
-const setup = (initialState: InitialState) => {
+const setup = (initialState: InitialState, showRemove: boolean) => {
   store = storeFactory(initialState);
   return mount(
     <Provider store={store}>
-      <ControlBar />
+      <ControlBar showRemove={showRemove} />
     </Provider>
   );
 };
 
-const createInitialState = (date: string) => {
-  return setup({
-    diary: {
-      currentDate: date,
-      currentDiary: {},
+const createInitialState = (date: string, showRemove: boolean = true) => {
+  return setup(
+    {
+      diary: {
+        currentDate: date,
+        currentDiary: {},
+      },
     },
-  });
+    showRemove
+  );
 };
 
 describe('arrows availability', () => {
@@ -63,5 +66,18 @@ describe('changes date on clicking arrows', () => {
     const arrowBack = findByTestAttr(wrapper, 'arrow-forward-active').first();
     arrowBack.simulate('click');
     expect(store.getState().diary.currentDate).toBe('2020-09-01');
+  });
+});
+
+describe('remove content button visibility', () => {
+  it('shows remove content button', () => {
+    const wrapper = createInitialState('2020-08-31', true);
+    const removeContentButton = findByTestAttr(wrapper, 'remove-content-button');
+    expect(removeContentButton.exists()).toBe(true);
+  });
+  it('doesnt show remove content button', () => {
+    const wrapper = createInitialState('2020-08-31', false);
+    const removeContentButton = findByTestAttr(wrapper, 'remove-content-button');
+    expect(removeContentButton.exists()).toBe(false);
   });
 });
