@@ -1,13 +1,14 @@
 import React from 'react';
 
-import classes from './analisys.module.scss';
 import Nav from '../pageElements/nav/Nav';
+import Modules from './modules/modules';
 
 const Analysys: React.FC = () => {
   return (
-    <div>
-      <Nav></Nav>
-    </div>
+    <React.Fragment>
+      <Nav />
+      <Modules />
+    </React.Fragment>
   );
 };
 
