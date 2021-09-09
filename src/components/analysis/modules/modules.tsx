@@ -8,8 +8,8 @@ import PageMainContentWrapper from '../../wrappers/pageMainContentWrapper/PageMa
 const Modules: React.FC = () => {
   return (
     <PageMainContentWrapper>
-      <DiarySummary />
       <Conclusion />
+      <DiarySummary />
     </PageMainContentWrapper>
   );
 };
