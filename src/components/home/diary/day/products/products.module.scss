@@ -4,20 +4,8 @@
   margin: 1em 0;
 }
 
-.noProductsInfo {
-  font-size: 14px;
-  color: #555;
-  font-style: italic;
-}
-
 @media (min-width: 500px) {
   .products {
     margin: 1.25em 0;
-  }
-
-  .noProductsInfo {
-    font-size: 16px;
-    color: #555;
-    font-style: italic;
   }
 }

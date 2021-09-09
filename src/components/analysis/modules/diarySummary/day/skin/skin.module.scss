@@ -1,0 +1,11 @@
+.skin {
+  padding-bottom: 1em;
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .skin {
+    display: flex;
+    align-items: center;
+    padding-bottom: 2em;
+  }
+}

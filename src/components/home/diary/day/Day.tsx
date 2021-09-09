@@ -5,12 +5,13 @@ import Products from './products/Products';
 import Sliders from './sliders/Sliders';
 import Spinner from './../../../UI/spinner/Spinner';
 import { useTypedSelector } from '../../../../redux/hooks/useTypedSelector';
+import ModuleMainContentWrapper from './../../../wrappers/moduleMainContentWrapper/ModuleMainContentWrapper';
 
 const Day: React.FC = () => {
   const { loading } = useTypedSelector((state) => state.diary);
 
   return (
-    <div className={classes.day}>
+    <ModuleMainContentWrapper>
       {loading ? (
         <Spinner />
       ) : (
@@ -19,7 +20,7 @@ const Day: React.FC = () => {
           <Sliders />
         </React.Fragment>
       )}
-    </div>
+    </ModuleMainContentWrapper>
   );
 };
 

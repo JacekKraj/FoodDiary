@@ -4,6 +4,7 @@ import classes from './products.module.scss';
 import Product from './product/Product';
 import AddProduct from './addProduct/AddProduct';
 import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
+import NoDataInfo from '../../../../UI/noDataInfo/NoDataInfo';
 
 const Products: React.FC = () => {
   const { currentDiary, currentDate } = useTypedSelector((state) => state.diary);
@@ -16,9 +17,7 @@ const Products: React.FC = () => {
             return <Product text={el} key={el} />;
           })
         ) : (
-          <p data-test='no-products-info' className={classes.noProductsInfo}>
-            You haven't added any products yet.
-          </p>
+          <NoDataInfo>You haven't added any products yet.</NoDataInfo>
         )}
       </div>
     </div>

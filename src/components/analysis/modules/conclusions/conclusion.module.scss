@@ -1,3 +1,9 @@
 .conclusions {
   margin-top: 2em;
 }
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .conclusions {
+    margin-top: 3em;
+  }
+}
