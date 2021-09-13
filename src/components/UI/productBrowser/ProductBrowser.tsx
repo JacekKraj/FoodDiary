@@ -29,18 +29,16 @@ const useStyles = makeStyles(() => ({
 interface Props {
   inputFocus: boolean;
   setInputFocus: React.Dispatch<React.SetStateAction<boolean>>;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   inputRef: React.RefObject<HTMLInputElement>;
   value: string;
-  //   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-  handleCancelClick: () => void;
 }
 
 const ProductBrowser: React.FC<Props> = (props) => {
   const iconStyle = useStyles();
 
-  const { inputFocus, setInputFocus, children, inputRef, value, setValue, handleCancelClick } = props;
+  const { inputFocus, setInputFocus, children, inputRef, value, setValue } = props;
   return (
     <div
       className={classnames(classes.productBrowser, inputFocus && classes.focused)}
@@ -61,7 +59,7 @@ const ProductBrowser: React.FC<Props> = (props) => {
       <CancelIcon
         data-test={`clear-browser-icon-${value && 'visible'}`}
         className={classnames(iconStyle.icon, iconStyle.clear, value && iconStyle.clearVisible)}
-        onClick={handleCancelClick}
+        onClick={() => setValue('')}
       />
       {children}
     </div>

@@ -5,7 +5,7 @@ import Button from '../../../../../UI/button/Button';
 import InputAutoComplete from '../../../../../UI/inputAutoComplete/InputAutoComplete';
 import useOnClickOutside from '../../../../../../utils/hooks/useOnClickOutside';
 import { useActions } from '../../../../../../redux/hooks/useActions';
-import ProductBrowser from '../../../../../UI/productBrowser/ProductBrwoser';
+import ProductBrowser from '../../../../../UI/productBrowser/ProductBrowser';
 
 const AddProduct: React.FC = () => {
   const [productName, setProductName] = React.useState('');
@@ -23,11 +23,6 @@ const AddProduct: React.FC = () => {
     setProductName('');
   };
 
-  const handleCancelClick = () => {
-    setProductName('');
-    inputRef.current?.focus();
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const product = productName.replace(/\s+/g, ' ').trim().toLocaleLowerCase();
@@ -40,14 +35,7 @@ const AddProduct: React.FC = () => {
 
   return (
     <form className={classes.addProduct} onSubmit={handleSubmit} ref={productBrowserRef} data-test='component-add-product'>
-      <ProductBrowser
-        inputFocus={inputFocus}
-        setInputFocus={setInputFocus}
-        inputRef={inputRef}
-        value={productName}
-        setValue={setProductName}
-        handleCancelClick={handleCancelClick}
-      >
+      <ProductBrowser inputFocus={inputFocus} setInputFocus={setInputFocus} inputRef={inputRef} value={productName} setValue={setProductName}>
         <InputAutoComplete focus={inputFocus} value={productName} pickItem={pickItemFromAutoComplete} />
       </ProductBrowser>
       <Button dataTest='submit-button' className={classes.buttonAdditional}>
