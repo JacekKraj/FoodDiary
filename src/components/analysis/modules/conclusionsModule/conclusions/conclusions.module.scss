@@ -1,0 +1,63 @@
+.title {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+  font-weight: 300;
+  padding: 0 1em 1.25em;
+}
+
+.noDataInfoContainer {
+  padding: 0 1em;
+}
+
+.moduleMainContentAdditional {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-height: 45vh;
+  overflow: auto;
+}
+
+@media (min-width: 500px) and (orientation: portrait) {
+  .moduleMainContentAdditional {
+    max-height: 40vh;
+  }
+  .title {
+    padding: 0 1.25em 1.25em;
+    font-size: 15px;
+  }
+
+  .noDataInfoContainer {
+    padding: 0em 1.25em;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .moduleMainContentAdditional {
+    max-height: 50vh;
+  }
+  .title {
+    padding: 0 1.5em 1.25em;
+  }
+
+  .noDataInfoContainer {
+    padding: 0 1.5em;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  .title {
+    padding: 0 2em 1.5em;
+  }
+
+  .noDataInfoContainer {
+    padding: 0 2em;
+  }
+}
+@media (min-width: 1000px) and (orientation: landscape) {
+  .moduleMainContentAdditional {
+    max-height: 40vh;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+}

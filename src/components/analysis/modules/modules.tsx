@@ -2,13 +2,13 @@ import React from 'react';
 
 import classes from './modules.module.scss';
 import DiarySummary from './diarySummary/DiarySummary';
-import Conclusion from './conclusions/Conclusions';
+import ConclusionsModule from './conclusionsModule/ConclusionsModule';
 import PageMainContentWrapper from '../../wrappers/pageMainContentWrapper/PageMainContentWrapper';
 
 const Modules: React.FC = () => {
   return (
     <PageMainContentWrapper>
-      <Conclusion />
+      <ConclusionsModule />
       <DiarySummary />
     </PageMainContentWrapper>
   );
