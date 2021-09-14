@@ -10,11 +10,24 @@ const Products: React.FC = () => {
   const [productName, setProductName] = React.useState('');
   const [focus, setFocus] = React.useState(false);
   const inputRef = React.useRef(null);
+  const browserContainerRef = React.useRef(null);
 
   return (
     <ModuleMainContentWrapper className={classes.moduleMainContentAdditional}>
-      <ProductBrowser value={productName} setValue={setProductName} inputFocus={focus} setInputFocus={setFocus} inputRef={inputRef} />
-      {true ? (
+      <div ref={browserContainerRef}>
+        <ProductBrowser
+          browserContainerRef={browserContainerRef}
+          handleOutsideClick={() => {
+            setFocus(false);
+          }}
+          value={productName}
+          setValue={setProductName}
+          inputFocus={focus}
+          setInputFocus={setFocus}
+          inputRef={inputRef}
+        />
+      </div>
+      {!true ? (
         <div className={classes.conclusions}>
           <React.Fragment>
             {' '}

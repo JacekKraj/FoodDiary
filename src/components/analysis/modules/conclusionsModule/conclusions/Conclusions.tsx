@@ -8,11 +8,9 @@ import Spinner from './../../../../UI/spinner/Spinner';
 
 const Conclusions: React.FC = () => {
   const noDataInfo = (
-    <div className={classes.noDataInfoContainer}>
-      <NoDataInfo>
-        We couldn't find any products that we are almost sure will have a bad effect on your skin. Please try to provide us with more data.
-      </NoDataInfo>
-    </div>
+    <NoDataInfo>
+      We couldn't find any products that we are almost sure will have a bad effect on your skin. Please try to provide us with more data.
+    </NoDataInfo>
   );
 
   const conclusions = true ? (

@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core';
 
 import classes from './productBrowser.module.scss';
 import { theme } from '../../../utils/breakpoints/breakpoints';
+import useOnClickOutside from './../../../utils/hooks/useOnClickOutside';
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -31,14 +32,19 @@ interface Props {
   setInputFocus: React.Dispatch<React.SetStateAction<boolean>>;
   children?: React.ReactNode;
   inputRef: React.RefObject<HTMLInputElement>;
+  browserContainerRef: React.RefObject<HTMLElement>;
   value: string;
+  handleOutsideClick: () => void;
   setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ProductBrowser: React.FC<Props> = (props) => {
   const iconStyle = useStyles();
 
-  const { inputFocus, setInputFocus, children, inputRef, value, setValue } = props;
+  const { inputFocus, setInputFocus, children, inputRef, value, setValue, handleOutsideClick, browserContainerRef } = props;
+
+  useOnClickOutside(browserContainerRef, handleOutsideClick);
+
   return (
     <div
       className={classnames(classes.productBrowser, inputFocus && classes.focused)}

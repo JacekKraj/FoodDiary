@@ -8,6 +8,7 @@
   padding: 0.55em;
   max-width: 100px;
   border-radius: 10px;
+  margin-left: 0.5em;
 }
 
 @media (min-width: 500px) {
@@ -19,5 +20,6 @@
 @media (min-width: 1000px) {
   .buttonAdditional {
     padding: 0.6em 1.5em;
+    margin-left: 1em;
   }
 }

@@ -3,7 +3,6 @@ import React from 'react';
 import classes from './addProduct.module.scss';
 import Button from '../../../../../UI/button/Button';
 import InputAutoComplete from '../../../../../UI/inputAutoComplete/InputAutoComplete';
-import useOnClickOutside from '../../../../../../utils/hooks/useOnClickOutside';
 import { useActions } from '../../../../../../redux/hooks/useActions';
 import ProductBrowser from '../../../../../UI/productBrowser/ProductBrowser';
 
@@ -15,8 +14,6 @@ const AddProduct: React.FC = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const { addProduct } = useActions();
-
-  useOnClickOutside(productBrowserRef, () => setInputFocus(false));
 
   const pickItemFromAutoComplete = (value: string) => {
     addProduct(value);
@@ -35,7 +32,17 @@ const AddProduct: React.FC = () => {
 
   return (
     <form className={classes.addProduct} onSubmit={handleSubmit} ref={productBrowserRef} data-test='component-add-product'>
-      <ProductBrowser inputFocus={inputFocus} setInputFocus={setInputFocus} inputRef={inputRef} value={productName} setValue={setProductName}>
+      <ProductBrowser
+        inputFocus={inputFocus}
+        browserContainerRef={productBrowserRef}
+        handleOutsideClick={() => {
+          setInputFocus(false);
+        }}
+        setInputFocus={setInputFocus}
+        inputRef={inputRef}
+        value={productName}
+        setValue={setProductName}
+      >
         <InputAutoComplete focus={inputFocus} value={productName} pickItem={pickItemFromAutoComplete} />
       </ProductBrowser>
       <Button dataTest='submit-button' className={classes.buttonAdditional}>
