@@ -1,5 +1,5 @@
-import { ActionTypes } from './../actionTypes/actionTypes';
-import { Action } from './../actions/diary';
+import { ActionTypes } from '../actionTypes/actionTypes';
+import { Action } from '../actions/diary';
 import { getModifiedDate } from '../../utils/helperFunctions/getModifiedDate';
 
 export enum SkinConditionValues {
@@ -26,7 +26,8 @@ interface InitialState {
   // in order to see if any changes were made
   downloadedDiary: DiaryDay;
   currentDiary: DiaryDay;
-  loading: boolean;
+  diaryLoading: boolean;
+  analysisLoading: boolean;
 }
 
 const customDay = {
@@ -36,7 +37,8 @@ const customDay = {
 };
 
 const initialState: InitialState = {
-  loading: true,
+  diaryLoading: true,
+  analysisLoading: true,
   currentDiary: {
     [getModifiedDate()]: {
       ...customDay,
@@ -58,7 +60,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action) => {
       }
       return {
         ...state,
-        loading: false,
+        diaryLoading: false,
         currentDiary: {
           ...state.currentDiary,
           ...diary,
@@ -132,12 +134,17 @@ const diaryReducer = (state: InitialState = initialState, action: Action) => {
           };
       return {
         ...state,
-        loading: action.loading,
+        diaryLoading: action.loading,
         currentDate: action.date,
         currentDiary: {
           ...state.currentDiary,
           ...diary,
         },
+      };
+    case ActionTypes.SET_ANALYSIS_LOADING:
+      return {
+        ...state,
+        analysisLoading: action.loading,
       };
     default:
       return state;

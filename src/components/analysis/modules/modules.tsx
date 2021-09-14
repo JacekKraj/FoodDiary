@@ -1,6 +1,5 @@
 import React from 'react';
 
-import classes from './modules.module.scss';
 import SearchForProduct from './searchForProduct/SearchForProduct';
 import ConclusionsModule from './conclusionsModule/ConclusionsModule';
 import PageMainContentWrapper from '../../wrappers/pageMainContentWrapper/PageMainContentWrapper';

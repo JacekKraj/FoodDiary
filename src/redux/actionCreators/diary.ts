@@ -7,6 +7,13 @@ import { ActionTypes } from './../actionTypes/actionTypes';
 import { modifyString } from '../../utils/helperFunctions/modifyString';
 import { successToast, failToast } from '../../utils/toasts/toasts';
 
+const setAnalysisLoading = (loading: boolean): Action => {
+  return {
+    type: ActionTypes.SET_ANALYSIS_LOADING,
+    loading,
+  };
+};
+
 export const addProduct = (product: string): Action => {
   return {
     type: ActionTypes.ADD_PRODUCT,
@@ -105,5 +112,30 @@ export const changeDate = (date: string, loading: boolean): Action => {
     type: ActionTypes.CHANGE_DATE,
     date,
     loading,
+  };
+};
+
+const setFullDiary = (fullDiary: DiaryDay): Action => {
+  return {
+    type: ActionTypes.SET_FULL_DIARY,
+    fullDiary: fullDiary,
+  };
+};
+
+export const getFullDiary = (userEmail: string) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch(setAnalysisLoading(true));
+    const modifiedEmail = modifyString(userEmail);
+    fire
+      .database()
+      .ref(`${modifiedEmail}`)
+      .get()
+      .then((snapshot) => {
+        dispatch(setFullDiary(snapshot.val()));
+        dispatch(setAnalysisLoading(false));
+      })
+      .catch(() => {
+        dispatch(setAnalysisLoading(false));
+      });
   };
 };

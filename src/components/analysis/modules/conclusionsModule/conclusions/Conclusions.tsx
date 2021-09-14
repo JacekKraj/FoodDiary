@@ -5,8 +5,11 @@ import Conclusion from './conclusion/Conclusion';
 import classes from './conclusions.module.scss';
 import NoDataInfo from '../../../../UI/noDataInfo/NoDataInfo';
 import Spinner from './../../../../UI/spinner/Spinner';
+import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
 
 const Conclusions: React.FC = () => {
+  const { analysisLoading } = useTypedSelector((state) => state.diary);
+
   const noDataInfo = (
     <NoDataInfo>
       We couldn't find any products that we are almost sure will have a bad effect on your skin. Please try to provide us with more data.
@@ -44,14 +47,8 @@ const Conclusions: React.FC = () => {
   );
   return (
     <ModuleMainContentWrapper className={classes.moduleMainContentAdditional}>
-      {true ? (
-        <React.Fragment>
-          <h3 className={classes.title}>Products that seem to be bad for your skin:</h3>
-          {conclusions}
-        </React.Fragment>
-      ) : (
-        <Spinner />
-      )}
+      <h3 className={classes.title}>Products that seem to be bad for your skin:</h3>
+      {!analysisLoading ? conclusions : <Spinner />}
     </ModuleMainContentWrapper>
   );
 };
