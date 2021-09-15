@@ -1,5 +1,6 @@
 import { DiaryDay, Day, SkinConditionValues, ModifiedAnalyzedProduct, AnalyzedProducts } from '../../redux/reducers/diaryReducer';
 import { getModifiedDate } from './getModifiedDate';
+import { sortProducts } from './sortProducts';
 
 export const sortFullDiary = (fullDiary: DiaryDay) => {
   const sortedFullDiary: Day[] = [];
@@ -71,8 +72,16 @@ export const modifyAnalyzedProducts = (analyzedProducts: AnalyzedProducts) => {
       type,
       product,
     };
-    const products = +probability >= 50 ? dangerousProducts : safeProducts;
+
+    let products = safeProducts;
+    // if product has more than 50% of probability it's considered as dangerous
+    // if product was eaten less than 5 times it must be considered as safe, because it's to little data to find results reliable
+    if (+probability >= 50 && +modifiedAnalyzedProduct.timesEaten > 5) {
+      products = dangerousProducts;
+    }
+
     products.push(modifiedAnalyzedProduct);
   }
-  return { safeProducts, dangerousProducts };
+  // sortProducts ranks products in order of probability (from low to high)
+  return { safeProducts: sortProducts(safeProducts), dangerousProducts: sortProducts(dangerousProducts) };
 };

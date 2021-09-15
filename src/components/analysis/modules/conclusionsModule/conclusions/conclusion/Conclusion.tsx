@@ -12,7 +12,7 @@ interface Props {
     probability: string;
   };
   header?: boolean;
-  type: 'red' | 'orange' | 'yellow' | 'normal';
+  type: string;
 }
 
 const Conclusion: React.FC<Props> = (props) => {

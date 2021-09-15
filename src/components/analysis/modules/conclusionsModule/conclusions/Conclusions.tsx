@@ -8,15 +8,16 @@ import Spinner from './../../../../UI/spinner/Spinner';
 import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
 
 const Conclusions: React.FC = () => {
-  const { analysisLoading } = useTypedSelector((state) => state.diary);
+  const { analysisLoading, dangerousProducts } = useTypedSelector((state) => state.diary);
 
   const noDataInfo = (
     <NoDataInfo>
-      We couldn't find any products that we are almost sure will have a bad effect on your skin. Please try to provide us with more data.
+      We couldn't find any products that we are almost sure to have a bad effect on your skin. Please try to provide us with more data. We need each
+      product to be added at least 5 times to be considered as dengerous.
     </NoDataInfo>
   );
 
-  const conclusions = true ? (
+  const conclusions = dangerousProducts.length ? (
     <div className={classes.conclusions}>
       <Conclusion
         header
@@ -24,23 +25,15 @@ const Conclusions: React.FC = () => {
         type='normal'
         skinCondition={{ timesEaten: 'TE', probability: 'P[%]', improvement: 'I', deterioration: 'D' }}
       />
-      <Conclusion productName='apple' type='red' skinCondition={{ timesEaten: '8', probability: '88', improvement: '1', deterioration: '7' }} />
-      <Conclusion
-        productName='corn flakes'
-        type='orange'
-        skinCondition={{ timesEaten: '5', probability: '80', improvement: '1', deterioration: '4' }}
-      />
-      <Conclusion
-        productName='corn flakes'
-        type='orange'
-        skinCondition={{ timesEaten: '5', probability: '80', improvement: '1', deterioration: '4' }}
-      />
-      <Conclusion
-        productName='corn flakes'
-        type='orange'
-        skinCondition={{ timesEaten: '5', probability: '80', improvement: '1', deterioration: '4' }}
-      />
-      <Conclusion productName='peperoni' type='yellow' skinCondition={{ timesEaten: '5', probability: '60', improvement: '2', deterioration: '3' }} />
+      {dangerousProducts.map((el) => {
+        return (
+          <Conclusion
+            productName={el.product}
+            type={el.type}
+            skinCondition={{ timesEaten: el.timesEaten, probability: el.probability, improvement: el.improvement, deterioration: el.deterioration }}
+          />
+        );
+      })}
     </div>
   ) : (
     noDataInfo

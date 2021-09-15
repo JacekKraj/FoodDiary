@@ -2,6 +2,7 @@ import { ActionTypes } from '../actionTypes/actionTypes';
 import { Action } from '../actions/diary';
 import { getModifiedDate } from '../../utils/helperFunctions/getModifiedDate';
 import { sortFullDiary, analyzeProducts, modifyAnalyzedProducts } from '../../utils/helperFunctions/diaryReducer';
+import { orange } from '@material-ui/core/colors';
 
 export enum SkinConditionValues {
   lower = 0,
