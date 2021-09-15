@@ -28,6 +28,7 @@ const Conclusions: React.FC = () => {
       {dangerousProducts.map((el) => {
         return (
           <Conclusion
+            key={el.product}
             productName={el.product}
             type={el.type}
             skinCondition={{ timesEaten: el.timesEaten, probability: el.probability, improvement: el.improvement, deterioration: el.deterioration }}
