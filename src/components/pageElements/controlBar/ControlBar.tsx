@@ -7,11 +7,11 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import classnames from 'classnames';
 
 import classes from './controlBar.module.scss';
-import { theme } from '../../../../utils/breakpoints/breakpoints';
-import IconLabelContainer from '../../../UI/iconLabelContainer/IconLabelContainer';
-import { useActions } from '../../../../redux/hooks/useActions';
-import { getModifiedDate } from '../../../../utils/helperFunctions/getModifiedDate';
-import { useTypedSelector } from '../../../../redux/hooks/useTypedSelector';
+import { theme } from './../../../utils/breakpoints/breakpoints';
+import IconLabelContainer from './../../UI/iconLabelContainer/IconLabelContainer';
+import { useActions } from './../../../redux/hooks/useActions';
+import { getModifiedDate } from '../../../utils/helperFunctions/getModifiedDate';
+import { useTypedSelector } from './../../../redux/hooks/useTypedSelector';
 
 const useStyles = makeStyles(() => ({
   active: { color: '#0078d4', cursor: 'pointer' },
@@ -42,53 +42,60 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ControlBar: React.FC = () => {
-  const { currentDiary, currentDate } = useTypedSelector((state) => state.diary);
+interface Props {
+  showRemove: boolean;
+}
 
-  const [date, setDate] = React.useState(currentDate || getModifiedDate());
+const ControlBar: React.FC<Props> = ({ showRemove }) => {
   const iconStyle = useStyles();
 
+  const { currentDiary, currentDate } = useTypedSelector((state) => state.diary);
   const { clearDiary, changeDate } = useActions();
 
-  const handleChangeInputDate = (newDate: string) => {
+  const [date, setDate] = React.useState(currentDate || getModifiedDate());
+
+  const handleChangeDate = (newDate: string) => {
     setDate(newDate);
     const loading = currentDiary[newDate] ? false : true;
     changeDate(newDate, loading);
   };
 
-  const handleChangeArrowDate = (type: '-' | '+') => {
+  const countNewDate = (type: '-' | '+') => {
     const otherDay = new Date(date);
     otherDay.setDate(type === '-' ? otherDay.getDate() - 1 : otherDay.getDate() + 1);
-    const newDate = getModifiedDate(otherDay);
-    handleChangeInputDate(newDate);
+    return getModifiedDate(otherDay);
   };
 
-  const isCurrentDate = date !== getModifiedDate();
+  const isCurrentDate = React.useMemo(() => {
+    return date !== getModifiedDate();
+  }, [date, getModifiedDate()]);
 
   return (
     <div className={classes.controlBar}>
       <div className={classes.controlLeftSide}>
         <IconLabelContainer text='Previous day'>
-          <ArrowBackIcon className={iconStyle.active} data-test='arrow-back' onClick={() => handleChangeArrowDate('-')} />
+          <ArrowBackIcon className={iconStyle.active} data-test='arrow-back' onClick={() => handleChangeDate(countNewDate('-'))} />
         </IconLabelContainer>
         <TextField
           inputProps={{ max: getModifiedDate() }}
           label='Date'
           type='date'
           value={date}
-          onChange={(e) => handleChangeInputDate(e.target.value)}
+          onChange={(e) => handleChangeDate(e.target.value)}
           className={iconStyle.dateInput}
         />
       </div>
       <div className={classes.controlRightSide}>
-        <IconLabelContainer text='Remove content'>
-          <DeleteForeverIcon className={iconStyle.remove} onClick={clearDiary} data-test='remove-content-button' />
-        </IconLabelContainer>
+        {showRemove && (
+          <IconLabelContainer text='Remove content'>
+            <DeleteForeverIcon className={iconStyle.remove} onClick={clearDiary} data-test='remove-content-button' />
+          </IconLabelContainer>
+        )}
         <IconLabelContainer text='Next day'>
           <ArrowForwardIcon
             data-test={`arrow-forward-${isCurrentDate ? 'active' : 'disabled'}`}
             onClick={() => {
-              isCurrentDate && handleChangeArrowDate('+');
+              isCurrentDate && handleChangeDate(countNewDate('+'));
             }}
             className={classnames(isCurrentDate ? iconStyle.active : iconStyle.disabled)}
           />

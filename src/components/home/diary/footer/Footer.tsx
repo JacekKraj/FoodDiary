@@ -6,6 +6,7 @@ import Button from './../../../UI/button/Button';
 import NewReleasesOutlinedIcon from '@material-ui/icons/NewReleasesOutlined';
 import { useActions } from '../../../../redux/hooks/useActions';
 import { useTypedSelector } from '../../../../redux/hooks/useTypedSelector';
+import FooterWrapper from '../../../wrappers/footerWrapper/FooterWrapper';
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -26,7 +27,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <div className={classes.footer}>
+    <FooterWrapper>
       <div className={classes.reminderContainer}>
         <NewReleasesOutlinedIcon className={iconStyle.icon} />
         <p className={classes.reminder}>
@@ -36,7 +37,7 @@ const Footer: React.FC = () => {
       <Button dataTest='save-button' className={classes.buttonAdditional} onClick={handleSave}>
         Save Changes
       </Button>
-    </div>
+    </FooterWrapper>
   );
 };
 

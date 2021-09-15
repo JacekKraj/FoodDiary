@@ -1,5 +1,5 @@
 import { ActionTypes } from '../actionTypes/actionTypes';
-import { Day, SkinConditionValues } from './../reducers/diaryReducer';
+import { Day, SkinConditionValues, DiaryDay } from './../reducers/diaryReducer';
 
 interface ChangeDate {
   type: ActionTypes.CHANGE_DATE;
@@ -39,4 +39,20 @@ interface SetDiary {
   date: string;
 }
 
-export type Action = AddProduct | ChangeDate | RemoveProduct | SetSkin | SaveDiary | ClearDiary | SetDiary;
+interface ChangeDate {
+  type: ActionTypes.CHANGE_DATE;
+  date: string;
+  loading: boolean;
+}
+
+interface SetFullDiary {
+  type: ActionTypes.SET_FULL_DIARY;
+  fullDiary: DiaryDay;
+}
+
+interface SetAnalysisLoading {
+  type: ActionTypes.SET_ANALYSIS_LOADING;
+  loading: boolean;
+}
+
+export type Action = AddProduct | ChangeDate | RemoveProduct | SetSkin | SaveDiary | ClearDiary | SetDiary | SetFullDiary | SetAnalysisLoading;

@@ -1,0 +1,9 @@
+.diarySummary {
+  margin-top: 2em;
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .diarySummary {
+    margin-top: 3em;
+  }
+}

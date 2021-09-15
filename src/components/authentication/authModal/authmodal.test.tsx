@@ -1,4 +1,4 @@
-import { mount, ReactWrapper } from 'enzyme';
+import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 
 import AuthModal from './AuthModal';
@@ -6,7 +6,6 @@ import { storeFactory, findByTestAttr } from '../../../utils/tests/testHelperFun
 import SignUp from './../signUp/SignUp';
 import SignIn from './../signIn/SignIn';
 import * as actionCreators from './../../../redux/actionCreators/index';
-import React from 'react';
 
 interface InitialState {
   auth?: {
