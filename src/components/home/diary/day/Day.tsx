@@ -9,6 +9,10 @@ import ModuleMainContentWrapper from './../../../wrappers/moduleMainContentWrapp
 const Day: React.FC = () => {
   const { diaryLoading } = useTypedSelector((state) => state.diary);
 
+  // React.useEffect(() => {
+  //   console.log(diaryLoading);
+  // }, [diaryLoading]);
+
   return (
     <ModuleMainContentWrapper>
       {diaryLoading ? (
