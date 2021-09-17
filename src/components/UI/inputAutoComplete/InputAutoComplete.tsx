@@ -18,10 +18,20 @@ const InputAutoComplete: React.FC<Props> = ({ value, pickItem, focus }) => {
   const trimmedValue = value.trim();
 
   React.useEffect(() => {
-    axios.get<string[]>(`https://api.edamam.com/auto-complete?q=${value}`).then((response) => {
-      const foundUserAutocomplitions = filterUserAutocomplitions(trimmedValue, userAutocomplitions);
-      setFoundItems([...foundUserAutocomplitions, ...response.data].slice(0, 4));
-    });
+    const axiosRequest = axios.CancelToken.source();
+    axios
+      .get<string[]>(`https://api.edamam.com/auto-complete?q=${value}`, {
+        cancelToken: axiosRequest.token,
+      })
+      .then((response) => {
+        const foundUserAutocomplitions = filterUserAutocomplitions(trimmedValue, userAutocomplitions);
+        setFoundItems([...foundUserAutocomplitions, ...response.data].slice(0, 4));
+      })
+      .catch(() => {});
+
+    return () => {
+      axiosRequest.cancel();
+    };
   }, [trimmedValue]);
 
   return (

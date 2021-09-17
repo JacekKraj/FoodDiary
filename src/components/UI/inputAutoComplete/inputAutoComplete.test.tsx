@@ -1,8 +1,9 @@
 import { mount } from 'enzyme';
 import moxios from 'moxios';
 import axios from 'axios';
+import { Provider } from 'react-redux';
 
-import { findByTestAttr } from '../../../utils/tests/testHelperFunction';
+import { findByTestAttr, storeFactory } from '../../../utils/tests/testHelperFunction';
 import InputAutoComplete from './InputAutoComplete';
 
 interface DefaultProps {
@@ -11,8 +12,15 @@ interface DefaultProps {
   focus: boolean;
 }
 
+let store: any;
+
 const setup = (defaultProps: DefaultProps) => {
-  return mount(<InputAutoComplete {...defaultProps} />);
+  store = storeFactory({ diary: { userAutocomplitions: [{ product: 'acai', timesUsed: 1 }] } });
+  return mount(
+    <Provider store={store}>
+      <InputAutoComplete {...defaultProps} />
+    </Provider>
+  );
 };
 
 beforeEach(() => {
@@ -23,8 +31,8 @@ afterEach(() => {
   moxios.uninstall();
 });
 
-it('shows autocomplete', (done) => {
-  const wrapper = setup({ pickItem: (_: string) => {}, focus: true, value: 'app' });
+it('shows autocomplete, and displays item from user autocomplitions', (done) => {
+  const wrapper = setup({ pickItem: (_: string) => {}, focus: true, value: 'a' });
   moxios.wait(() => {
     let request = moxios.requests.mostRecent();
     request
@@ -35,7 +43,8 @@ it('shows autocomplete', (done) => {
       .then(() => {
         wrapper.update();
         const autoCompleteItem = findByTestAttr(wrapper, 'component-auto-complete-item');
-        expect(autoCompleteItem.text()).toEqual('apple');
+        expect(autoCompleteItem.first().text()).toEqual('acai');
+        expect(autoCompleteItem.last().text()).toEqual('apple');
         wrapper.unmount();
         done();
       });

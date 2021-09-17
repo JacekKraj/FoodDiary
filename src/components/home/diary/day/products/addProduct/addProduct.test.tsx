@@ -4,8 +4,9 @@ import { Provider } from 'react-redux';
 import { findByTestAttr, storeFactory } from '../../../../../../utils/tests/testHelperFunction';
 import AddProduct from './AddProduct';
 
+let store: any;
 const setup = () => {
-  const store = storeFactory();
+  store = storeFactory();
   return mount(
     <Provider store={store}>
       <AddProduct />
@@ -31,6 +32,14 @@ describe('<AddProduct />', () => {
       addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
       addProductBrowser.simulate('change', { target: { value: 'app' } });
       clearBrowserIcon = findByTestAttr(wrapper, 'clear-browser-icon-visible');
+    });
+
+    describe('form submitting', () => {
+      it('adds product to user autocomplitions', () => {
+        const form = findByTestAttr(wrapper, 'component-add-product');
+        form.simulate('submit');
+        expect(store.getState().diary.userAutocomplitions[0].product).toEqual('app');
+      });
     });
 
     describe('clear browser icon', () => {
