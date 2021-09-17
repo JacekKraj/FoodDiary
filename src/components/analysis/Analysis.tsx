@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Nav from '../pageElements/nav/Nav';
-import Modules from './modules/Modules';
 import { useActions } from '../../redux/hooks/useActions';
 import { useTypedSelector } from '../../redux/hooks/useTypedSelector';
+import Modules from './modules/Modules';
 
 const Analysys: React.FC = () => {
   const { getFullDiary } = useActions();

@@ -19,11 +19,11 @@ const Footer: React.FC = () => {
   const iconStyle = useStyles();
 
   const { saveDiary } = useActions();
-  const { currentDiary, downloadedDiary } = useTypedSelector((state) => state.diary);
+  const { currentDiary, downloadedDiary, userAutocomplitions } = useTypedSelector((state) => state.diary);
   const { userEmail } = useTypedSelector((state) => state.auth);
 
   const handleSave = () => {
-    saveDiary(userEmail, currentDiary, downloadedDiary);
+    saveDiary(userEmail, currentDiary, downloadedDiary, userAutocomplitions);
   };
 
   return (

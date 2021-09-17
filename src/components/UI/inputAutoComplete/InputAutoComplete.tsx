@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import classes from './inputAutoComplete.module.scss';
 import AutoCompleteItem from './autoCompletItem/AutoCompleteItem';
+import { useTypedSelector } from './../../../redux/hooks/useTypedSelector';
+import { filterUserAutocomplitions } from './../../../utils/helperFunctions/filterUserAutocomplitions';
 
 interface Props {
   value: string;
@@ -12,10 +14,13 @@ interface Props {
 
 const InputAutoComplete: React.FC<Props> = ({ value, pickItem, focus }) => {
   const [foundItems, setFoundItems] = React.useState<string[]>([]);
+  const { userAutocomplitions } = useTypedSelector((state) => state.diary);
   const trimmedValue = value.trim();
+
   React.useEffect(() => {
     axios.get<string[]>(`https://api.edamam.com/auto-complete?q=${value}`).then((response) => {
-      setFoundItems(response.data.slice(0, 4));
+      const foundUserAutocomplitions = filterUserAutocomplitions(trimmedValue, userAutocomplitions);
+      setFoundItems([...foundUserAutocomplitions, ...response.data].slice(0, 4));
     });
   }, [trimmedValue]);
 
