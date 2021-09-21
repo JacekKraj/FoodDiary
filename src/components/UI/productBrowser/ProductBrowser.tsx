@@ -48,8 +48,8 @@ const ProductBrowser: React.FC<Props> = (props) => {
 
   useOnClickOutside(browserContainerRef, handleOutsideClick);
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+  const handleOnChange = (value: string) => {
+    setValue(value);
     if (setTyped) {
       setTyped(true);
     }
@@ -72,13 +72,13 @@ const ProductBrowser: React.FC<Props> = (props) => {
         ref={inputRef}
         placeholder='Search for product'
         value={value}
-        onChange={handleOnChange}
+        onChange={(e) => handleOnChange(e.target.value)}
         className={classes.inputAdditional}
       />
       <CancelIcon
         data-test={`clear-browser-icon-${value && 'visible'}`}
         className={classnames(iconStyle.icon, iconStyle.clear, value && iconStyle.clearVisible)}
-        onClick={() => setValue('')}
+        onClick={() => handleOnChange('')}
       />
       {children}
     </div>

@@ -1,4 +1,4 @@
-import React, { KeyboardEvent } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 import classes from './inputAutoComplete.module.scss';
@@ -21,7 +21,6 @@ const InputAutoComplete: React.FC<Props> = (props) => {
   const { value, pickItem, focus, setValue, typed, setTyped, activeSuggestion, setActiveSuggestion } = props;
   const [foundItems, setFoundItems] = React.useState<string[]>([]);
   const { userAutocomplitions } = useTypedSelector((state) => state.diary);
-  const trimmedValue = value.trim();
 
   React.useEffect(() => {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
@@ -61,15 +60,19 @@ const InputAutoComplete: React.FC<Props> = (props) => {
           cancelToken: axiosRequest.token,
         })
         .then((response) => {
-          const foundUserAutocomplitions = filterUserAutocomplitions(trimmedValue, userAutocomplitions);
-          setFoundItems([...foundUserAutocomplitions, ...response.data].slice(0, 4));
+          const newFoundItems = [...filterUserAutocomplitions(value, userAutocomplitions)];
+          // check if suggestions from API aren't already included in user autocomplitions
+          response.data.forEach((el) => {
+            !newFoundItems.includes(el) && newFoundItems.push(el);
+          });
+          setFoundItems(newFoundItems.slice(0, 4));
         })
         .catch(() => {});
     }
     return () => {
       axiosRequest.cancel();
     };
-  }, [trimmedValue, typed]);
+  }, [value, typed]);
 
   return (
     <div>

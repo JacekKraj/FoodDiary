@@ -20,6 +20,8 @@ const AddProduct: React.FC = () => {
   const pickItemFromAutoComplete = (value: string) => {
     addProduct(value);
     setProductName('');
+    setTyped(true);
+    setActiveSuggestion(0);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -51,7 +53,7 @@ const AddProduct: React.FC = () => {
       >
         <InputAutoComplete
           focus={inputFocus}
-          value={productName}
+          value={productName.replace(/\s+/g, ' ').trim()}
           setValue={setProductName}
           pickItem={pickItemFromAutoComplete}
           typed={typed}
