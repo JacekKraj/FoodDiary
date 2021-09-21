@@ -5,6 +5,7 @@
   cursor: pointer;
 }
 
-.autoCompleteItem:hover {
+.autoCompleteItem:hover,
+.active {
   color: #0078d4;
 }

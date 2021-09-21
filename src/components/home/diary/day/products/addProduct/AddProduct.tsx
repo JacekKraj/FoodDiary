@@ -9,6 +9,8 @@ import ProductBrowser from '../../../../../UI/productBrowser/ProductBrowser';
 const AddProduct: React.FC = () => {
   const [productName, setProductName] = React.useState('');
   const [inputFocus, setInputFocus] = React.useState(false);
+  const [typed, setTyped] = React.useState(false);
+  const [activeSuggestion, setActiveSuggestion] = React.useState(0);
 
   const productBrowserRef = React.useRef<HTMLFormElement>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -24,6 +26,8 @@ const AddProduct: React.FC = () => {
     e.preventDefault();
     const product = productName.replace(/\s+/g, ' ').trim().toLocaleLowerCase();
     if (product) {
+      setActiveSuggestion(0);
+      setTyped(true);
       addProduct(product);
       setProductName('');
       inputRef.current?.focus();
@@ -33,6 +37,7 @@ const AddProduct: React.FC = () => {
   return (
     <form className={classes.addProduct} onSubmit={handleSubmit} ref={productBrowserRef} data-test='component-add-product'>
       <ProductBrowser
+        setTyped={setTyped}
         inputFocus={inputFocus}
         browserContainerRef={productBrowserRef}
         handleOutsideClick={() => {
@@ -42,8 +47,18 @@ const AddProduct: React.FC = () => {
         inputRef={inputRef}
         value={productName}
         setValue={setProductName}
+        setActiveSuggestion={setActiveSuggestion}
       >
-        <InputAutoComplete focus={inputFocus} value={productName} pickItem={pickItemFromAutoComplete} />
+        <InputAutoComplete
+          focus={inputFocus}
+          value={productName}
+          setValue={setProductName}
+          pickItem={pickItemFromAutoComplete}
+          typed={typed}
+          setTyped={setTyped}
+          activeSuggestion={activeSuggestion}
+          setActiveSuggestion={setActiveSuggestion}
+        />
       </ProductBrowser>
       <Button dataTest='submit-button' className={classes.buttonAdditional}>
         Add

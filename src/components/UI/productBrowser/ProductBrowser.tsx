@@ -36,14 +36,27 @@ interface Props {
   value: string;
   handleOutsideClick: () => void;
   setValue: React.Dispatch<React.SetStateAction<string>>;
+  setTyped?: React.Dispatch<React.SetStateAction<boolean>>;
+  setActiveSuggestion?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ProductBrowser: React.FC<Props> = (props) => {
   const iconStyle = useStyles();
 
-  const { inputFocus, setInputFocus, children, inputRef, value, setValue, handleOutsideClick, browserContainerRef } = props;
+  const { inputFocus, setInputFocus, children, inputRef, value, setValue, handleOutsideClick, browserContainerRef, setTyped, setActiveSuggestion } =
+    props;
 
   useOnClickOutside(browserContainerRef, handleOutsideClick);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    if (setTyped) {
+      setTyped(true);
+    }
+    if (setActiveSuggestion) {
+      setActiveSuggestion(0);
+    }
+  };
 
   return (
     <div
@@ -59,7 +72,7 @@ const ProductBrowser: React.FC<Props> = (props) => {
         ref={inputRef}
         placeholder='Search for product'
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={handleOnChange}
         className={classes.inputAdditional}
       />
       <CancelIcon
