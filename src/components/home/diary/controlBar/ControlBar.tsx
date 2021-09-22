@@ -7,11 +7,11 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import classnames from 'classnames';
 
 import classes from './controlBar.module.scss';
-import { theme } from './../../../utils/breakpoints/breakpoints';
-import IconLabelContainer from './../../UI/iconLabelContainer/IconLabelContainer';
-import { useActions } from './../../../redux/hooks/useActions';
-import { getModifiedDate } from '../../../utils/helperFunctions/getModifiedDate';
-import { useTypedSelector } from './../../../redux/hooks/useTypedSelector';
+import { theme } from '../../../../utils/breakpoints/breakpoints';
+import IconLabelContainer from '../../../UI/iconLabelContainer/IconLabelContainer';
+import { useActions } from '../../../../redux/hooks/useActions';
+import { getModifiedDate } from '../../../../utils/helperFunctions/getModifiedDate';
+import { useTypedSelector } from '../../../../redux/hooks/useTypedSelector';
 
 const useStyles = makeStyles(() => ({
   active: { color: '#0078d4', cursor: 'pointer' },
@@ -42,11 +42,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface Props {
-  showRemove: boolean;
-}
-
-const ControlBar: React.FC<Props> = ({ showRemove }) => {
+const ControlBar: React.FC = () => {
   const iconStyle = useStyles();
 
   const { currentDiary, currentDate } = useTypedSelector((state) => state.diary);
@@ -86,11 +82,9 @@ const ControlBar: React.FC<Props> = ({ showRemove }) => {
         />
       </div>
       <div className={classes.controlRightSide}>
-        {showRemove && (
-          <IconLabelContainer text='Remove content'>
-            <DeleteForeverIcon className={iconStyle.remove} onClick={clearDiary} data-test='remove-content-button' />
-          </IconLabelContainer>
-        )}
+        <IconLabelContainer text='Remove content'>
+          <DeleteForeverIcon className={iconStyle.remove} onClick={clearDiary} data-test='remove-content-button' />
+        </IconLabelContainer>
         <IconLabelContainer text='Next day'>
           <ArrowForwardIcon
             data-test={`arrow-forward-${isCurrentDate ? 'active' : 'disabled'}`}

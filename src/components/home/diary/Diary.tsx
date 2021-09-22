@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Day from './day/Day';
-import ControlBarContainer from './controlBarConainer/ControlBarContainer';
+import ControlBar from './controlBar/ControlBar';
 import Footer from './footer/Footer';
 import ModuleWrapper from '../../wrappers/moduleWrapper/ModuleWrapper';
 import PageMainContentWrapper from '../../wrappers/pageMainContentWrapper/PageMainContentWrapper';
@@ -29,7 +29,7 @@ const Diary: React.FC = () => {
   return (
     <PageMainContentWrapper>
       <ModuleWrapper title="Store products and skin's condition">
-        <ControlBarContainer />
+        <ControlBar />
         <Day />
         <Footer />
       </ModuleWrapper>
