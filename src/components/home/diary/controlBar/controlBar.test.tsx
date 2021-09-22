@@ -68,16 +68,3 @@ describe('changes date on clicking arrows', () => {
     expect(store.getState().diary.currentDate).toBe('2020-09-01');
   });
 });
-
-describe('remove content button visibility', () => {
-  it('shows remove content button', () => {
-    const wrapper = createInitialState('2020-08-31', true);
-    const removeContentButton = findByTestAttr(wrapper, 'remove-content-button');
-    expect(removeContentButton.exists()).toBe(true);
-  });
-  it('doesnt show remove content button', () => {
-    const wrapper = createInitialState('2020-08-31', false);
-    const removeContentButton = findByTestAttr(wrapper, 'remove-content-button');
-    expect(removeContentButton.exists()).toBe(false);
-  });
-});
