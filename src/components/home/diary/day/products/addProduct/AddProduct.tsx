@@ -2,13 +2,12 @@ import React from 'react';
 
 import classes from './addProduct.module.scss';
 import Button from '../../../../../UI/button/Button';
-import InputAutoComplete from '../../../../../UI/inputAutoComplete/InputAutoComplete';
 import { useActions } from '../../../../../../redux/hooks/useActions';
 import ProductBrowser from '../../../../../UI/productBrowser/ProductBrowser';
 
 const AddProduct: React.FC = () => {
   const [productName, setProductName] = React.useState('');
-  const [inputFocus, setInputFocus] = React.useState(false);
+
   const [typed, setTyped] = React.useState(false);
   const [activeSuggestion, setActiveSuggestion] = React.useState(0);
 
@@ -17,8 +16,8 @@ const AddProduct: React.FC = () => {
 
   const { addProduct } = useActions();
 
-  const pickItemFromAutoComplete = (value: string) => {
-    addProduct(value);
+  const handleAddProduct = (item: string) => {
+    addProduct(item);
     setProductName('');
     setTyped(true);
     setActiveSuggestion(0);
@@ -28,10 +27,7 @@ const AddProduct: React.FC = () => {
     e.preventDefault();
     const product = productName.replace(/\s+/g, ' ').trim().toLocaleLowerCase();
     if (product) {
-      setActiveSuggestion(0);
-      setTyped(true);
-      addProduct(product);
-      setProductName('');
+      handleAddProduct(product);
       inputRef.current?.focus();
     }
   };
@@ -40,28 +36,15 @@ const AddProduct: React.FC = () => {
     <form className={classes.addProduct} onSubmit={handleSubmit} ref={productBrowserRef} data-test='component-add-product'>
       <ProductBrowser
         setTyped={setTyped}
-        inputFocus={inputFocus}
         browserContainerRef={productBrowserRef}
-        handleOutsideClick={() => {
-          setInputFocus(false);
-        }}
-        setInputFocus={setInputFocus}
         inputRef={inputRef}
         value={productName}
         setValue={setProductName}
+        activeSuggestion={activeSuggestion}
+        typed={typed}
         setActiveSuggestion={setActiveSuggestion}
-      >
-        <InputAutoComplete
-          focus={inputFocus}
-          value={productName.replace(/\s+/g, ' ').trim()}
-          setValue={setProductName}
-          pickItem={pickItemFromAutoComplete}
-          typed={typed}
-          setTyped={setTyped}
-          activeSuggestion={activeSuggestion}
-          setActiveSuggestion={setActiveSuggestion}
-        />
-      </ProductBrowser>
+        pickItem={handleAddProduct}
+      />
       <Button dataTest='submit-button' className={classes.buttonAdditional}>
         Add
       </Button>

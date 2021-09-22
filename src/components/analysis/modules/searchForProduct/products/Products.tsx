@@ -8,24 +8,13 @@ import NoDataInfo from './../../../../UI/noDataInfo/NoDataInfo';
 
 const Products: React.FC = () => {
   const [productName, setProductName] = React.useState('');
-  const [focus, setFocus] = React.useState(false);
   const inputRef = React.useRef(null);
   const browserContainerRef = React.useRef(null);
 
   return (
     <ModuleMainContentWrapper className={classes.moduleMainContentAdditional}>
       <div ref={browserContainerRef}>
-        <ProductBrowser
-          browserContainerRef={browserContainerRef}
-          handleOutsideClick={() => {
-            setFocus(false);
-          }}
-          value={productName}
-          setValue={setProductName}
-          inputFocus={focus}
-          setInputFocus={setFocus}
-          inputRef={inputRef}
-        />
+        <ProductBrowser browserContainerRef={browserContainerRef} value={productName} setValue={setProductName} inputRef={inputRef} />
       </div>
       {!true ? (
         <div className={classes.conclusions}>
