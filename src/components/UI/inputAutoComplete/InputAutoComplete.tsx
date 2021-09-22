@@ -28,16 +28,14 @@ const InputAutoComplete: React.FC<Props> = (props) => {
         let newSuggestionIndex = activeSuggestion;
 
         if (e.key === 'ArrowDown') {
-          newSuggestionIndex += 1;
-          newSuggestionIndex = newSuggestionIndex > foundItems.length ? 1 : newSuggestionIndex;
+          newSuggestionIndex = newSuggestionIndex + 1 > foundItems.length ? 1 : newSuggestionIndex + 1;
           setTyped(false);
           setValue(foundItems[newSuggestionIndex - 1]);
         }
 
         if (e.key === 'ArrowUp') {
           e.preventDefault();
-          newSuggestionIndex -= 1;
-          newSuggestionIndex = newSuggestionIndex === 0 ? (newSuggestionIndex = foundItems.length) : newSuggestionIndex;
+          newSuggestionIndex = newSuggestionIndex - 1 <= 0 ? foundItems.length : newSuggestionIndex - 1;
           setValue(foundItems[newSuggestionIndex - 1]);
           setTyped(false);
         }
