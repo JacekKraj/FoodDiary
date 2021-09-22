@@ -1,9 +1,9 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
 
-import { findByTestAttr, storeFactory } from './../../../utils/tests/testHelperFunction';
+import { findByTestAttr, storeFactory } from '../../../../utils/tests/testHelperFunction';
 import ControlBar from './ControlBar';
-import { getModifiedDate } from '../../../utils/helperFunctions/getModifiedDate';
+import { getModifiedDate } from '../../../../utils/helperFunctions/getModifiedDate';
 
 interface InitialState {
   diary: {
@@ -17,7 +17,7 @@ const setup = (initialState: InitialState, showRemove: boolean) => {
   store = storeFactory(initialState);
   return mount(
     <Provider store={store}>
-      <ControlBar showRemove={showRemove} />
+      <ControlBar />
     </Provider>
   );
 };
