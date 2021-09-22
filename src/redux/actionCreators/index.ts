@@ -10,4 +10,15 @@ export {
   registerFail,
 } from './authentication';
 
-export { getDiary, setDiary, addProduct, removeProduct, saveDiary, clearDiary, setSkin, changeDate, getFullDiary } from './diary';
+export {
+  getDiary,
+  setDiary,
+  addProduct,
+  removeProduct,
+  saveDiary,
+  clearDiary,
+  setSkin,
+  changeDate,
+  getFullDiary,
+  getUserAutocomplitions,
+} from './diary';

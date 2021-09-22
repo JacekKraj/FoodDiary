@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 
 import { fire } from '../../fireConfig';
 import { Action, SkinConditonTypes } from './../actions/diary';
-import { SkinConditionValues, Day, DiaryDay } from '../reducers/diaryReducer';
+import { SkinConditionValues, Day, DiaryDay, UserAutocomplitions } from '../reducers/diaryReducer';
 import { ActionTypes } from './../actionTypes/actionTypes';
 import { modifyString } from '../../utils/helperFunctions/modifyString';
 import { successToast, failToast } from '../../utils/toasts/toasts';
@@ -41,7 +41,7 @@ export const getDiary = (date: string, userEmail: string) => {
     const modifiedEmail = modifyString(userEmail);
     fire
       .database()
-      .ref(`${modifiedEmail}/${date}`)
+      .ref(`${modifiedEmail}/diary/${date}`)
       .get()
       .then((snapshot) => {
         let day: Day | null = snapshot.val();
@@ -69,19 +69,20 @@ const findModifiedDays = (currentDiary: DiaryDay, downloadedDiary: DiaryDay) => 
   return modifiedDays;
 };
 
-export const saveDiary = (userEmail: string, currentDiary: DiaryDay, downloadedDiary: DiaryDay) => {
+export const saveDiary = (userEmail: string, currentDiary: DiaryDay, downloadedDiary: DiaryDay, autocomplitions: UserAutocomplitions[]) => {
   return (dispatch: Dispatch<Action>) => {
     if (JSON.stringify(currentDiary) !== JSON.stringify(downloadedDiary)) {
       const modifiedEmail = modifyString(userEmail);
       const modifiedDays = findModifiedDays(currentDiary, downloadedDiary);
-      Promise.all(
-        modifiedDays.map((el) => {
+      Promise.all([
+        ...modifiedDays.map((el) => {
           return fire
             .database()
-            .ref(`/${modifiedEmail}/${Object.keys(el)[0]}`)
+            .ref(`/${modifiedEmail}/diary/${Object.keys(el)[0]}`)
             .update(Object.values(el)[0]);
-        })
-      )
+        }),
+        fire.database().ref(`/${modifiedEmail}/autocomplitions`).set(autocomplitions),
+      ])
         .then(() => {
           dispatch({ type: ActionTypes.SAVE_DIARY });
           successToast('Your data has been saved.');
@@ -128,7 +129,7 @@ export const getFullDiary = (userEmail: string) => {
     const modifiedEmail = modifyString(userEmail);
     fire
       .database()
-      .ref(`${modifiedEmail}`)
+      .ref(`${modifiedEmail}/diary`)
       .get()
       .then((snapshot) => {
         dispatch(setFullDiary(snapshot.val()));
@@ -137,5 +138,26 @@ export const getFullDiary = (userEmail: string) => {
       .catch(() => {
         dispatch(setAnalysisLoading(false));
       });
+  };
+};
+
+const setUserAutocomplitions = (autocomplitions: UserAutocomplitions[]): Action => {
+  return {
+    type: ActionTypes.SET_USER_AUTOCOMPLITIONS,
+    autocomplitions,
+  };
+};
+
+export const getUserAutocomplitions = (userEmail: string) => {
+  return (dispatch: Dispatch<Action>) => {
+    const modifiedEmail = modifyString(userEmail);
+    fire
+      .database()
+      .ref(`${modifiedEmail}/autocomplitions`)
+      .get()
+      .then((snapshot) => {
+        dispatch(setUserAutocomplitions(snapshot.val()));
+      })
+      .catch(() => {});
   };
 };

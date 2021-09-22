@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { makeStyles } from '@material-ui/core';
+import InputAutoComplete from '../inputAutoComplete/InputAutoComplete';
 
 import classes from './productBrowser.module.scss';
 import { theme } from '../../../utils/breakpoints/breakpoints';
@@ -28,22 +29,33 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface Props {
-  inputFocus: boolean;
-  setInputFocus: React.Dispatch<React.SetStateAction<boolean>>;
-  children?: React.ReactNode;
   inputRef: React.RefObject<HTMLInputElement>;
   browserContainerRef: React.RefObject<HTMLElement>;
   value: string;
-  handleOutsideClick: () => void;
   setValue: React.Dispatch<React.SetStateAction<string>>;
+  setTyped?: React.Dispatch<React.SetStateAction<boolean>>;
+  setActiveSuggestion?: React.Dispatch<React.SetStateAction<number>>;
+  activeSuggestion?: number;
+  typed?: boolean;
+  pickItem?: (item: string) => void;
 }
 
 const ProductBrowser: React.FC<Props> = (props) => {
+  const [inputFocus, setInputFocus] = React.useState(false);
+
   const iconStyle = useStyles();
 
-  const { inputFocus, setInputFocus, children, inputRef, value, setValue, handleOutsideClick, browserContainerRef } = props;
+  const { inputRef, value, setValue, browserContainerRef, setTyped, setActiveSuggestion, activeSuggestion, typed, pickItem } = props;
 
-  useOnClickOutside(browserContainerRef, handleOutsideClick);
+  useOnClickOutside(browserContainerRef, () => setInputFocus(false));
+
+  const handleOnChange = (value: string) => {
+    setValue(value);
+    if (setTyped && setActiveSuggestion) {
+      setTyped(true);
+      setActiveSuggestion(0);
+    }
+  };
 
   return (
     <div
@@ -59,15 +71,26 @@ const ProductBrowser: React.FC<Props> = (props) => {
         ref={inputRef}
         placeholder='Search for product'
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => handleOnChange(e.target.value)}
         className={classes.inputAdditional}
       />
       <CancelIcon
         data-test={`clear-browser-icon-${value && 'visible'}`}
         className={classnames(iconStyle.icon, iconStyle.clear, value && iconStyle.clearVisible)}
-        onClick={() => setValue('')}
+        onClick={() => handleOnChange('')}
       />
-      {children}
+      {setTyped && setActiveSuggestion && activeSuggestion !== undefined && typed !== undefined && pickItem && (
+        <InputAutoComplete
+          focus={inputFocus}
+          value={value.replace(/\s+/g, ' ').trim()}
+          setValue={setValue}
+          pickItem={pickItem}
+          typed={typed}
+          setTyped={setTyped}
+          activeSuggestion={activeSuggestion}
+          setActiveSuggestion={setActiveSuggestion}
+        />
+      )}
     </div>
   );
 };
