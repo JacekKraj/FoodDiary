@@ -12,8 +12,9 @@ import classes from './app.module.scss';
 import Spinner from './components/UI/spinner/Spinner';
 
 const App = () => {
-  const { isAuthenticated } = useTypedSelector((state) => state.auth);
-  const { signOut, authenticationEnd } = useActions();
+  const { isAuthenticated, userEmail } = useTypedSelector((state) => state.auth);
+
+  const { signOut, authenticationEnd, getUserAutocomplitions } = useActions();
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -27,6 +28,10 @@ const App = () => {
       setLoading(false);
     });
   }, []);
+
+  React.useEffect(() => {
+    getUserAutocomplitions(userEmail);
+  }, [userEmail]);
 
   const Analysis = React.lazy(() => {
     return import('./components/analysis/Analysis');

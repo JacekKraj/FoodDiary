@@ -9,22 +9,16 @@ import { useActions } from '../../../redux/hooks/useActions';
 import { useTypedSelector } from './../../../redux/hooks/useTypedSelector';
 
 const Diary: React.FC = () => {
-  const { getDiary, getUserAutocomplitions } = useActions();
+  const { getDiary } = useActions();
 
   const { userEmail } = useTypedSelector((state) => state.auth);
-  const { currentDate, downloadedDiary, userAutocomplitions } = useTypedSelector((state) => state.diary);
+  const { currentDate, downloadedDiary } = useTypedSelector((state) => state.diary);
 
   React.useEffect(() => {
     if (!downloadedDiary[currentDate]) {
       getDiary(currentDate, userEmail);
     }
   }, [currentDate, userEmail]);
-
-  React.useEffect(() => {
-    if (!userAutocomplitions.length) {
-      getUserAutocomplitions(userEmail);
-    }
-  }, []);
 
   return (
     <PageMainContentWrapper>

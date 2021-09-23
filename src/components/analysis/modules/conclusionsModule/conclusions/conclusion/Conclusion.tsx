@@ -20,7 +20,9 @@ const Conclusion: React.FC<Props> = (props) => {
   const { timesEaten, improvement, deterioration, probability } = skinCondition;
   return (
     <div className={classnames(classes.conclusion, header && classes.header, classes[type])}>
-      <p className={classes.productName}>{productName}</p>
+      <p className={classes.productName} data-test='conclusion-product-name'>
+        {productName}
+      </p>
       <ul className={classes.skinCondition}>
         <li>{timesEaten}</li>
         <li>{deterioration}</li>
