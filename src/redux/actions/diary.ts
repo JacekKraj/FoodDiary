@@ -1,5 +1,5 @@
 import { ActionTypes } from '../actionTypes/actionTypes';
-import { Day, SkinConditionValues, DiaryDay, UserAutocomplitions } from './../reducers/diaryReducer';
+import { Day, SkinConditionValues, DiaryDay, UserAutocomplition } from './../reducers/diaryReducer';
 
 interface ChangeDate {
   type: ActionTypes.CHANGE_DATE;
@@ -57,7 +57,7 @@ interface SetAnalysisLoading {
 
 interface SetUserAutocomplitions {
   type: ActionTypes.SET_USER_AUTOCOMPLITIONS;
-  autocomplitions: UserAutocomplitions[];
+  autocomplitions: UserAutocomplition[];
 }
 
 export type Action =

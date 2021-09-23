@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 
 import { fire } from '../../fireConfig';
 import { Action, SkinConditonTypes } from './../actions/diary';
-import { SkinConditionValues, Day, DiaryDay, UserAutocomplitions } from '../reducers/diaryReducer';
+import { SkinConditionValues, Day, DiaryDay, UserAutocomplition } from '../reducers/diaryReducer';
 import { ActionTypes } from './../actionTypes/actionTypes';
 import { modifyString } from '../../utils/helperFunctions/modifyString';
 import { successToast, failToast } from '../../utils/toasts/toasts';
@@ -69,7 +69,7 @@ const findModifiedDays = (currentDiary: DiaryDay, downloadedDiary: DiaryDay) => 
   return modifiedDays;
 };
 
-export const saveDiary = (userEmail: string, currentDiary: DiaryDay, downloadedDiary: DiaryDay, autocomplitions: UserAutocomplitions[]) => {
+export const saveDiary = (userEmail: string, currentDiary: DiaryDay, downloadedDiary: DiaryDay, autocomplitions: UserAutocomplition[]) => {
   return (dispatch: Dispatch<Action>) => {
     if (JSON.stringify(currentDiary) !== JSON.stringify(downloadedDiary)) {
       const modifiedEmail = modifyString(userEmail);
@@ -141,7 +141,7 @@ export const getFullDiary = (userEmail: string) => {
   };
 };
 
-const setUserAutocomplitions = (autocomplitions: UserAutocomplitions[]): Action => {
+const setUserAutocomplitions = (autocomplitions: UserAutocomplition[]): Action => {
   return {
     type: ActionTypes.SET_USER_AUTOCOMPLITIONS,
     autocomplitions,

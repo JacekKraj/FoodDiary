@@ -43,7 +43,7 @@ const customDay = {
   comparedSkinCondition: SkinConditionValues.medium,
 };
 
-export interface UserAutocomplitions {
+export interface UserAutocomplition {
   product: string;
   timesUsed: number;
 }
@@ -59,7 +59,7 @@ interface InitialState {
   // safe products contains also products with probability higher than 50% but which were eaten to little times to find the resultsa reliable
   safeProducts: ModifiedAnalyzedProduct[];
   dangerousProducts: ModifiedAnalyzedProduct[];
-  userAutocomplitions: UserAutocomplitions[];
+  userAutocomplitions: UserAutocomplition[];
 }
 
 const initialState: InitialState = {

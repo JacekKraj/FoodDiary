@@ -1,6 +1,6 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
-import { ModifiedAnalyzedProduct, UserAutocomplitions } from '../../../../../redux/reducers/diaryReducer';
+import { ModifiedAnalyzedProduct, UserAutocomplition } from '../../../../../redux/reducers/diaryReducer';
 
 import Products from './Products';
 import { findByTestAttr, storeFactory } from '../../../../../utils/tests/testHelperFunction';
@@ -9,7 +9,7 @@ interface InitialState {
   diary: {
     dangerousProducts: ModifiedAnalyzedProduct[];
     safeProducts: ModifiedAnalyzedProduct[];
-    userAutocomplitions: UserAutocomplitions[];
+    userAutocomplitions: UserAutocomplition[];
   };
 }
 

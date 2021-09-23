@@ -6,13 +6,13 @@ import axios from 'axios';
 import Products from './Products';
 import { findByTestAttr, storeFactory } from '../../../../../utils/tests/testHelperFunction';
 import { getModifiedDate } from './../../../../../utils/helperFunctions/getModifiedDate';
-import { UserAutocomplitions } from './../../../../../redux/reducers/diaryReducer';
+import { UserAutocomplition } from './../../../../../redux/reducers/diaryReducer';
 
 interface InitialState {
   diary: {
     currentDate: string;
     currentDiary: {};
-    userAutocomplitions?: UserAutocomplitions[];
+    userAutocomplitions?: UserAutocomplition[];
   };
 }
 let store: any;
