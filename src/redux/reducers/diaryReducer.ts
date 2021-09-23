@@ -218,7 +218,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
         ...state,
         analysisLoading: action.loading,
       };
-    case ActionTypes.SET_FULL_DIARY:
+    case ActionTypes.ANALYZE_DIARY:
       const sortedFullDiary = sortFullDiary(action.fullDiary);
       const analyzedProducts = analyzeProducts(sortedFullDiary);
       const { dangerousProducts, safeProducts } = modifyAnalyzedProducts(analyzedProducts);

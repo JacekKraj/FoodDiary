@@ -45,8 +45,8 @@ interface ChangeDate {
   loading: boolean;
 }
 
-interface SetFullDiary {
-  type: ActionTypes.SET_FULL_DIARY;
+interface AnalyzeDiary {
+  type: ActionTypes.ANALYZE_DIARY;
   fullDiary: DiaryDay;
 }
 
@@ -69,5 +69,5 @@ export type Action =
   | SaveDiary
   | ClearDiary
   | SetDiary
-  | SetFullDiary
+  | AnalyzeDiary
   | SetAnalysisLoading;

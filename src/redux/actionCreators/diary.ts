@@ -116,9 +116,9 @@ export const changeDate = (date: string, loading: boolean): Action => {
   };
 };
 
-const setFullDiary = (fullDiary: DiaryDay): Action => {
+const analyzeDiary = (fullDiary: DiaryDay): Action => {
   return {
-    type: ActionTypes.SET_FULL_DIARY,
+    type: ActionTypes.ANALYZE_DIARY,
     fullDiary: fullDiary,
   };
 };
@@ -132,7 +132,7 @@ export const getFullDiary = (userEmail: string) => {
       .ref(`${modifiedEmail}/diary`)
       .get()
       .then((snapshot) => {
-        dispatch(setFullDiary(snapshot.val()));
+        dispatch(analyzeDiary(snapshot.val()));
         dispatch(setAnalysisLoading(false));
       })
       .catch(() => {
