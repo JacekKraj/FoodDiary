@@ -82,7 +82,7 @@ const ProductBrowser: React.FC<Props> = (props) => {
       {setTyped && setActiveSuggestion && activeSuggestion !== undefined && typed !== undefined && pickItem && (
         <InputAutoComplete
           focus={inputFocus}
-          value={value.replace(/\s+/g, ' ').trim()}
+          value={value}
           setValue={setValue}
           pickItem={pickItem}
           typed={typed}

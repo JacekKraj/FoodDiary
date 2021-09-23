@@ -61,11 +61,9 @@ export const modifyAnalyzedProducts = (analyzedProducts: AnalyzedProducts) => {
     let type = 'normal';
     if (+probability >= 85) {
       type = 'red';
-    }
-    if (+probability >= 70) {
+    } else if (+probability >= 70) {
       type = 'orange';
-    }
-    if (+probability > 50) {
+    } else if (+probability > 50) {
       type = 'yellow';
     }
 

@@ -10,7 +10,7 @@ import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
 const Conclusions: React.FC = () => {
   const { analysisLoading, dangerousProducts } = useTypedSelector((state) => state.diary);
 
-  const noDataInfo = (
+  const noConclusionsInfo = (
     <NoDataInfo>
       We couldn't find any products that we are almost sure to have a bad effect on your skin. Please try to provide us with more data. We need each
       product to be added at least 5 times to be considered as dengerous.
@@ -26,18 +26,12 @@ const Conclusions: React.FC = () => {
         skinCondition={{ timesEaten: 'TE', probability: 'P[%]', improvement: 'I', deterioration: 'D' }}
       />
       {dangerousProducts.map((el) => {
-        return (
-          <Conclusion
-            key={el.product}
-            productName={el.product}
-            type={el.type}
-            skinCondition={{ timesEaten: el.timesEaten, probability: el.probability, improvement: el.improvement, deterioration: el.deterioration }}
-          />
-        );
+        const { product, timesEaten, type, probability, improvement, deterioration } = el;
+        return <Conclusion key={product} productName={product} type={type} skinCondition={{ timesEaten, probability, improvement, deterioration }} />;
       })}
     </div>
   ) : (
-    noDataInfo
+    noConclusionsInfo
   );
   return (
     <ModuleMainContentWrapper className={classes.moduleMainContentAdditional}>
