@@ -11,7 +11,7 @@ const Conclusions: React.FC = () => {
   const { analysisLoading, dangerousProducts } = useTypedSelector((state) => state.diary);
 
   const noConclusionsInfo = (
-    <NoDataInfo>
+    <NoDataInfo className={classes.noDataInfoAdditional}>
       We couldn't find any products that we are almost sure to have a bad effect on your skin. Please try to provide us with more data. We need each
       product to be added at least 5 times to be considered as dengerous.
     </NoDataInfo>
