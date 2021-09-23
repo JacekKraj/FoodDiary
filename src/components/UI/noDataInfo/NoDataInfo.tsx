@@ -8,7 +8,7 @@ interface Props {
 
 const NoDataInfo: React.FC<Props> = ({ children }) => {
   return (
-    <p data-test='no-products-info' className={classes.noProductsInfo}>
+    <p data-test='no-data-info' className={classes.noProductsInfo}>
       {children}
     </p>
   );
