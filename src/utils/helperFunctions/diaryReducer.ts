@@ -25,26 +25,27 @@ export const sortFullDiary = (fullDiary: DiaryDay) => {
 export const analyzeProducts = (sortedData: Day[]) => {
   let analyzedProducts: AnalyzedProducts = {};
   sortedData.forEach((el) => {
-    let deterioration = 0;
-    let improvement = 0;
+    let deteriorated = 0;
+    let improved = 0;
+
     if (el.comparedSkinCondition === SkinConditionValues.lower || el.comparedSkinCondition === SkinConditionValues.low) {
-      deterioration = 1;
+      deteriorated = 1;
     } else if (el.comparedSkinCondition === SkinConditionValues.higher || el.comparedSkinCondition === SkinConditionValues.high) {
-      improvement = 1;
+      improved = 1;
     } else {
       if (el.currentSkinCondition === SkinConditionValues.higher || el.currentSkinCondition === SkinConditionValues.high) {
-        improvement = 1;
+        improved = 1;
       } else {
-        deterioration = 1;
+        deteriorated = 1;
       }
     }
 
     el.products.forEach((product) => {
-      const previousProductState = analyzedProducts[product] || { timesEaten: 0, deterioration: 0, improvement: 0 };
+      const { timesEaten, deterioration, improvement } = analyzedProducts[product] || { timesEaten: 0, deterioration: 0, improvement: 0 };
       analyzedProducts[product] = {
-        timesEaten: (+previousProductState.timesEaten + 1).toString(),
-        deterioration: (+previousProductState.deterioration + deterioration).toString(),
-        improvement: (+previousProductState.improvement + improvement).toString(),
+        timesEaten: (+timesEaten + 1).toString(),
+        deterioration: (+deterioration + deteriorated).toString(),
+        improvement: (+improvement + improved).toString(),
       };
     });
   });
@@ -60,9 +61,11 @@ export const modifyAnalyzedProducts = (analyzedProducts: AnalyzedProducts) => {
     let type = 'normal';
     if (+probability >= 85) {
       type = 'red';
-    } else if (+probability >= 70) {
+    }
+    if (+probability >= 70) {
       type = 'orange';
-    } else if (+probability >= 50) {
+    }
+    if (+probability > 50) {
       type = 'yellow';
     }
 
@@ -72,14 +75,9 @@ export const modifyAnalyzedProducts = (analyzedProducts: AnalyzedProducts) => {
       type,
       product,
     };
-
-    let products = safeProducts;
     // if product has more than 50% of probability it's considered as dangerous
     // if product was eaten less than 5 times it must be considered as safe, because it's to little data to find results reliable
-    if (+probability >= 50 && +modifiedAnalyzedProduct.timesEaten >= 5) {
-      products = dangerousProducts;
-    }
-
+    let products = +probability > 50 && +modifiedAnalyzedProduct.timesEaten >= 5 ? dangerousProducts : safeProducts;
     products.push(modifiedAnalyzedProduct);
   }
   // sortProducts ranks products in order of probability (from low to high)
