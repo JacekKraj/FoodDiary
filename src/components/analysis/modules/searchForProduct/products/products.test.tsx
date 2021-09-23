@@ -48,7 +48,7 @@ beforeEach(() => {
 });
 
 it('shows no products info initially', () => {
-  const noProductsInfo = findByTestAttr(wrapper, 'no-products-info');
+  const noProductsInfo = findByTestAttr(wrapper, 'no-data-info');
   expect(noProductsInfo.exists()).toBe(true);
 });
 
@@ -63,6 +63,6 @@ it('displays apropriate product on typing in product browser', () => {
 it('displays no products info when product browser value doesnt match any user autocomplition', () => {
   const addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
   addProductBrowser.simulate('change', { target: { value: 'c' } });
-  const noProductsInfo = findByTestAttr(wrapper, 'no-products-info');
+  const noProductsInfo = findByTestAttr(wrapper, 'no-data-info');
   expect(noProductsInfo.exists()).toBe(true);
 });

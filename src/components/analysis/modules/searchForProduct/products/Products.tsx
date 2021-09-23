@@ -23,9 +23,7 @@ const Products: React.FC = () => {
   }, [productName, dangerousProducts, safeProducts, userAutocomplitions]);
 
   const noProductsInfo = (
-    <div className={classes.noDataInfoContainer}>
-      <NoDataInfo>Serch for product that you have already added into our database.</NoDataInfo>
-    </div>
+    <NoDataInfo className={classes.noDataInfoAdditional}>Search for product that you have already added into our database.</NoDataInfo>
   );
 
   return (

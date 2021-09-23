@@ -29,7 +29,7 @@ describe('displaying products', () => {
   describe('no products added', () => {
     it('displays no products info', () => {
       const wrapper = setup({ diary: { currentDate: getModifiedDate(), currentDiary: { [getModifiedDate()]: { products: [] } } } });
-      const noProductsInfo = findByTestAttr(wrapper, 'no-products-info');
+      const noProductsInfo = findByTestAttr(wrapper, 'no-data-info');
       expect(noProductsInfo.text()).toEqual("You haven't added any products yet.");
     });
   });

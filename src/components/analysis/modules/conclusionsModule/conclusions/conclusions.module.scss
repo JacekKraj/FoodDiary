@@ -10,6 +10,10 @@
   overflow: auto;
 }
 
+.noDataInfoAdditional {
+  margin: 0.5em 0;
+}
+
 @media (min-width: 500px) and (orientation: portrait) {
   .moduleMainContentAdditional {
     max-height: 40vh;
