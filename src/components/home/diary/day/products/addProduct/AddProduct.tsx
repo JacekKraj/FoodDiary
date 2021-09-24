@@ -12,7 +12,6 @@ const AddProduct: React.FC = () => {
   const [activeSuggestion, setActiveSuggestion] = React.useState(0);
 
   const productBrowserRef = React.useRef<HTMLFormElement>(null);
-  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const { addProduct } = useActions();
 
@@ -28,7 +27,6 @@ const AddProduct: React.FC = () => {
     const product = productName.replace(/\s+/g, ' ').trim().toLocaleLowerCase();
     if (product) {
       handleAddProduct(product);
-      inputRef.current?.focus();
     }
   };
 
@@ -37,7 +35,6 @@ const AddProduct: React.FC = () => {
       <ProductBrowser
         setTyped={setTyped}
         browserContainerRef={productBrowserRef}
-        inputRef={inputRef}
         value={productName}
         setValue={setProductName}
         activeSuggestion={activeSuggestion}

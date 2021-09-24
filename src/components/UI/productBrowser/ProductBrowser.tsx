@@ -29,7 +29,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement>;
   browserContainerRef: React.RefObject<HTMLElement>;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
@@ -45,7 +44,9 @@ const ProductBrowser: React.FC<Props> = (props) => {
 
   const iconStyle = useStyles();
 
-  const { inputRef, value, setValue, browserContainerRef, setTyped, setActiveSuggestion, activeSuggestion, typed, pickItem } = props;
+  const { value, setValue, browserContainerRef, setTyped, setActiveSuggestion, activeSuggestion, typed, pickItem } = props;
+
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   useOnClickOutside(browserContainerRef, () => setInputFocus(false));
 
@@ -56,6 +57,10 @@ const ProductBrowser: React.FC<Props> = (props) => {
       setActiveSuggestion(0);
     }
   };
+
+  React.useEffect(() => {
+    inputRef.current?.focus();
+  }, [value]);
 
   return (
     <div

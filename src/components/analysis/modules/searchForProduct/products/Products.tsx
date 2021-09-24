@@ -10,7 +10,6 @@ import { filterUserAutocomplitions } from '../../../../../utils/helperFunctions/
 
 const Products: React.FC = () => {
   const [productName, setProductName] = React.useState('');
-  const inputRef = React.useRef(null);
   const browserContainerRef = React.useRef(null);
 
   const { dangerousProducts, safeProducts, userAutocomplitions } = useTypedSelector((state) => state.diary);
@@ -29,7 +28,7 @@ const Products: React.FC = () => {
   return (
     <ModuleMainContentWrapper className={classes.moduleMainContentAdditional}>
       <div ref={browserContainerRef}>
-        <ProductBrowser browserContainerRef={browserContainerRef} value={productName} setValue={setProductName} inputRef={inputRef} />
+        <ProductBrowser browserContainerRef={browserContainerRef} value={productName} setValue={setProductName} />
       </div>
       {filterProducts?.length ? (
         <div className={classes.conclusions}>
