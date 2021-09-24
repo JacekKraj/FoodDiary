@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Diary from './Diary';
 import { findByTestAttr, storeFactory } from '../../../utils/tests/testHelperFunction';
 import { getModifiedDate } from './../../../utils/helperFunctions/getModifiedDate';
-import { UserAutocomplitions } from './../../../redux/reducers/diaryReducer';
+import { UserAutocomplition } from './../../../redux/reducers/diaryReducer';
 
 interface Days {
   [index: string]: { products: string[]; currentSkinCondition: number; comparedSkinCondition: number };
@@ -15,7 +15,7 @@ interface InitialState {
     currentDate: string;
     currentDiary: Days;
     downloadedDiary: Days;
-    userAutocomplitions: UserAutocomplitions[];
+    userAutocomplitions: UserAutocomplition[];
   };
 }
 

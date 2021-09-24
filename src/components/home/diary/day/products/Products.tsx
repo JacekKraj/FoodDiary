@@ -17,7 +17,7 @@ const Products: React.FC = () => {
             return <Product text={el} key={el} />;
           })
         ) : (
-          <NoDataInfo>You haven't added any products yet.</NoDataInfo>
+          <NoDataInfo className={classes.noDataInfoAdditional}>You haven't added any products yet.</NoDataInfo>
         )}
       </div>
     </div>

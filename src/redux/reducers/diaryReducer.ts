@@ -43,7 +43,7 @@ const customDay = {
   comparedSkinCondition: SkinConditionValues.medium,
 };
 
-export interface UserAutocomplitions {
+export interface UserAutocomplition {
   product: string;
   timesUsed: number;
 }
@@ -59,17 +59,13 @@ interface InitialState {
   // safe products contains also products with probability higher than 50% but which were eaten to little times to find the resultsa reliable
   safeProducts: ModifiedAnalyzedProduct[];
   dangerousProducts: ModifiedAnalyzedProduct[];
-  userAutocomplitions: UserAutocomplitions[];
+  userAutocomplitions: UserAutocomplition[];
 }
 
 const initialState: InitialState = {
   diaryLoading: true,
   analysisLoading: true,
-  currentDiary: {
-    [getModifiedDate()]: {
-      ...customDay,
-    },
-  },
+  currentDiary: {},
   currentDate: getModifiedDate(),
   downloadedDiary: {},
   safeProducts: [],
@@ -83,10 +79,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
   let diary: DiaryDay;
   switch (action.type) {
     case ActionTypes.SET_DIARY:
-      diary = { [action.date]: { ...state.currentDiary[action.date] } };
-      if (action.day) {
-        diary = { [action.date]: { ...action.day } };
-      }
+      diary = { [action.date]: action.day || customDay };
       return {
         ...state,
         diaryLoading: false,
@@ -197,13 +190,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
         },
       };
     case ActionTypes.CHANGE_DATE:
-      diary = state.currentDiary[action.date]
-        ? { [action.date]: { ...state.currentDiary[action.date] } }
-        : {
-            [action.date]: {
-              ...customDay,
-            },
-          };
+      diary = { [action.date]: state.currentDiary[action.date] || customDay };
       return {
         ...state,
         diaryLoading: action.loading,
@@ -218,7 +205,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
         ...state,
         analysisLoading: action.loading,
       };
-    case ActionTypes.SET_FULL_DIARY:
+    case ActionTypes.ANALYZE_DIARY:
       const sortedFullDiary = sortFullDiary(action.fullDiary);
       const analyzedProducts = analyzeProducts(sortedFullDiary);
       const { dangerousProducts, safeProducts } = modifyAnalyzedProducts(analyzedProducts);

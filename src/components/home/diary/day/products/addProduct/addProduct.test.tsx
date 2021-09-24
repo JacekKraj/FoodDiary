@@ -3,10 +3,35 @@ import { Provider } from 'react-redux';
 
 import { findByTestAttr, storeFactory } from '../../../../../../utils/tests/testHelperFunction';
 import AddProduct from './AddProduct';
+import { getModifiedDate } from './../../../../../../utils/helperFunctions/getModifiedDate';
+import { DiaryDay, UserAutocomplition } from './../../../../../../redux/reducers/diaryReducer';
+
+interface InitialState {
+  diary: {
+    currentDiary: DiaryDay;
+    currentDate: string;
+    userAutocomplitions: UserAutocomplition[];
+  };
+}
+
+const initialState: InitialState = {
+  diary: {
+    currentDiary: {
+      [getModifiedDate()]: {
+        products: [],
+        currentSkinCondition: 50,
+        comparedSkinCondition: 50,
+      },
+    },
+    currentDate: getModifiedDate(),
+    userAutocomplitions: [],
+  },
+};
 
 let store: any;
+
 const setup = () => {
-  store = storeFactory();
+  store = storeFactory(initialState);
   return mount(
     <Provider store={store}>
       <AddProduct />

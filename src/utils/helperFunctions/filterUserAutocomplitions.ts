@@ -1,6 +1,6 @@
-import { UserAutocomplitions } from '../../redux/reducers/diaryReducer';
+import { UserAutocomplition } from '../../redux/reducers/diaryReducer';
 
-export const filterUserAutocomplitions = (inputValue: string, userAutocomplitions: UserAutocomplitions[]) => {
+export const filterUserAutocomplitions = (inputValue: string, userAutocomplitions: UserAutocomplition[]) => {
   const modifiedValue = inputValue.replace(/\s+/g, ' ').trim();
   const autocomplitionsToFilter = userAutocomplitions.map((el) => el.product);
   let lastingAutocomplitions = autocomplitionsToFilter.filter((autocomplition) => {
