@@ -65,11 +65,7 @@ interface InitialState {
 const initialState: InitialState = {
   diaryLoading: true,
   analysisLoading: true,
-  currentDiary: {
-    [getModifiedDate()]: {
-      ...customDay,
-    },
-  },
+  currentDiary: {},
   currentDate: getModifiedDate(),
   downloadedDiary: {},
   safeProducts: [],
@@ -83,10 +79,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
   let diary: DiaryDay;
   switch (action.type) {
     case ActionTypes.SET_DIARY:
-      diary = { [action.date]: { ...state.currentDiary[action.date] } };
-      if (action.day) {
-        diary = { [action.date]: { ...action.day } };
-      }
+      diary = { [action.date]: action.day || customDay };
       return {
         ...state,
         diaryLoading: false,
@@ -197,13 +190,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
         },
       };
     case ActionTypes.CHANGE_DATE:
-      diary = state.currentDiary[action.date]
-        ? { [action.date]: { ...state.currentDiary[action.date] } }
-        : {
-            [action.date]: {
-              ...customDay,
-            },
-          };
+      diary = { [action.date]: state.currentDiary[action.date] || customDay };
       return {
         ...state,
         diaryLoading: action.loading,
