@@ -1,0 +1,30 @@
+.conclusions {
+  margin-top: 1.25em;
+}
+
+.noDataInfoAdditional {
+  margin: 2em 0 1em;
+}
+
+.moduleMainContentAdditional {
+  max-height: 45vh;
+  overflow: auto;
+}
+
+@media (min-width: 500px) and (orientation: portrait) {
+  .moduleMainContentAdditional {
+    max-height: 40vh;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .moduleMainContentAdditional {
+    max-height: 50vh;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .moduleMainContentAdditional {
+    max-height: 40vh;
+  }
+}

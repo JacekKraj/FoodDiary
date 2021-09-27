@@ -1,0 +1,46 @@
+.navItem {
+  display: block;
+  color: #777;
+  font-weight: 300;
+  font-size: 18px;
+  padding: 0.3em 0em;
+  width: 100%;
+  transition: 0.1s;
+  margin: 0.5em 0;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.navItem:hover,
+.activeClassName {
+  background-color: rgb(240, 240, 240);
+  color: #555;
+  border-radius: 8px;
+  padding: 0.3em 0.75em;
+}
+
+@media (min-width: 400px) and (orientation: portrait) {
+  .navItem {
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  .navItem {
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .navItem {
+    margin: 0;
+    padding: 0 0.75em;
+  }
+
+  .navItem:hover,
+  .activeClassName {
+    padding: 0 0.75em;
+    background-color: transparent;
+    color: #0078d4;
+  }
+}

@@ -1,0 +1,60 @@
+.useInstructionStep {
+  display: flex;
+  margin-bottom: 2em;
+}
+
+.stepNumber {
+  flex-basis: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+.stepDescription {
+  flex-basis: calc(100% - 28px);
+  padding: 0 0.75em;
+}
+
+.stepTitle {
+  font-weight: normal;
+  color: #555;
+  font-size: 26px;
+}
+
+.stepText {
+  font-size: 14px;
+  margin: 0.6em 0;
+  font-weight: 300;
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .useInstructionStep {
+    margin-bottom: 2.2em;
+  }
+  .stepNumber {
+    flex-basis: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+
+  .stepDescription {
+    flex-basis: calc(100% - 32px);
+  }
+
+  .stepTitle {
+    font-size: 30px;
+  }
+
+  .stepText {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1200px) and (orientation: landscape) {
+  .useInstructionStep {
+    margin-bottom: 1.5em;
+  }
+}

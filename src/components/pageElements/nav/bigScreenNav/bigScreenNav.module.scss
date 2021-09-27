@@ -1,0 +1,19 @@
+.bigScreenNav {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 1em 1em;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 0.5em;
+}
+.logoContainer {
+  border-right: 2px solid #777;
+  margin-right: 1.5em;
+}
+
+.logoAdditional {
+  font-size: 24px;
+  padding-right: 1em;
+}

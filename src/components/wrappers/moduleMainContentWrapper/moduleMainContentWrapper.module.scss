@@ -1,0 +1,22 @@
+.moduleMainContentWrapper {
+  background-color: #fefefe;
+  padding: 1em;
+}
+
+@media (min-width: 500px) and (orientation: portrait) {
+  .moduleMainContentWrapper {
+    padding: 1.25em;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .moduleMainContentWrapper {
+    padding: 1.5em;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  .moduleMainContentWrapper {
+    padding: 1.5em 2em;
+  }
+}

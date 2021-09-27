@@ -1,0 +1,22 @@
+.iconLabelContainer {
+  position: relative;
+}
+
+.iconLabel {
+  position: absolute;
+  top: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 12px;
+  padding: 0.4em;
+  border-radius: 5px;
+  z-index: 11;
+}
+
+.iconLabelContainer:hover .iconLabel {
+  display: block;
+}

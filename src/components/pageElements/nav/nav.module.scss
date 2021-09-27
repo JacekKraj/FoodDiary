@@ -1,0 +1,12 @@
+.bigScreenNavContainer {
+  display: none;
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+  .smallScreenNavContainer {
+    display: none;
+  }
+  .bigScreenNavContainer {
+    display: block;
+  }
+}

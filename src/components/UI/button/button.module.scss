@@ -1,0 +1,24 @@
+.button {
+  display: block;
+  color: white;
+  background-color: #0078d4;
+  padding: 0.3em 0;
+  border: 3px solid #0078d4;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+}
+
+.button:hover {
+  background-color: #2493e7;
+}
+
+.buttonLight {
+  background-color: #ddd;
+  color: black;
+  border: 3px solid #ddd;
+}
+
+.buttonLight:hover {
+  background-color: #eee;
+}

@@ -1,0 +1,45 @@
+.title {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+  font-weight: 300;
+  padding: 0 0 1.25em;
+}
+
+.moduleMainContentAdditional {
+  max-height: 45vh;
+  overflow: auto;
+}
+
+.noDataInfoAdditional {
+  margin: 0.5em 0;
+}
+
+@media (min-width: 500px) and (orientation: portrait) {
+  .moduleMainContentAdditional {
+    max-height: 40vh;
+  }
+  .title {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  .moduleMainContentAdditional {
+    max-height: 50vh;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  .title {
+    padding: 0 0 1.5em;
+  }
+}
+@media (min-width: 1000px) and (orientation: landscape) {
+  .moduleMainContentAdditional {
+    max-height: 40vh;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+}
