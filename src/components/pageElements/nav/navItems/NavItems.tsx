@@ -36,7 +36,7 @@ const NavItems: React.FC<Props> = ({ handleShowSignIn, handleShowNav }) => {
   return (
     <div className={classes.navItems}>
       <div className={classes.navItemsContainer}>
-        <NavItem path='FAQ' />
+        {isAuthenticated && <NavItem path='FAQ' />}
         {isAuthenticated && <NavItem path='diary' />}
         {isAuthenticated && <NavItem path='analysis' />}
       </div>
