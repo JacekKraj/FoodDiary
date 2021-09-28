@@ -49,7 +49,7 @@ const Authentication: React.FC = () => {
     return {
       number: 3,
       title: 'Find your problem',
-      text: 'Compare with our help condition of your skin with food you ate and find out what factors may cause your atopic dermatitis.',
+      text: 'We compare your skin condition with food you eat and find out what factors may affect your skin badly.',
     };
   }, []);
 
