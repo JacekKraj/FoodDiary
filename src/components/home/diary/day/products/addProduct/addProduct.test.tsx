@@ -39,28 +39,30 @@ const setup = () => {
   );
 };
 
-let addProductBrowser: ReactWrapper;
-let wrapper: ReactWrapper;
-beforeEach(() => {
-  wrapper = setup();
-  addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
-  addProductBrowser.simulate('change', { target: { value: 'app' } });
-});
+describe('<AddProduct />', () => {
+  let addProductBrowser: ReactWrapper;
+  let wrapper: ReactWrapper;
+  beforeEach(() => {
+    wrapper = setup();
+    addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
+    addProductBrowser.simulate('change', { target: { value: 'app' } });
+  });
 
-afterEach(() => {
-  wrapper.unmount();
-});
+  afterEach(() => {
+    wrapper.unmount();
+  });
 
-it('adds product to user autocomplitions', () => {
-  const form = findByTestAttr(wrapper, 'component-add-product');
-  form.simulate('submit');
-  expect(store.getState().diary.userAutocomplitions[0].product).toEqual('app');
-});
+  it('adds product to user autocomplitions', () => {
+    const form = findByTestAttr(wrapper, 'component-add-product');
+    form.simulate('submit');
+    expect(store.getState().diary.userAutocomplitions[0].product).toEqual('app');
+  });
 
-it('still has a focus after clicking submit button', () => {
-  addProductBrowser.simulate('focus');
-  const submitButton = findByTestAttr(wrapper, 'submit-button');
-  submitButton.simulate('click');
-  const addProductBrowserContainer = findByTestAttr(wrapper, 'add-product-browser-container');
-  expect(addProductBrowserContainer.hasClass('focused')).toBe(true);
+  it('still has a focus after clicking submit button', () => {
+    addProductBrowser.simulate('focus');
+    const submitButton = findByTestAttr(wrapper, 'submit-button');
+    submitButton.simulate('click');
+    const addProductBrowserContainer = findByTestAttr(wrapper, 'add-product-browser-container');
+    expect(addProductBrowserContainer.hasClass('focused')).toBe(true);
+  });
 });
