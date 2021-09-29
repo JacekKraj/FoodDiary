@@ -25,7 +25,7 @@ const setup = (initialState: InitialState) => {
   );
 };
 
-describe('displaying products', () => {
+describe('<Products />', () => {
   describe('no products added', () => {
     it('displays no products info', () => {
       const wrapper = setup({ diary: { currentDate: getModifiedDate(), currentDiary: { [getModifiedDate()]: { products: [] } } } });

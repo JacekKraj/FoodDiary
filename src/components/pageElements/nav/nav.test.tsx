@@ -22,40 +22,42 @@ const setup = (initialState: InitialState) => {
   );
 };
 
-describe('user unauthenticated', () => {
-  let wrapper: ReactWrapper;
-  beforeEach(() => {
-    wrapper = setup({ auth: { isAuthenticated: false } });
+describe('<Nav />', () => {
+  describe('user unauthenticated', () => {
+    let wrapper: ReactWrapper;
+    beforeEach(() => {
+      wrapper = setup({ auth: { isAuthenticated: false } });
+    });
+
+    afterEach(() => {
+      wrapper.unmount();
+    });
+    it('has 0 nav items available', () => {
+      const navItems = findByTestAttr(wrapper, 'component-nav-item');
+      expect(navItems.length).toBe(0);
+    });
+    it('has sign in button', () => {
+      const button = findByTestAttr(wrapper, 'authentication-button').first();
+      expect(button.text()).toEqual('Sign in');
+    });
   });
 
-  afterEach(() => {
-    wrapper.unmount();
-  });
-  it('has 0 nav items available', () => {
-    const navItems = findByTestAttr(wrapper, 'component-nav-item');
-    expect(navItems.length).toBe(0);
-  });
-  it('has sign in button', () => {
-    const button = findByTestAttr(wrapper, 'authentication-button').first();
-    expect(button.text()).toEqual('Sign in');
-  });
-});
+  describe('user authenticated', () => {
+    let wrapper: ReactWrapper;
+    beforeEach(() => {
+      wrapper = setup({ auth: { isAuthenticated: true } });
+    });
 
-describe('user authenticated', () => {
-  let wrapper: ReactWrapper;
-  beforeEach(() => {
-    wrapper = setup({ auth: { isAuthenticated: true } });
-  });
-
-  afterEach(() => {
-    wrapper.unmount();
-  });
-  it('has only all available nav items ', () => {
-    const navItems = findByTestAttr(wrapper, 'component-nav-item');
-    expect(navItems.length).toBe(6);
-  });
-  it('has sign out button', () => {
-    const button = findByTestAttr(wrapper, 'authentication-button').first();
-    expect(button.text()).toEqual('Sign out');
+    afterEach(() => {
+      wrapper.unmount();
+    });
+    it('has only all available nav items ', () => {
+      const navItems = findByTestAttr(wrapper, 'component-nav-item');
+      expect(navItems.length).toBe(6);
+    });
+    it('has sign out button', () => {
+      const button = findByTestAttr(wrapper, 'authentication-button').first();
+      expect(button.text()).toEqual('Sign out');
+    });
   });
 });

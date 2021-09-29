@@ -30,37 +30,39 @@ const setup = (initialState: InitialState = {}, isSignIn: boolean) => {
   );
 };
 
-describe('shows spinner after dispatching registerStart', () => {
-  const dispatchAction = (isSignIn: boolean) => {
-    const wrapper = setup({}, isSignIn);
-    store.dispatch(isSignIn ? actionCreators.authenticationStart() : actionCreators.registerStart());
-    wrapper.setProps({});
-    return findByTestAttr(wrapper, 'component-spinner');
-  };
-  it('shows spinner when <SignUp /> is rendered ', () => {
-    const spinner = dispatchAction(false);
-    expect(spinner.exists()).toBe(true);
+describe('<AuthModal />', () => {
+  describe('shows spinner after dispatching registerStart', () => {
+    const dispatchAction = (isSignIn: boolean) => {
+      const wrapper = setup({}, isSignIn);
+      store.dispatch(isSignIn ? actionCreators.authenticationStart() : actionCreators.registerStart());
+      wrapper.setProps({});
+      return findByTestAttr(wrapper, 'component-spinner');
+    };
+    it('shows spinner when <SignUp /> is rendered ', () => {
+      const spinner = dispatchAction(false);
+      expect(spinner.exists()).toBe(true);
+    });
+    it('shows spinner when <SignIn /> is rendered ', () => {
+      const spinner = dispatchAction(true);
+      expect(spinner.exists()).toBe(true);
+    });
   });
-  it('shows spinner when <SignIn /> is rendered ', () => {
-    const spinner = dispatchAction(true);
-    expect(spinner.exists()).toBe(true);
-  });
-});
 
-describe('shows error after dispatching register/authentication error', () => {
-  const dispatchAction = (isSignIn: boolean) => {
-    const wrapper = setup({}, isSignIn);
-    const errorMessage = 'test error';
-    store.dispatch(isSignIn ? actionCreators.authenticationFail(errorMessage) : actionCreators.registerFail(errorMessage));
-    wrapper.setProps({});
-    return findByTestAttr(wrapper, 'component-error');
-  };
-  it('shows spinner when <SignUp /> is rendered ', () => {
-    const error = dispatchAction(false);
-    expect(error.text()).toBe('test error');
-  });
-  it('shows spinner when <SignIn /> is rendered ', () => {
-    const error = dispatchAction(true);
-    expect(error.text()).toBe('test error');
+  describe('shows error after dispatching register/authentication error', () => {
+    const dispatchAction = (isSignIn: boolean) => {
+      const wrapper = setup({}, isSignIn);
+      const errorMessage = 'test error';
+      store.dispatch(isSignIn ? actionCreators.authenticationFail(errorMessage) : actionCreators.registerFail(errorMessage));
+      wrapper.setProps({});
+      return findByTestAttr(wrapper, 'component-error');
+    };
+    it('shows spinner when <SignUp /> is rendered ', () => {
+      const error = dispatchAction(false);
+      expect(error.text()).toBe('test error');
+    });
+    it('shows spinner when <SignIn /> is rendered ', () => {
+      const error = dispatchAction(true);
+      expect(error.text()).toBe('test error');
+    });
   });
 });
