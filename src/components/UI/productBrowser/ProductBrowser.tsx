@@ -80,6 +80,7 @@ const ProductBrowser: React.FC<Props> = (props) => {
         placeholder='Search for product'
         value={value}
         onChange={(e) => handleOnChange(e.target.value)}
+        onFocus={() => setInputFocus(true)}
         className={classes.input}
       />
       <CancelIcon

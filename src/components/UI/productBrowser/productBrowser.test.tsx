@@ -1,5 +1,4 @@
 import { mount } from 'enzyme';
-import React from 'react';
 
 import ProductBrowser from './ProductBrowser';
 import { findByTestAttr } from '../../../utils/tests/testHelperFunction';

@@ -31,9 +31,9 @@ describe('user unauthenticated', () => {
   afterEach(() => {
     wrapper.unmount();
   });
-  it('has only unauthanticated user nav items available', () => {
+  it('has 0 nav items available', () => {
     const navItems = findByTestAttr(wrapper, 'component-nav-item');
-    expect(navItems.length).toBe(2);
+    expect(navItems.length).toBe(0);
   });
   it('has sign in button', () => {
     const button = findByTestAttr(wrapper, 'authentication-button').first();
