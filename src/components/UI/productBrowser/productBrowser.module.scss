@@ -1,14 +1,8 @@
-.addProduct {
-  display: flex;
-  align-items: center;
-}
-
 .productBrowser {
   display: flex;
   align-items: center;
   padding: 0.45em;
   background-color: #eaeaea;
-  // margin-right: 0.25em;
   border-radius: 10px;
   border: 2px solid #eaeaea;
   flex-grow: 1;
@@ -16,22 +10,15 @@
   cursor: text;
 }
 
-.inputAdditional {
+.input {
   border: none;
   outline: none;
   background-color: transparent;
   margin: 0 0.5em;
   font-size: 14px;
-  flex-grow: 1;
   color: #555;
   align-self: stretch;
-}
-
-.buttonAdditional {
-  font-size: 14px;
-  padding: 0.55em;
-  max-width: 100px;
-  border-radius: 10px;
+  flex-grow: 1;
 }
 
 .focused {
