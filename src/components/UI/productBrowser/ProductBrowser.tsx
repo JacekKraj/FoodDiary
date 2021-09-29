@@ -59,7 +59,9 @@ const ProductBrowser: React.FC<Props> = (props) => {
   };
 
   React.useEffect(() => {
-    inputRef.current?.focus();
+    if (typed) {
+      inputRef.current?.focus();
+    }
   }, [value]);
 
   return (
