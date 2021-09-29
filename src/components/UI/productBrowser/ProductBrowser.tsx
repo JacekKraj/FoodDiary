@@ -59,21 +59,21 @@ const ProductBrowser: React.FC<Props> = (props) => {
   };
 
   React.useEffect(() => {
-    if (typed) {
+    const setFocus = () => {
+      setInputFocus(true);
       inputRef.current?.focus();
-    }
-  }, [value]);
+    };
+    browserContainerRef.current?.addEventListener('click', setFocus);
+    return () => {
+      browserContainerRef.current?.removeEventListener('click', setFocus);
+    };
+  }, [browserContainerRef.current]);
 
   return (
-    <div
-      className={classnames(classes.productBrowser, inputFocus && classes.focused)}
-      data-test='add-product-browser-container'
-      onClick={() => inputRef.current?.focus()}
-    >
+    <div className={classnames(classes.productBrowser, inputFocus && classes.focused)} data-test='add-product-browser-container'>
       <SearchIcon className={iconStyle.icon} />
       <input
         data-test='add-product-browser'
-        onFocus={() => setInputFocus(true)}
         type='text'
         ref={inputRef}
         placeholder='Search for product'
