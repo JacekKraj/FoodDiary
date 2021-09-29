@@ -16,7 +16,7 @@ const setup = () => {
   );
 };
 
-describe('side nav and backdrop visibility', () => {
+describe('<SmallScreenNav />', () => {
   let wrapper: ReactWrapper;
   beforeEach(() => {
     wrapper = setup();

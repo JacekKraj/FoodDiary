@@ -28,45 +28,47 @@ const setup = (defaultProps: DefaultProps) => {
   );
 };
 
-beforeEach(() => {
-  moxios.install();
-});
-
-afterEach(() => {
-  moxios.uninstall();
-});
-
-const customProps = {
-  typed: true,
-  activeSuggestion: 0,
-  pickItem: jest.fn(),
-  setValue: jest.fn(),
-  setActiveSuggestion: jest.fn(),
-  setTyped: jest.fn(),
-};
-
-it('shows autocomplete, and displays item from user autocomplitions', (done) => {
-  const wrapper = setup({ focus: true, value: 'a', ...customProps });
-  moxios.wait(() => {
-    let request = moxios.requests.mostRecent();
-    request
-      .respondWith({
-        status: 200,
-        response: ['apple'],
-      })
-      .then(() => {
-        wrapper.update();
-        const autoCompleteItem = findByTestAttr(wrapper, 'component-auto-complete-item');
-        expect(autoCompleteItem.first().text()).toEqual('acai');
-        expect(autoCompleteItem.last().text()).toEqual('apple');
-        wrapper.unmount();
-        done();
-      });
+describe('<InputAutoComplete />', () => {
+  beforeEach(() => {
+    moxios.install();
   });
-});
 
-it("doesn't show autocomplete when no value comes", () => {
-  const wrapper = setup({ focus: false, value: '', ...customProps });
-  const autoCompleteItem = findByTestAttr(wrapper, 'component-auto-complete-item');
-  expect(autoCompleteItem.exists()).toBe(false);
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  const customProps = {
+    typed: true,
+    activeSuggestion: 0,
+    pickItem: jest.fn(),
+    setValue: jest.fn(),
+    setActiveSuggestion: jest.fn(),
+    setTyped: jest.fn(),
+  };
+
+  it('shows autocomplete, and displays item from user autocomplitions', (done) => {
+    const wrapper = setup({ focus: true, value: 'a', ...customProps });
+    moxios.wait(() => {
+      let request = moxios.requests.mostRecent();
+      request
+        .respondWith({
+          status: 200,
+          response: ['apple'],
+        })
+        .then(() => {
+          wrapper.update();
+          const autoCompleteItem = findByTestAttr(wrapper, 'component-auto-complete-item');
+          expect(autoCompleteItem.first().text()).toEqual('acai');
+          expect(autoCompleteItem.last().text()).toEqual('apple');
+          wrapper.unmount();
+          done();
+        });
+    });
+  });
+
+  it("doesn't show autocomplete when no value comes", () => {
+    const wrapper = setup({ focus: false, value: '', ...customProps });
+    const autoCompleteItem = findByTestAttr(wrapper, 'component-auto-complete-item');
+    expect(autoCompleteItem.exists()).toBe(false);
+  });
 });

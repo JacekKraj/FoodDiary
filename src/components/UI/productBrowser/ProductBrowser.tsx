@@ -59,25 +59,29 @@ const ProductBrowser: React.FC<Props> = (props) => {
   };
 
   React.useEffect(() => {
-    inputRef.current?.focus();
-  }, [value]);
+    const browserRef = browserContainerRef.current;
+    const setFocus = () => {
+      setInputFocus(true);
+      inputRef.current?.focus();
+    };
+    browserRef?.addEventListener('click', setFocus);
+    return () => {
+      browserRef?.removeEventListener('click', setFocus);
+    };
+  }, [browserContainerRef.current]);
 
   return (
-    <div
-      className={classnames(classes.productBrowser, inputFocus && classes.focused)}
-      data-test='add-product-browser-container'
-      onClick={() => inputRef.current?.focus()}
-    >
+    <div className={classnames(classes.productBrowser, inputFocus && classes.focused)} data-test='add-product-browser-container'>
       <SearchIcon className={iconStyle.icon} />
       <input
         data-test='add-product-browser'
-        onFocus={() => setInputFocus(true)}
         type='text'
         ref={inputRef}
         placeholder='Search for product'
         value={value}
         onChange={(e) => handleOnChange(e.target.value)}
-        className={classes.inputAdditional}
+        onFocus={() => setInputFocus(true)}
+        className={classes.input}
       />
       <CancelIcon
         data-test={`clear-browser-icon-${value && 'visible'}`}

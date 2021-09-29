@@ -26,10 +26,12 @@ const setup = () => {
   );
 };
 
-it('has initially values from redux store', () => {
-  const wrapper = setup();
-  const sliderCurrent = findByTestAttr(wrapper, 'slider-current').first();
-  const sliderCompared = findByTestAttr(wrapper, 'slider-compared').first();
-  expect(sliderCurrent.prop('value')).toEqual(75);
-  expect(sliderCompared.prop('value')).toEqual(25);
+describe('<Sliders />', () => {
+  it('has initially values from redux store', () => {
+    const wrapper = setup();
+    const sliderCurrent = findByTestAttr(wrapper, 'slider-current').first();
+    const sliderCompared = findByTestAttr(wrapper, 'slider-compared').first();
+    expect(sliderCurrent.prop('value')).toEqual(75);
+    expect(sliderCompared.prop('value')).toEqual(25);
+  });
 });

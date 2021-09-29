@@ -1,7 +1,7 @@
 import { UserAutocomplition } from '../../redux/reducers/diaryReducer';
 
 export const filterUserAutocomplitions = (inputValue: string, userAutocomplitions: UserAutocomplition[]) => {
-  const modifiedValue = inputValue.replace(/\s+/g, ' ').trim();
+  const modifiedValue = inputValue.replace(/\s+/g, ' ').trim().toLocaleLowerCase();
   const autocomplitionsToFilter = userAutocomplitions.map((el) => el.product);
   let lastingAutocomplitions = autocomplitionsToFilter.filter((autocomplition) => {
     let foundMatchingWord = false;
