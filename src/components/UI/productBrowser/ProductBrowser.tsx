@@ -59,13 +59,14 @@ const ProductBrowser: React.FC<Props> = (props) => {
   };
 
   React.useEffect(() => {
+    const browserRef = browserContainerRef.current;
     const setFocus = () => {
       setInputFocus(true);
       inputRef.current?.focus();
     };
-    browserContainerRef.current?.addEventListener('click', setFocus);
+    browserRef?.addEventListener('click', setFocus);
     return () => {
-      browserContainerRef.current?.removeEventListener('click', setFocus);
+      browserRef?.removeEventListener('click', setFocus);
     };
   }, [browserContainerRef.current]);
 
@@ -79,7 +80,7 @@ const ProductBrowser: React.FC<Props> = (props) => {
         placeholder='Search for product'
         value={value}
         onChange={(e) => handleOnChange(e.target.value)}
-        className={classes.inputAdditional}
+        className={classes.input}
       />
       <CancelIcon
         data-test={`clear-browser-icon-${value && 'visible'}`}
