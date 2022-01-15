@@ -2,9 +2,9 @@ import { Dispatch } from 'redux';
 
 import { fire } from '../../fireConfig';
 import { Action, SkinConditonTypes } from './../actions/diary';
-import { SkinConditionValues, Day, DiaryDay, UserAutocomplition } from '../reducers/diaryReducer';
+import { SkinConditionValues, Day, DiaryDay, AddedProduct } from '../reducers/diaryReducer';
 import { ActionTypes } from './../actionTypes/actionTypes';
-import { modifyString } from '../../utils/helperFunctions/modifyString';
+import { modifyEmail } from '../../utils/helperFunctions/modifyEmail';
 import { successToast, failToast } from '../../utils/toasts/toasts';
 
 const setAnalysisLoading = (loading: boolean): Action => {
@@ -38,7 +38,7 @@ export const setDiary = (day: Day | null, date: string): Action => {
 
 export const getDiary = (date: string, userEmail: string) => {
   return (dispatch: Dispatch<Action>) => {
-    const modifiedEmail = modifyString(userEmail);
+    const modifiedEmail = modifyEmail(userEmail);
     fire
       .database()
       .ref(`${modifiedEmail}/diary/${date}`)
@@ -69,10 +69,10 @@ const findModifiedDays = (currentDiary: DiaryDay, downloadedDiary: DiaryDay) => 
   return modifiedDays;
 };
 
-export const saveDiary = (userEmail: string, currentDiary: DiaryDay, downloadedDiary: DiaryDay, autocomplitions: UserAutocomplition[]) => {
+export const saveDiary = (userEmail: string, currentDiary: DiaryDay, downloadedDiary: DiaryDay, autocomplitions: AddedProduct[]) => {
   return (dispatch: Dispatch<Action>) => {
     if (JSON.stringify(currentDiary) !== JSON.stringify(downloadedDiary)) {
-      const modifiedEmail = modifyString(userEmail);
+      const modifiedEmail = modifyEmail(userEmail);
       const modifiedDays = findModifiedDays(currentDiary, downloadedDiary);
       Promise.all([
         ...modifiedDays.map((el) => {
@@ -81,7 +81,7 @@ export const saveDiary = (userEmail: string, currentDiary: DiaryDay, downloadedD
             .ref(`/${modifiedEmail}/diary/${Object.keys(el)[0]}`)
             .update(Object.values(el)[0]);
         }),
-        fire.database().ref(`/${modifiedEmail}/autocomplitions`).set(autocomplitions),
+        fire.database().ref(`/${modifiedEmail}/addedProductsList`).set(autocomplitions),
       ])
         .then(() => {
           dispatch({ type: ActionTypes.SAVE_DIARY });
@@ -108,11 +108,10 @@ export const setSkin = (condition: SkinConditionValues, skinType: SkinConditonTy
   };
 };
 
-export const changeDate = (date: string, loading: boolean): Action => {
+export const changeDate = (date: string): Action => {
   return {
     type: ActionTypes.CHANGE_DATE,
     date,
-    loading,
   };
 };
 
@@ -126,7 +125,7 @@ const analyzeDiary = (fullDiary: DiaryDay): Action => {
 export const getFullDiary = (userEmail: string) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch(setAnalysisLoading(true));
-    const modifiedEmail = modifyString(userEmail);
+    const modifiedEmail = modifyEmail(userEmail);
     fire
       .database()
       .ref(`${modifiedEmail}/diary`)
@@ -141,22 +140,23 @@ export const getFullDiary = (userEmail: string) => {
   };
 };
 
-const setUserAutocomplitions = (autocomplitions: UserAutocomplition[]): Action => {
+const setAddedProductsListAction = (addedProductsList: AddedProduct[]): Action => {
   return {
-    type: ActionTypes.SET_USER_AUTOCOMPLITIONS,
-    autocomplitions,
+    type: ActionTypes.SET_ADDED_PRODUCTS_LIST,
+    addedProductsList,
   };
 };
 
-export const getUserAutocomplitions = (userEmail: string) => {
+export const setAddedProductsList = (userEmail: string) => {
   return (dispatch: Dispatch<Action>) => {
-    const modifiedEmail = modifyString(userEmail);
+    const modifiedEmail = modifyEmail(userEmail);
     fire
       .database()
-      .ref(`${modifiedEmail}/autocomplitions`)
+      .ref(`${modifiedEmail}/addedProductsList`)
       .get()
       .then((snapshot) => {
-        dispatch(setUserAutocomplitions(snapshot.val()));
+        const addedProductsList = snapshot.val() as AddedProduct[];
+        dispatch(setAddedProductsListAction(addedProductsList));
       })
       .catch(() => {});
   };

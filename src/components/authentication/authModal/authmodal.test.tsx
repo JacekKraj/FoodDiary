@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 
 import AuthModal from './AuthModal';
 import { storeFactory, findByTestAttr } from '../../../utils/tests/testHelperFunction';
-import SignUp from './../signUp/SignUp';
-import SignIn from './../signIn/SignIn';
+import SignUp from '../signUpModal/SignUpModal';
+import SignIn from '../signInModal/SignInModal';
 import * as actionCreators from './../../../redux/actionCreators/index';
 
 interface InitialState {

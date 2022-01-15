@@ -20,5 +20,7 @@ export {
   setSkin,
   changeDate,
   getFullDiary,
-  getUserAutocomplitions,
+  setAddedProductsList,
 } from './diary';
+
+export { showModal, hideModal } from './modals';

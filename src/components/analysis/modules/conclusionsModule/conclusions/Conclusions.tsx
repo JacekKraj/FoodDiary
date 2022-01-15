@@ -20,19 +20,22 @@ const Conclusions: React.FC = () => {
   const conclusions = dangerousProducts.length ? (
     <div className={classes.conclusions}>
       <Conclusion
-        header
-        productName='Product'
-        type='normal'
+        isHeader
+        product={{
+          name: 'Product',
+          type: 'normal',
+        }}
         skinCondition={{ timesEaten: 'TE', probability: 'P[%]', improvement: 'I', deterioration: 'D' }}
       />
       {dangerousProducts.map((el) => {
         const { product, timesEaten, type, probability, improvement, deterioration } = el;
-        return <Conclusion key={product} productName={product} type={type} skinCondition={{ timesEaten, probability, improvement, deterioration }} />;
+        return <Conclusion key={product} product={{ name: product, type }} skinCondition={{ timesEaten, probability, improvement, deterioration }} />;
       })}
     </div>
   ) : (
     noConclusionsInfo
   );
+
   return (
     <ModuleMainContentWrapper className={classes.moduleMainContentAdditional}>
       <h3 className={classes.title}>Products that seem to be bad for your skin:</h3>

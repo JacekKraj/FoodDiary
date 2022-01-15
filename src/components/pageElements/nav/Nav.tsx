@@ -4,18 +4,14 @@ import SmallScreenNav from './smallScreenNav/SmallScreenNav';
 import BigScreenNav from './bigScreenNav/BigScreenNav';
 import classes from './nav.module.scss';
 
-interface Props {
-  handleShowSignIn?: () => void;
-}
-
-const Nav: React.FC<Props> = ({ handleShowSignIn = () => {} }) => {
+const Nav: React.FC = () => {
   return (
     <React.Fragment>
       <div className={classes.smallScreenNavContainer}>
-        <SmallScreenNav handleShowSignIn={handleShowSignIn} />
+        <SmallScreenNav />
       </div>
       <div className={classes.bigScreenNavContainer}>
-        <BigScreenNav handleShowSignIn={handleShowSignIn} />
+        <BigScreenNav />
       </div>
     </React.Fragment>
   );

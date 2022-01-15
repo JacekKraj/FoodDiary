@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import classes from './button.module.scss';
 
 interface Props {
-  typeLight?: boolean;
+  isTypeLight?: boolean;
   onClick?: () => void;
   children: React.ReactNode;
   className?: string;
@@ -12,9 +12,14 @@ interface Props {
 }
 
 const Button: React.FC<Props> = (props) => {
-  const { onClick, typeLight, children, className, dataTest } = props;
+  const { onClick, isTypeLight, children, className, dataTest } = props;
   return (
-    <button type='submit' onClick={onClick} data-test={dataTest} className={classnames(classes.button, typeLight && classes.buttonLight, className)}>
+    <button
+      type='submit'
+      onClick={onClick}
+      data-test={dataTest}
+      className={classnames(classes.button, isTypeLight && classes.buttonLight, className)}
+    >
       {children}
     </button>
   );

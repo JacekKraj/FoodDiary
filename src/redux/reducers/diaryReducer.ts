@@ -43,9 +43,9 @@ const customDay = {
   comparedSkinCondition: SkinConditionValues.medium,
 };
 
-export interface UserAutocomplition {
-  product: string;
-  timesUsed: number;
+export interface AddedProduct {
+  name: string;
+  timesAdded: number;
 }
 
 interface InitialState {
@@ -56,10 +56,10 @@ interface InitialState {
   currentDiary: DiaryDay;
   diaryLoading: boolean;
   analysisLoading: boolean;
-  // safe products contains also products with probability higher than 50% but which were eaten to little times to find the resultsa reliable
+  // safe products contains also products with probability higher than 50% but which were eaten to little times to find the results reliable
   safeProducts: ModifiedAnalyzedProduct[];
   dangerousProducts: ModifiedAnalyzedProduct[];
-  userAutocomplitions: UserAutocomplition[];
+  addedProductsList: AddedProduct[];
 }
 
 const initialState: InitialState = {
@@ -70,7 +70,7 @@ const initialState: InitialState = {
   downloadedDiary: {},
   safeProducts: [],
   dangerousProducts: [],
-  userAutocomplitions: [],
+  addedProductsList: [],
 };
 
 const diaryReducer = (state: InitialState = initialState, action: Action): InitialState => {
@@ -95,26 +95,27 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
     case ActionTypes.ADD_PRODUCT:
       // adding product
       currProducts = state.currentDiary[state.currentDate].products;
-      const isExisting = !!currProducts.find((el) => el === action.product);
-      newProducts = isExisting ? currProducts : [...currProducts, action.product];
+      const isProductExistingOnThatDay = !!currProducts.find((el) => el === action.product);
+      newProducts = isProductExistingOnThatDay ? currProducts : [...currProducts, action.product];
       // updating userAutocomplitions
       const addAutocomplition = () => {
-        const newAutocomplitions = [...state.userAutocomplitions];
-        if (!isExisting) {
-          const autocomplitionIndex = newAutocomplitions.findIndex((el) => el.product === action.product);
+        const newAutocomplitions = [...state.addedProductsList];
+        if (!isProductExistingOnThatDay) {
+          const autocomplitionIndex = newAutocomplitions.findIndex((el) => el.name === action.product);
           const autocomplition = newAutocomplitions[autocomplitionIndex] || {
-            product: action.product,
-            timesUsed: 0,
+            name: action.product,
+            timesAdded: 0,
           };
-          autocomplition.timesUsed += 1;
+          autocomplition.timesAdded += 1;
           const currentIndex = autocomplitionIndex >= 0 ? autocomplitionIndex : newAutocomplitions.length;
           newAutocomplitions[currentIndex] = autocomplition;
         }
         return newAutocomplitions;
       };
+
       return {
         ...state,
-        userAutocomplitions: addAutocomplition(),
+        addedProductsList: addAutocomplition(),
         currentDiary: {
           ...state.currentDiary,
           [state.currentDate]: {
@@ -129,17 +130,18 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
       newProducts = currProducts.filter((el) => el !== action.product);
       // update userAutocomplitions
       const removeAutocomplition = () => {
-        let newAutocomplitions = [...state.userAutocomplitions];
-        const autocompliton = newAutocomplitions.filter((el) => el.product === action.product)[0];
-        autocompliton.timesUsed -= 1;
-        if (!autocompliton.timesUsed) {
-          newAutocomplitions = newAutocomplitions.filter((el) => el.product !== action.product);
+        let newAutocomplitions = [...state.addedProductsList];
+        const autocompliton = newAutocomplitions.filter((el) => el.name === action.product)[0];
+        autocompliton.timesAdded -= 1;
+        if (!autocompliton.timesAdded) {
+          newAutocomplitions = newAutocomplitions.filter((el) => el.name !== action.product);
         }
         return newAutocomplitions;
       };
+
       return {
         ...state,
-        userAutocomplitions: removeAutocomplition(),
+        addedProductsList: removeAutocomplition(),
         currentDiary: {
           ...state.currentDiary,
           [state.currentDate]: {
@@ -157,20 +159,20 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
       };
     case ActionTypes.CLEAR_DIARY:
       const clearAutocomplitions = () => {
-        let newAutocomplitions = [...state.userAutocomplitions];
+        let newAutocomplitions = [...state.addedProductsList];
         const removedProducts = state.currentDiary[state.currentDate].products;
         newAutocomplitions = newAutocomplitions.map((el) => {
-          if (removedProducts.includes(el.product)) {
-            el.timesUsed -= 1;
+          if (removedProducts.includes(el.name)) {
+            el.timesAdded -= 1;
           }
           return el;
         });
-        return newAutocomplitions.filter((el) => el.timesUsed);
+        return newAutocomplitions.filter((el) => el.timesAdded);
       };
 
       return {
         ...state,
-        userAutocomplitions: clearAutocomplitions(),
+        addedProductsList: clearAutocomplitions(),
         currentDiary: {
           ...state.currentDiary,
           [state.currentDate]: {
@@ -193,7 +195,7 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
       diary = { [action.date]: state.currentDiary[action.date] || customDay };
       return {
         ...state,
-        diaryLoading: action.loading,
+        diaryLoading: !state.currentDiary[action.date],
         currentDate: action.date,
         currentDiary: {
           ...state.currentDiary,
@@ -214,10 +216,10 @@ const diaryReducer = (state: InitialState = initialState, action: Action): Initi
         dangerousProducts,
         safeProducts,
       };
-    case ActionTypes.SET_USER_AUTOCOMPLITIONS:
+    case ActionTypes.SET_ADDED_PRODUCTS_LIST:
       return {
         ...state,
-        userAutocomplitions: action.autocomplitions || [],
+        addedProductsList: action.addedProductsList || [],
       };
     default:
       return state;

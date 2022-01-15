@@ -16,7 +16,7 @@ const Questions: React.FC = () => {
       />
       <Question
         question='How many samples of a given product are needed to determine if it is harmful?'
-        answer='The minimum number of times that a given product should be added to include it in the analysis is 5 times, because with a smaller number the result is hard to be considered credible. Therefore, the conclusions will be closer to reality the more times a given product is added.'
+        answer="The minimum number of times that a given product should be added to include it in the analysis is 5 times (it's also required to add skin condition on the each next day after adding given product), because with a smaller number the result is hard to be considered credible. Therefore, the conclusions will be closer to reality the more times a given product is added."
       />
       <Question
         question='Is page free to use?'

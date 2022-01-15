@@ -4,20 +4,22 @@ import { makeStyles } from '@material-ui/core';
 import Nav from './../pageElements/nav/Nav';
 import classes from './authentication.module.scss';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import { theme } from '../../utils/breakpoints/breakpoints';
+import { breakpoints } from '../../utils/breakpoints/breakpoints';
 import Button from '../UI/button/Button';
 import UsageInstructionStep from './usageInstructionStep/UsageInstructionStep';
-import SignUp from './signUp/SignUp';
-import SignIn from './signIn/SignIn';
+import { useActions } from '../../redux/hooks/useActions';
+import { MODAL_TYPES } from './../../modalMenager/ModalMenager';
+
+const { mobileVertical, laptopSm } = breakpoints;
 
 const useStyles = makeStyles(() => ({
   icon: {
-    [theme.breakpoints.up('xs')]: {
+    [mobileVertical]: {
       color: '#888',
       width: 95,
       height: 95,
     },
-    [theme.breakpoints.up('lg')]: {
+    [laptopSm]: {
       width: 105,
       height: 105,
     },
@@ -25,8 +27,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Authentication: React.FC = () => {
-  const [showSignUp, setShowSignUp] = React.useState(false);
-  const [showSignIn, setShowSignIn] = React.useState(false);
+  const { showModal } = useActions();
 
   const iconStyle = useStyles();
 
@@ -54,19 +55,17 @@ const Authentication: React.FC = () => {
   }, []);
 
   const handleShowSignUp = () => {
-    setShowSignUp((currVal) => !currVal);
+    showModal(MODAL_TYPES.SIGN_UP);
   };
 
   const handleShowSignIn = () => {
-    setShowSignIn((currVal) => !currVal);
+    showModal(MODAL_TYPES.SIGN_IN);
   };
 
   return (
     <React.Fragment>
-      {showSignUp && <SignUp handleShowSignUp={handleShowSignUp} />}
-      {showSignIn && <SignIn handleShowSignIn={handleShowSignIn} />}
       <div className={classes.authentication}>
-        <Nav handleShowSignIn={handleShowSignIn} />
+        <Nav />
         <div className={classes.authenticationInfo}>
           <h1>Hi. Let's get Started!</h1>
           <div className={classes.authenticationMainContent}>
@@ -77,7 +76,7 @@ const Authentication: React.FC = () => {
               <Button className={classes.buttonAdditional} onClick={handleShowSignIn} dataTest='sign-in-button'>
                 Sign In
               </Button>
-              <Button className={classes.buttonAdditional} typeLight onClick={handleShowSignUp} dataTest='sign-up-button'>
+              <Button className={classes.buttonAdditional} isTypeLight onClick={handleShowSignUp} dataTest='sign-up-button'>
                 Sign Up
               </Button>
             </UsageInstructionStep>

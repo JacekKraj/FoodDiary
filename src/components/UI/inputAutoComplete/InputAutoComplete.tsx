@@ -4,80 +4,93 @@ import axios from 'axios';
 import classes from './inputAutoComplete.module.scss';
 import AutoCompleteItem from './autoCompletItem/AutoCompleteItem';
 import { useTypedSelector } from './../../../redux/hooks/useTypedSelector';
-import { filterUserAutocomplitions } from './../../../utils/helperFunctions/filterUserAutocomplitions';
+import { getMatchingAddedProductsNames } from '../../../utils/helperFunctions/getMatchingAddedProductsNames';
+import { modifyProductName } from './../../../utils/helperFunctions/modifyProductName';
 
 interface Props {
-  value: string;
+  input: { value: string; setValue: React.Dispatch<React.SetStateAction<string>>; isFocused: boolean };
   pickItem: (value: string) => void;
-  focus: boolean;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
-  typed: boolean;
-  setTyped: React.Dispatch<React.SetStateAction<boolean>>;
-  activeSuggestion: number;
-  setActiveSuggestion: React.Dispatch<React.SetStateAction<number>>;
+  isTyping: boolean;
+  setIsTyping: React.Dispatch<React.SetStateAction<boolean>>;
+  activeSuggestion: { index: number; setIndex: React.Dispatch<React.SetStateAction<number>> };
 }
 
 const InputAutoComplete: React.FC<Props> = (props) => {
-  const { value, pickItem, focus, setValue, typed, setTyped, activeSuggestion, setActiveSuggestion } = props;
-  const [foundItems, setFoundItems] = React.useState<string[]>([]);
-  const { userAutocomplitions } = useTypedSelector((state) => state.diary);
+  const { input, pickItem, isTyping, setIsTyping, activeSuggestion } = props;
+  const [autocomplitions, setAutocomplitions] = React.useState<string[]>([]);
+  const { addedProductsList } = useTypedSelector((state) => state.diary);
 
   React.useEffect(() => {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
-      if (focus && foundItems.length) {
-        let newSuggestionIndex = activeSuggestion;
+      if (!input.isFocused || !autocomplitions.length) return;
 
-        if (e.key === 'ArrowDown') {
-          newSuggestionIndex = newSuggestionIndex + 1 > foundItems.length ? 1 : newSuggestionIndex + 1;
-          setTyped(false);
-          setValue(foundItems[newSuggestionIndex - 1]);
-        }
+      let newSuggestionIndex = activeSuggestion.index;
 
-        if (e.key === 'ArrowUp') {
-          e.preventDefault();
-          newSuggestionIndex = newSuggestionIndex - 1 <= 0 ? foundItems.length : newSuggestionIndex - 1;
-          setValue(foundItems[newSuggestionIndex - 1]);
-          setTyped(false);
-        }
-
-        setActiveSuggestion(newSuggestionIndex);
+      if (e.key === 'ArrowDown') {
+        newSuggestionIndex = newSuggestionIndex + 1 > autocomplitions.length ? 1 : newSuggestionIndex + 1;
+        input.setValue(autocomplitions[newSuggestionIndex - 1]);
       }
+
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        newSuggestionIndex = newSuggestionIndex - 1 <= 0 ? autocomplitions.length : newSuggestionIndex - 1;
+        input.setValue(autocomplitions[newSuggestionIndex - 1]);
+      }
+
+      setIsTyping(false);
+      activeSuggestion.setIndex(newSuggestionIndex);
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [foundItems, activeSuggestion]);
+  }, [autocomplitions, activeSuggestion]);
 
   React.useEffect(() => {
     const axiosRequest = axios.CancelToken.source();
-    if (typed) {
-      axios
-        .get<string[]>(`https://api.edamam.com/auto-complete?q=${value}`, {
+
+    if (!isTyping) return;
+
+    const updateAutocomplitions = async () => {
+      const modifiedInputValue = modifyProductName(input.value);
+
+      const autocomplitinsFromAddedProductsList = [...getMatchingAddedProductsNames(modifiedInputValue, addedProductsList)];
+
+      try {
+        const response = await axios.get<string[]>(`https://api.edamam.com/auto-complete?q=${modifiedInputValue}`, {
           cancelToken: axiosRequest.token,
-        })
-        .then((response) => {
-          const newFoundItems = [...filterUserAutocomplitions(value, userAutocomplitions)];
-          // check if suggestions from API aren't already included in user autocomplitions
-          response.data.forEach((el) => {
-            !newFoundItems.includes(el) && newFoundItems.push(el);
-          });
-          setFoundItems(newFoundItems.slice(0, 4));
-        })
-        .catch(() => {});
-    }
+        });
+
+        const autocomplitionsFromAPI = response.data;
+
+        const connectedAutocomplitions = [...autocomplitinsFromAddedProductsList];
+
+        autocomplitionsFromAPI.forEach((autocomplition) => {
+          if (!connectedAutocomplitions.includes(autocomplition)) {
+            connectedAutocomplitions.push(autocomplition);
+          }
+        });
+
+        setAutocomplitions(connectedAutocomplitions.slice(0, 4));
+      } catch (_) {
+        setAutocomplitions(autocomplitinsFromAddedProductsList.slice(0, 4));
+      }
+    };
+
+    updateAutocomplitions();
+
     return () => {
       axiosRequest.cancel();
     };
-  }, [value, typed]);
+  }, [input.value, isTyping]);
 
   return (
     <div>
-      {foundItems.length && focus ? (
+      {autocomplitions.length && input.isFocused ? (
         <ul className={classes.inputAutoComplete}>
-          {foundItems.map((el: string, index: number) => {
-            return <AutoCompleteItem text={el} key={el} pickItem={pickItem} active={index + 1 === activeSuggestion} />;
+          {autocomplitions.map((text: string, index: number) => {
+            return <AutoCompleteItem text={text} key={text} pickItem={pickItem} isActive={index + 1 === activeSuggestion.index} />;
           })}
         </ul>
       ) : null}
