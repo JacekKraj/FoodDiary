@@ -9,7 +9,7 @@ interface Props {
   className?: string;
   type: string;
   placeholder: string;
-  as: any;
+  as: React.FC<any>;
 }
 
 const MyFormikInput: React.FC<Props> = (props) => {

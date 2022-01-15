@@ -12,21 +12,23 @@ interface Props {
   title: string;
   steps: number;
   value: number;
-  sliderClassName?: string;
-  sliderContainerClassName?: string;
+  classNames?: {
+    slider: string;
+    sliderContainer: string;
+  };
   dataTest?: string;
   onChange: (e: React.ChangeEvent<{}>, value: number | number[]) => void;
 }
 
 const SliderInput: React.FC<Props> = (props) => {
-  const { marks, title, steps, sliderClassName, sliderContainerClassName, onChange, value, dataTest } = props;
+  const { marks, title, steps, classNames, onChange, value, dataTest } = props;
 
   return (
-    <div className={sliderContainerClassName}>
+    <div className={classNames?.sliderContainer}>
       <Typography id='discrete-slider-custom' gutterBottom>
         {title}
       </Typography>
-      <Slider value={value} step={100 / (steps - 1)} data-test={dataTest} className={sliderClassName} marks={marks} onChange={onChange} />
+      <Slider value={value} step={100 / (steps - 1)} data-test={dataTest} className={classNames?.slider} marks={marks} onChange={onChange} />
     </div>
   );
 };

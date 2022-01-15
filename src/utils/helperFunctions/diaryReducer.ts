@@ -74,7 +74,7 @@ export const modifyAnalyzedProducts = (analyzedProducts: AnalyzedProducts) => {
       product,
     };
     // if product has more than 50% of probability it's considered as dangerous
-    // if product was eaten less than 5 times it must be considered as safe, because it's to little data to find results reliable
+    // if product was eaten less than 5 times it must be considered as safe, because it's too little data to find results reliable
     let products = +probability > 50 && +modifiedAnalyzedProduct.timesEaten >= 5 ? dangerousProducts : safeProducts;
     products.push(modifiedAnalyzedProduct);
   }

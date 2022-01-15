@@ -6,20 +6,23 @@ import ProductBrowser from '../../../../UI/productBrowser/ProductBrowser';
 import Conclusion from '../../conclusionsModule/conclusions/conclusion/Conclusion';
 import NoDataInfo from './../../../../UI/noDataInfo/NoDataInfo';
 import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
-import { filterUserAutocomplitions } from '../../../../../utils/helperFunctions/filterUserAutocomplitions';
+import { getMatchingAddedProductsNames } from '../../../../../utils/helperFunctions/getMatchingAddedProductsNames';
 
 const Products: React.FC = () => {
-  const [productName, setProductName] = React.useState('');
+  const [inputValue, setInputValue] = React.useState('');
   const browserContainerRef = React.useRef(null);
 
-  const { dangerousProducts, safeProducts, userAutocomplitions } = useTypedSelector((state) => state.diary);
+  const { dangerousProducts, safeProducts, addedProductsList } = useTypedSelector((state) => state.diary);
 
-  const filterProducts = React.useMemo(() => {
-    const filteredUserAutocomplitions = filterUserAutocomplitions(productName, userAutocomplitions);
-    return [...dangerousProducts, ...safeProducts].filter((el) => {
-      return filteredUserAutocomplitions.includes(el.product);
+  const getMatchingWithInputValueProducts = React.useMemo(() => {
+    const matchingAddedProducts = getMatchingAddedProductsNames(inputValue, addedProductsList);
+
+    const matchingProducts = [...dangerousProducts, ...safeProducts].filter((product) => {
+      return !!matchingAddedProducts.includes(product.product);
     });
-  }, [productName, dangerousProducts, safeProducts, userAutocomplitions]);
+
+    return matchingProducts;
+  }, [inputValue, dangerousProducts, safeProducts, addedProductsList]);
 
   const noProductsInfo = (
     <NoDataInfo className={classes.noDataInfoAdditional}>Search for product that you have already added into our database.</NoDataInfo>
@@ -28,23 +31,27 @@ const Products: React.FC = () => {
   return (
     <ModuleMainContentWrapper className={classes.moduleMainContentAdditional}>
       <div ref={browserContainerRef}>
-        <ProductBrowser browserContainerRef={browserContainerRef} value={productName} setValue={setProductName} />
+        <ProductBrowser browserContainerRef={browserContainerRef} input={{ value: inputValue, setValue: setInputValue }} />
       </div>
-      {filterProducts?.length ? (
+      {getMatchingWithInputValueProducts?.length ? (
         <div className={classes.conclusions}>
           <Conclusion
-            header
-            productName='Product'
-            type='normal'
+            isHeader
+            product={{
+              name: 'Product',
+              type: 'normal',
+            }}
             skinCondition={{ timesEaten: 'TE', probability: 'P[%]', improvement: 'I', deterioration: 'D' }}
           />
-          {filterProducts.map((el) => {
+          {getMatchingWithInputValueProducts.map((el) => {
             const { product, timesEaten, type, probability, improvement, deterioration } = el;
             return (
               <Conclusion
                 key={product}
-                productName={product + (+timesEaten < 5 ? '*' : '')}
-                type={type}
+                product={{
+                  name: product + (+timesEaten < 5 ? '*' : ''),
+                  type,
+                }}
                 skinCondition={{
                   timesEaten,
                   probability,

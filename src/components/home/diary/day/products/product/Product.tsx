@@ -21,23 +21,23 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface Props {
-  text: string;
+  name: string;
 }
 
-const Product: React.FC<Props> = ({ text }) => {
+const Product: React.FC<Props> = ({ name }) => {
   const iconStyle = useStyles();
 
   const { removeProduct } = useActions();
 
-  const handleRemove = () => {
-    removeProduct(text);
+  const remove = () => {
+    removeProduct(name);
   };
 
   return (
     <div className={classes.product} data-test='component-product'>
-      <ClearIcon className={iconStyle.remove} onClick={handleRemove} data-test='remove-icon' />
+      <ClearIcon className={iconStyle.remove} onClick={remove} data-test='remove-icon' />
       <p className={classes.productName} data-test='product'>
-        {text}
+        {name}
       </p>
     </div>
   );

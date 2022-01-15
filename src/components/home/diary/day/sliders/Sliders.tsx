@@ -56,11 +56,11 @@ const Sliders: React.FC = () => {
   const { setSkin } = useActions();
   const { currentDate, currentDiary } = useTypedSelector((state) => state.diary);
 
-  const handleCurrentChange = (_: React.ChangeEvent<{}>, value: number | number[]) => {
+  const changeCurrentCondition = (_: React.ChangeEvent<{}>, value: number | number[]) => {
     setSkin(value as SkinConditionValues, 'currentSkinCondition');
   };
 
-  const handleComparedChange = (_: React.ChangeEvent<{}>, value: number | number[]) => {
+  const changeComparedCondition = (_: React.ChangeEvent<{}>, value: number | number[]) => {
     setSkin(value as SkinConditionValues, 'comparedSkinCondition');
   };
   return (
@@ -70,21 +70,25 @@ const Sliders: React.FC = () => {
           dataTest='slider-current'
           value={currentDiary[currentDate].currentSkinCondition}
           marks={currSkinStateMarks}
-          sliderContainerClassName={classes.sliderContainer}
-          sliderClassName={classes.slider}
+          classNames={{
+            slider: classes.slider,
+            sliderContainer: classes.sliderContainer,
+          }}
           title={'Current skin condition'}
           steps={currSkinStateMarks.length}
-          onChange={handleCurrentChange}
+          onChange={changeCurrentCondition}
         />
         <SliderInput
           dataTest='slider-compared'
           value={currentDiary[currentDate].comparedSkinCondition}
-          sliderContainerClassName={classes.sliderContainer}
+          classNames={{
+            slider: classes.slider,
+            sliderContainer: classes.sliderContainer,
+          }}
           marks={skinStateChangesMarks}
-          sliderClassName={classes.slider}
           title={'Skin condition compared to yesterday'}
           steps={skinStateChangesMarks.length}
-          onChange={handleComparedChange}
+          onChange={changeComparedCondition}
         />
       </div>
     </React.Fragment>

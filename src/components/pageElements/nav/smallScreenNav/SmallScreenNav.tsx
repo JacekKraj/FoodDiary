@@ -8,46 +8,42 @@ import Backdrop from './../../../UI/backdrop/Backdrop';
 import NavItems from './../navItems/NavItems';
 import Logo from './../../logo/Logo';
 import CloseIcon from '@material-ui/icons/Close';
-import { theme } from '../../../../utils/breakpoints/breakpoints';
+import { breakpoints } from '../../../../utils/breakpoints/breakpoints';
 
-interface Props {
-  handleShowSignIn: () => void;
-}
+const { laptopSm } = breakpoints;
 
 const useStyles = makeStyles(() => ({
   icon: {
     color: '#555',
     cursor: 'pointer',
-    [theme.breakpoints.up('xs')]: {
-      width: 30,
-      height: 30,
-    },
-    [theme.breakpoints.up('xl')]: {
+    width: 30,
+    height: 30,
+    [laptopSm]: {
       display: 'none',
     },
   },
 }));
 
-const SmallScreenNav: React.FC<Props> = ({ handleShowSignIn }) => {
-  const [show, setShow] = React.useState(false);
+const SmallScreenNav: React.FC = () => {
+  const [isVisible, setIsVisible] = React.useState(false);
 
   const iconStyle = useStyles();
 
-  const handleShowNav = () => {
-    setShow((currVal) => !currVal);
+  const changeNavVisibility = () => {
+    setIsVisible((currVal) => !currVal);
   };
 
   return (
     <React.Fragment>
-      <Header handleShowNav={handleShowNav} />
-      {show && <Backdrop onClick={handleShowNav} />}
+      <Header handleShowNav={changeNavVisibility} />
+      {isVisible && <Backdrop onClick={changeNavVisibility} />}
 
-      <div className={classnames(classes.smallScreenNav, show && classes.active)} data-test='component-small-screen-nav'>
+      <div className={classnames(classes.smallScreenNav, isVisible && classes.active)} data-test='component-small-screen-nav'>
         <div className={classes.navHeader}>
           <Logo className={classes.logo} />
-          <CloseIcon onClick={handleShowNav} className={iconStyle.icon} data-test='close-icon' />
+          <CloseIcon onClick={changeNavVisibility} className={iconStyle.icon} data-test='close-icon' />
         </div>
-        <NavItems handleShowSignIn={handleShowSignIn} handleShowNav={handleShowNav} />
+        <NavItems hideNav={changeNavVisibility} />
       </div>
     </React.Fragment>
   );

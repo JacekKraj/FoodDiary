@@ -12,6 +12,7 @@ const Analysys: React.FC = () => {
   React.useEffect(() => {
     getFullDiary(userEmail);
   }, []);
+
   return (
     <React.Fragment>
       <Nav />

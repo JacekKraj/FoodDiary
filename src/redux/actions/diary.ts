@@ -1,11 +1,5 @@
 import { ActionTypes } from '../actionTypes/actionTypes';
-import { Day, SkinConditionValues, DiaryDay, UserAutocomplition } from './../reducers/diaryReducer';
-
-interface ChangeDate {
-  type: ActionTypes.CHANGE_DATE;
-  date: string;
-  loading: boolean;
-}
+import { Day, SkinConditionValues, DiaryDay, AddedProduct } from './../reducers/diaryReducer';
 
 interface AddProduct {
   type: ActionTypes.ADD_PRODUCT;
@@ -42,7 +36,6 @@ interface SetDiary {
 interface ChangeDate {
   type: ActionTypes.CHANGE_DATE;
   date: string;
-  loading: boolean;
 }
 
 interface AnalyzeDiary {
@@ -55,13 +48,13 @@ interface SetAnalysisLoading {
   loading: boolean;
 }
 
-interface SetUserAutocomplitions {
-  type: ActionTypes.SET_USER_AUTOCOMPLITIONS;
-  autocomplitions: UserAutocomplition[];
+interface SetAddedProductsList {
+  type: ActionTypes.SET_ADDED_PRODUCTS_LIST;
+  addedProductsList: AddedProduct[];
 }
 
 export type Action =
-  | SetUserAutocomplitions
+  | SetAddedProductsList
   | AddProduct
   | ChangeDate
   | RemoveProduct

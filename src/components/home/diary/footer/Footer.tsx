@@ -19,11 +19,11 @@ const Footer: React.FC = () => {
   const iconStyle = useStyles();
 
   const { saveDiary } = useActions();
-  const { currentDiary, downloadedDiary, userAutocomplitions } = useTypedSelector((state) => state.diary);
+  const { currentDiary, downloadedDiary, addedProductsList } = useTypedSelector((state) => state.diary);
   const { userEmail } = useTypedSelector((state) => state.auth);
 
-  const handleSave = () => {
-    saveDiary(userEmail, currentDiary, downloadedDiary, userAutocomplitions);
+  const save = () => {
+    saveDiary(userEmail, currentDiary, downloadedDiary, addedProductsList);
   };
 
   return (
@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
           Remember to add all the products you ate on that day. This is very important because only then will we be able to find your real problem.
         </p>
       </div>
-      <Button dataTest='save-button' className={classes.buttonAdditional} onClick={handleSave}>
+      <Button dataTest='save-button' className={classes.buttonAdditional} onClick={save}>
         Save Changes
       </Button>
     </FooterWrapper>

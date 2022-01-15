@@ -6,13 +6,13 @@ import classes from './autoCompleteItem.module.scss';
 interface Props {
   text: string;
   pickItem: (value: string) => void;
-  active: boolean;
+  isActive: boolean;
 }
 
-const AutoCompleteItem: React.FC<Props> = ({ text, pickItem, active }) => {
+const AutoCompleteItem: React.FC<Props> = ({ text, pickItem, isActive }) => {
   return (
     <li
-      className={classnames(classes.autoCompleteItem, active && classes.active)}
+      className={classnames(classes.autoCompleteItem, isActive && classes.active)}
       onClick={() => pickItem(text)}
       data-test='component-auto-complete-item'
     >

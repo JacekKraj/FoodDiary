@@ -3,22 +3,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import classes from './header.module.scss';
-import { theme } from '../../../utils/breakpoints/breakpoints';
+import { breakpoints } from '../../../utils/breakpoints/breakpoints';
 import Logo from '../logo/Logo';
+
+const { mobileHorizontal, laptopSm } = breakpoints;
 
 const useStyles = makeStyles(() => ({
   icon: {
     cursor: 'pointer',
-    [theme.breakpoints.up('xs')]: {
-      fontWeight: 'lighter',
-      width: 27,
-      height: 27,
-    },
-    [theme.breakpoints.up('sm')]: {
+    fontWeight: 'lighter',
+    width: 27,
+    height: 27,
+    [mobileHorizontal]: {
       width: 30,
       height: 30,
     },
-    [theme.breakpoints.up('xl')]: {
+    [laptopSm]: {
       display: 'none',
     },
   },
