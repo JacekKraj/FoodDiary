@@ -1,6 +1,6 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
-import { ModifiedAnalyzedProduct, UserAutocomplition } from '../../../../../redux/reducers/diaryReducer';
+import { ModifiedAnalyzedProduct, AddedProduct } from '../../../../../redux/reducers/diaryReducer';
 
 import Products from './Products';
 import { findByTestAttr, storeFactory } from '../../../../../utils/tests/testHelperFunction';
@@ -9,7 +9,7 @@ interface InitialState {
   diary: {
     dangerousProducts: ModifiedAnalyzedProduct[];
     safeProducts: ModifiedAnalyzedProduct[];
-    userAutocomplitions: UserAutocomplition[];
+    addedProductsList: AddedProduct[];
   };
 }
 
@@ -28,9 +28,9 @@ const setup = () => {
     diary: {
       dangerousProducts: [{ product: 'apple', ...customProduct('5') }],
       safeProducts: [{ product: 'banana', ...customProduct('1') }],
-      userAutocomplitions: [
-        { product: 'apple', timesUsed: 1 },
-        { product: 'banana', timesUsed: 1 },
+      addedProductsList: [
+        { name: 'apple', timesAdded: 1 },
+        { name: 'banana', timesAdded: 1 },
       ],
     },
   };
@@ -64,7 +64,7 @@ describe('<Products />', () => {
     expect(conclusionProductName.last().text()).toEqual('apple');
   });
 
-  it('displays no products info when product browser value doesnt match any user autocomplition', () => {
+  it('displays no products info when product browser value doesnt match any product from addedProductsList', () => {
     const addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
     addProductBrowser.simulate('change', { target: { value: 'c' } });
     const noProductsInfo = findByTestAttr(wrapper, 'no-data-info');

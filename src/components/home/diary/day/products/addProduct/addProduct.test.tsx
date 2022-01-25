@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import { findByTestAttr, storeFactory } from '../../../../../../utils/tests/testHelperFunction';
 import AddProduct from './AddProduct';
 import { getModifiedDate } from './../../../../../../utils/helperFunctions/getModifiedDate';
-import { DiaryDay, UserAutocomplition } from './../../../../../../redux/reducers/diaryReducer';
+import { DiaryDay, AddedProduct } from './../../../../../../redux/reducers/diaryReducer';
 
 interface InitialState {
   diary: {
     currentDiary: DiaryDay;
     currentDate: string;
-    userAutocomplitions: UserAutocomplition[];
+    addedProductsList: AddedProduct[];
   };
 }
 
@@ -24,7 +24,7 @@ const initialState: InitialState = {
       },
     },
     currentDate: getModifiedDate(),
-    userAutocomplitions: [],
+    addedProductsList: [],
   },
 };
 
@@ -55,7 +55,7 @@ describe('<AddProduct />', () => {
   it('adds product to user autocomplitions', () => {
     const form = findByTestAttr(wrapper, 'component-add-product');
     form.simulate('submit');
-    expect(store.getState().diary.userAutocomplitions[0].product).toEqual('app');
+    expect(store.getState().diary.addedProductsList[0].name).toEqual('app');
   });
 
   it('still has a focus after clicking submit button', () => {

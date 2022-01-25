@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Diary from './Diary';
 import { findByTestAttr, storeFactory } from '../../../utils/tests/testHelperFunction';
 import { getModifiedDate } from './../../../utils/helperFunctions/getModifiedDate';
-import { UserAutocomplition } from './../../../redux/reducers/diaryReducer';
+import { AddedProduct } from './../../../redux/reducers/diaryReducer';
 
 interface Days {
   [index: string]: { products: string[]; currentSkinCondition: number; comparedSkinCondition: number };
@@ -15,7 +15,7 @@ interface InitialState {
     currentDate: string;
     currentDiary: Days;
     downloadedDiary: Days;
-    userAutocomplitions: UserAutocomplition[];
+    addedProductsList: AddedProduct[];
   };
 }
 
@@ -45,14 +45,14 @@ describe('<Diary />', () => {
     };
     it("shows spinner on clicking change date arrow when this day's content wasn't downloaded yet", () => {
       const wrapper = setup({
-        diary: { currentDate: getModifiedDate(), currentDiary: sampleDiary, downloadedDiary: {}, userAutocomplitions: [] },
+        diary: { currentDate: getModifiedDate(), currentDiary: sampleDiary, downloadedDiary: {}, addedProductsList: [] },
       });
       const spinner = simulateClicking(wrapper);
       expect(spinner.exists()).toBe(true);
     });
     it("doesn't show spinner on clicking change date arrow when this day's conntent already exists in downloaded", () => {
       const wrapper = setup({
-        diary: { currentDate: getModifiedDate(), currentDiary: sampleDiary, downloadedDiary: sampleDiary, userAutocomplitions: [] },
+        diary: { currentDate: getModifiedDate(), currentDiary: sampleDiary, downloadedDiary: sampleDiary, addedProductsList: [] },
       });
       const spinner = simulateClicking(wrapper);
       expect(spinner.exists()).toBe(true);
@@ -62,7 +62,7 @@ describe('<Diary />', () => {
         '2021-09-01': { products: ['apple'], ...sampleSkinCondition },
         '2021-08-31': { products: ['orange'], currentSkinCondition: 75, comparedSkinCondition: 25 },
       };
-      const wrapper = setup({ diary: { currentDate: '2021-09-01', currentDiary: diary, downloadedDiary: diary, userAutocomplitions: [] } });
+      const wrapper = setup({ diary: { currentDate: '2021-09-01', currentDiary: diary, downloadedDiary: diary, addedProductsList: [] } });
       simulateClicking(wrapper);
       const product = findByTestAttr(wrapper, 'product');
       const comparedSlider = findByTestAttr(wrapper, 'slider-compared').first();
@@ -81,7 +81,7 @@ describe('<Diary />', () => {
           currentDate: getModifiedDate(),
           currentDiary: sampleDiary,
           downloadedDiary: sampleDiary,
-          userAutocomplitions: [{ product: 'apple', timesUsed: 1 }],
+          addedProductsList: [{ name: 'apple', timesAdded: 1 }],
         },
       });
       const removeContentButton = findByTestAttr(wrapper, 'remove-content-button').first();
@@ -91,7 +91,7 @@ describe('<Diary />', () => {
       wrapper.unmount();
     });
     it('updates userAutocomplitions state', () => {
-      expect(store.getState().diary.userAutocomplitions).toEqual([]);
+      expect(store.getState().diary.addedProductsList).toEqual([]);
     });
     it('removes existing products', () => {
       const product = findByTestAttr(wrapper, 'product');

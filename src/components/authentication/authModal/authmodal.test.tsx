@@ -17,7 +17,7 @@ let store: any;
 const setup = (initialState: InitialState = {}, isSignIn: boolean) => {
   store = storeFactory(initialState);
 
-  const children = isSignIn ? <SignIn handleShowSignIn={jest.fn()} /> : <SignUp handleShowSignUp={jest.fn()} />;
+  const children = isSignIn ? <SignIn /> : <SignUp />;
 
   const props = {
     onClick: () => {},

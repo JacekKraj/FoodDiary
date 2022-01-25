@@ -14,8 +14,8 @@ const { mobileVertical, laptopSm } = breakpoints;
 
 const useStyles = makeStyles(() => ({
   icon: {
+    color: '#888',
     [mobileVertical]: {
-      color: '#888',
       width: 95,
       height: 95,
     },

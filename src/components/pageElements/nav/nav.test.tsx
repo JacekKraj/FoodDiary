@@ -16,7 +16,7 @@ const setup = (initialState: InitialState) => {
   return mount(
     <Provider store={store}>
       <BrowserRouter>
-        <Nav handleShowSignIn={jest.fn()} />
+        <Nav />
       </BrowserRouter>
     </Provider>
   );

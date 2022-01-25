@@ -53,12 +53,10 @@ const InputAutoComplete: React.FC<Props> = (props) => {
     if (!isTyping) return;
 
     const updateAutocomplitions = async () => {
-      const modifiedInputValue = modifyProductName(input.value);
-
-      const autocomplitinsFromAddedProductsList = [...getMatchingAddedProductsNames(modifiedInputValue, addedProductsList)];
+      const autocomplitinsFromAddedProductsList = [...getMatchingAddedProductsNames(input.value, addedProductsList)];
 
       try {
-        const response = await axios.get<string[]>(`https://api.edamam.com/auto-complete?q=${modifiedInputValue}`, {
+        const response = await axios.get<string[]>(`https://api.edamam.com/auto-complete?q=${modifyProductName(input.value)}`, {
           cancelToken: axiosRequest.token,
         });
 
