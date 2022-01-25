@@ -147,6 +147,8 @@ const setAddedProductsListAction = (addedProductsList: AddedProduct[]): Action =
   };
 };
 
+////////////////////////////////////// @@@@@@@@@@@@@@@@@@@@@@222
+
 export const setAddedProductsList = (userEmail: string) => {
   return (dispatch: Dispatch<Action>) => {
     const modifiedEmail = modifyEmail(userEmail);
@@ -161,3 +163,5 @@ export const setAddedProductsList = (userEmail: string) => {
       .catch(() => {});
   };
 };
+
+////////////////////////////////////// @@@@@@@@@@@@@@@@@@@@@@@2 22

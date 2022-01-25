@@ -29,6 +29,7 @@ const App = () => {
 
       setIsLoading(false);
     });
+    setIsLoading(false);
   }, []);
 
   React.useEffect(() => {

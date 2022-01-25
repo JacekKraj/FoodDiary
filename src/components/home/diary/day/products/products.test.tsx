@@ -1,18 +1,17 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
 import moxios from 'moxios';
-import axios from 'axios';
 
 import Products from './Products';
 import { findByTestAttr, storeFactory } from '../../../../../utils/tests/testHelperFunction';
 import { getModifiedDate } from './../../../../../utils/helperFunctions/getModifiedDate';
-import { UserAutocomplition } from './../../../../../redux/reducers/diaryReducer';
+import { AddedProduct } from './../../../../../redux/reducers/diaryReducer';
 
 interface InitialState {
   diary: {
     currentDate: string;
     currentDiary: {};
-    userAutocomplitions?: UserAutocomplition[];
+    addedProductsList?: AddedProduct[];
   };
 }
 let store: any;
@@ -41,7 +40,7 @@ describe('<Products />', () => {
         diary: {
           currentDate: getModifiedDate(),
           currentDiary: { [getModifiedDate()]: { products: ['apple'] }, '2020-09-01': { products: ['banana'] } },
-          userAutocomplitions: [{ product: 'apple', timesUsed: 1 }],
+          addedProductsList: [{ name: 'apple', timesAdded: 1 }],
         },
       });
     });
@@ -60,7 +59,7 @@ describe('<Products />', () => {
       removeIcon.simulate('click');
       product = findByTestAttr(wrapper, 'component-product');
       expect(product.exists()).toBe(false);
-      expect(store.getState().diary.userAutocomplitions).toEqual([]);
+      expect(store.getState().diary.addedProductsList).toEqual([]);
     });
 
     it('displays 2 products after submitting browser form', () => {
@@ -71,30 +70,6 @@ describe('<Products />', () => {
       const product = findByTestAttr(wrapper, 'component-product');
       expect(product.first().text()).toBe('apple');
       expect(product.last().text()).toBe('orange');
-    });
-
-    it('changes input value on picking item with arrows from autocomplete', (done) => {
-      let addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
-      addProductBrowser.simulate('focus');
-      addProductBrowser.simulate('change', { target: { value: 'a' } });
-
-      moxios.wait(() => {
-        let request = moxios.requests.mostRecent();
-        request
-          .respondWith({
-            status: 200,
-            response: ['acai'],
-          })
-          .then(() => {
-            wrapper.update();
-            const event = new KeyboardEvent('keydown', { key: 'ArrowDown' });
-            global.dispatchEvent(event);
-            wrapper.update();
-            addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
-            expect(addProductBrowser.prop('value')).toEqual('apple');
-            done();
-          });
-      });
     });
   });
 });
