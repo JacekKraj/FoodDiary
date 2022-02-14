@@ -32,7 +32,7 @@ export const SignUp: React.FC = () => {
       return;
     }
 
-    register(formValues.email, formValues.password, hideModal);
+    register({ email: formValues.email, password: formValues.password }, hideModal);
   };
 
   const initialValues: FormValues = {

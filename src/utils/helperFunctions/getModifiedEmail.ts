@@ -1,3 +1,3 @@
-export const modifyEmail = (email: string) => {
+export const getModifiedEmail = (email: string) => {
   return email.replace(/[.*+\-?^${}()|[\]@\\]/g, '');
 };

@@ -11,8 +11,8 @@ export {
 } from './authentication';
 
 export {
-  getDiary,
-  setDiary,
+  downloadSingleDiaryDay,
+  setSingleDiaryDay,
   addProduct,
   removeProduct,
   saveDiary,

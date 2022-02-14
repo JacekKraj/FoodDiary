@@ -18,7 +18,6 @@ const App = () => {
 
   React.useEffect(() => {
     toast.configure();
-
     fire.auth().onAuthStateChanged((authUser) => {
       if (authUser && fire.auth().currentUser?.emailVerified) {
         hideModal();
@@ -26,14 +25,12 @@ const App = () => {
       } else {
         signOut();
       }
-
       setIsLoading(false);
     });
-    setIsLoading(false);
   }, []);
 
   React.useEffect(() => {
-    setAddedProductsList(userEmail);
+    setAddedProductsList();
   }, [userEmail]);
 
   const spinnerContainer = (

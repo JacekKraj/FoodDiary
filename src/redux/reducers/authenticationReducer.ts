@@ -1,5 +1,6 @@
 import { Action } from '../actions/authentication';
 import { ActionTypes } from '../actionTypes/actionTypes';
+import { getModifiedEmail } from './../../utils/helperFunctions/getModifiedEmail';
 
 interface InitialState {
   isLoading: boolean;
@@ -28,7 +29,7 @@ const authenticationReducer = (state: InitialState = initialState, action: Actio
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        userEmail: action.userEmail,
+        userEmail: getModifiedEmail(action.userEmail),
       };
     case ActionTypes.AUTHENTICATION_FAIL:
       return {
