@@ -28,16 +28,17 @@ const InputAutoComplete: React.FC<Props> = (props) => {
 
       if (e.key === 'ArrowDown') {
         newSuggestionIndex = newSuggestionIndex + 1 > autocomplitions.length ? 1 : newSuggestionIndex + 1;
+        setIsTyping(false);
         input.setValue(autocomplitions[newSuggestionIndex - 1]);
       }
 
       if (e.key === 'ArrowUp') {
         e.preventDefault();
         newSuggestionIndex = newSuggestionIndex - 1 <= 0 ? autocomplitions.length : newSuggestionIndex - 1;
+        setIsTyping(false);
         input.setValue(autocomplitions[newSuggestionIndex - 1]);
       }
 
-      setIsTyping(false);
       activeSuggestion.setIndex(newSuggestionIndex);
     };
 
