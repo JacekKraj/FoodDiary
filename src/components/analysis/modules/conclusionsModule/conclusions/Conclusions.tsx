@@ -8,7 +8,7 @@ import Spinner from './../../../../UI/spinner/Spinner';
 import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
 
 const Conclusions: React.FC = () => {
-  const { analysisLoading, dangerousProducts } = useTypedSelector((state) => state.diary);
+  const { isAnalysisLoading, dangerousProducts } = useTypedSelector((state) => state.diary);
 
   const noConclusionsInfo = (
     <NoDataInfo className={classes.noDataInfoAdditional}>
@@ -39,7 +39,7 @@ const Conclusions: React.FC = () => {
   return (
     <ModuleMainContentWrapper className={classes.moduleMainContentAdditional}>
       <h3 className={classes.title}>Products that seem to be bad for your skin:</h3>
-      {!analysisLoading ? conclusions : <Spinner />}
+      {!isAnalysisLoading ? conclusions : <Spinner />}
     </ModuleMainContentWrapper>
   );
 };

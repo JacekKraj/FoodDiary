@@ -7,7 +7,7 @@ import { ModifiedAnalyzedProduct } from './../../../../../redux/reducers/diaryRe
 
 interface InitialState {
   diary: {
-    analysisLoading: boolean;
+    isAnalysisLoading: boolean;
     dangerousProducts: ModifiedAnalyzedProduct[];
   };
 }
@@ -23,13 +23,13 @@ const setup = (initialState: InitialState) => {
 
 describe('<Conculusions />', () => {
   it('shows spinner when loading is true', () => {
-    const wrapper = setup({ diary: { analysisLoading: true, dangerousProducts: [] } });
+    const wrapper = setup({ diary: { isAnalysisLoading: true, dangerousProducts: [] } });
     const spinner = findByTestAttr(wrapper, 'component-spinner');
     expect(spinner.exists()).toBe(true);
   });
 
   it('shows no products info when dangerous products array is empty', () => {
-    const wrapper = setup({ diary: { analysisLoading: false, dangerousProducts: [] } });
+    const wrapper = setup({ diary: { isAnalysisLoading: false, dangerousProducts: [] } });
     const noProductsInfo = findByTestAttr(wrapper, 'no-data-info');
     expect(noProductsInfo.exists()).toBe(true);
   });
@@ -37,7 +37,7 @@ describe('<Conculusions />', () => {
   it('shows products in correct order when dangerous products array is not empty', () => {
     const wrapper = setup({
       diary: {
-        analysisLoading: false,
+        isAnalysisLoading: false,
         dangerousProducts: [
           { timesEaten: '5', improvement: '0', deterioration: '5', probability: '100', type: 'red', product: 'apple' },
           { timesEaten: '5', improvement: '1', deterioration: '4', probability: '20', type: 'normal', product: 'banana' },

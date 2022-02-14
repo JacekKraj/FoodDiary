@@ -9,16 +9,15 @@ import { useActions } from '../../../redux/hooks/useActions';
 import { useTypedSelector } from './../../../redux/hooks/useTypedSelector';
 
 const Diary: React.FC = () => {
-  const { getDiary } = useActions();
+  const { downloadSingleDiaryDay } = useActions();
 
-  const { userEmail } = useTypedSelector((state) => state.auth);
   const { currentDate, downloadedDiary } = useTypedSelector((state) => state.diary);
 
   React.useEffect(() => {
     if (!downloadedDiary[currentDate]) {
-      getDiary(currentDate, userEmail);
+      downloadSingleDiaryDay(currentDate);
     }
-  }, [currentDate, userEmail]);
+  }, [currentDate]);
 
   return (
     <PageMainContentWrapper>

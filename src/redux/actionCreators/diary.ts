@@ -2,94 +2,93 @@ import { Dispatch } from 'redux';
 
 import { fire } from '../../fireConfig';
 import { Action, SkinConditonTypes } from './../actions/diary';
-import { SkinConditionValues, Day, DiaryDay, AddedProduct } from '../reducers/diaryReducer';
+import { SkinConditionValues, SingleDayData, DiaryDays, AddedProduct } from '../reducers/diaryReducer';
 import { ActionTypes } from './../actionTypes/actionTypes';
-import { modifyEmail } from '../../utils/helperFunctions/modifyEmail';
 import { successToast, failToast } from '../../utils/toasts/toasts';
+import { RootState } from './../reducers';
 
-const setAnalysisLoading = (loading: boolean): Action => {
+const setIsAnalysisLoading = (isLoading: boolean): Action => {
   return {
     type: ActionTypes.SET_ANALYSIS_LOADING,
-    loading,
+    isLoading,
   };
 };
 
-export const addProduct = (product: string): Action => {
+export const addProduct = (name: string): Action => {
   return {
     type: ActionTypes.ADD_PRODUCT,
-    product,
+    name,
   };
 };
 
-export const removeProduct = (product: string): Action => {
+export const removeProduct = (name: string): Action => {
   return {
     type: ActionTypes.REMOVE_PRODUCT,
-    product,
+    name,
   };
 };
 
-export const setDiary = (day: Day | null, date: string): Action => {
+export const setSingleDiaryDay = (data: SingleDayData | null, date: string): Action => {
   return {
-    type: ActionTypes.SET_DIARY,
-    day,
+    type: ActionTypes.SET_SINGLE_DIARY_DAY,
+    data,
     date,
   };
 };
 
-export const getDiary = (date: string, userEmail: string) => {
-  return (dispatch: Dispatch<Action>) => {
-    const modifiedEmail = modifyEmail(userEmail);
-    fire
-      .database()
-      .ref(`${modifiedEmail}/diary/${date}`)
-      .get()
-      .then((snapshot) => {
-        let day: Day | null = snapshot.val();
-        if (day && !day.products) {
-          day = { ...day, products: [] };
-        }
-        dispatch(setDiary(day, date));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+export const downloadSingleDiaryDay = (date: string) => {
+  return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
+    const { userEmail } = getState().auth;
+
+    const snapshot = await fire.database().ref(`${userEmail}/diary/${date}`).get();
+
+    const singleDayData: SingleDayData | null = snapshot.val();
+
+    dispatch(setSingleDiaryDay(singleDayData, date));
   };
 };
 
-const findModifiedDays = (currentDiary: DiaryDay, downloadedDiary: DiaryDay) => {
-  const modifiedDays: DiaryDay[] = [];
+const getModifiedDaysDates = (currentDiary: DiaryDays, downloadedDiary: DiaryDays) => {
+  const modifiedDays: string[] = [];
+
   for (let date in currentDiary) {
     const day = currentDiary[date];
-    const wasEdited = JSON.stringify(currentDiary[date]) !== JSON.stringify(downloadedDiary[date]);
-    const isBasicDay = !day.products.length || day.currentSkinCondition === 50 || day.comparedSkinCondition === 50;
-    if (!isBasicDay || wasEdited) {
-      modifiedDays.push({ [date]: day });
+    const isEdited = JSON.stringify(currentDiary[date]) !== JSON.stringify(downloadedDiary[date]);
+    const isBasicDay = !day.productsNames.length && day.currentSkinCondition === 50 && day.comparedSkinCondition === 50;
+
+    if (!isBasicDay || isEdited) {
+      modifiedDays.push(date);
     }
   }
   return modifiedDays;
 };
 
-export const saveDiary = (userEmail: string, currentDiary: DiaryDay, downloadedDiary: DiaryDay, autocomplitions: AddedProduct[]) => {
-  return (dispatch: Dispatch<Action>) => {
-    if (JSON.stringify(currentDiary) !== JSON.stringify(downloadedDiary)) {
-      const modifiedEmail = modifyEmail(userEmail);
-      const modifiedDays = findModifiedDays(currentDiary, downloadedDiary);
-      Promise.all([
-        ...modifiedDays.map((el) => {
-          return fire
-            .database()
-            .ref(`/${modifiedEmail}/diary/${Object.keys(el)[0]}`)
-            .update(Object.values(el)[0]);
+export const saveDiary = () => {
+  return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
+    const { userEmail } = getState().auth;
+    const { currentDiary, downloadedDiary, addedProductsList } = getState().diary;
+
+    if (JSON.stringify(currentDiary) === JSON.stringify(downloadedDiary)) return;
+
+    const modifiedDaysDates = getModifiedDaysDates(currentDiary, downloadedDiary);
+
+    try {
+      await Promise.all([
+        ...modifiedDaysDates.map((date) => {
+          return fire.database().ref(`/${userEmail}/diary/${date}`).update(currentDiary[date]);
         }),
-        fire.database().ref(`/${modifiedEmail}/addedProductsList`).set(autocomplitions),
-      ])
-        .then(() => {
-          dispatch({ type: ActionTypes.SAVE_DIARY });
-          successToast('Your data has been saved.');
-        })
-        .catch((error: { message: string }) => {
-          failToast(error.message);
-        });
+        fire.database().ref(`/${userEmail}/addedProductsList`).set(addedProductsList),
+      ]);
+
+      dispatch({ type: ActionTypes.SAVE_DIARY });
+      successToast('Your data has been saved.');
+    } catch (error) {
+      let message = 'Failed to save.';
+
+      if (error instanceof Error) {
+        message = error.message;
+      }
+      failToast(message);
     }
   };
 };
@@ -115,28 +114,29 @@ export const changeDate = (date: string): Action => {
   };
 };
 
-const analyzeDiary = (fullDiary: DiaryDay): Action => {
+const analyzeFullDiary = (fullDiary: DiaryDays): Action => {
   return {
-    type: ActionTypes.ANALYZE_DIARY,
-    fullDiary: fullDiary,
+    type: ActionTypes.ANALYZE_FULL_DIARY,
+    fullDiary,
   };
 };
 
-export const getFullDiary = (userEmail: string) => {
-  return (dispatch: Dispatch<Action>) => {
-    dispatch(setAnalysisLoading(true));
-    const modifiedEmail = modifyEmail(userEmail);
-    fire
-      .database()
-      .ref(`${modifiedEmail}/diary`)
-      .get()
-      .then((snapshot) => {
-        dispatch(analyzeDiary(snapshot.val()));
-        dispatch(setAnalysisLoading(false));
-      })
-      .catch(() => {
-        dispatch(setAnalysisLoading(false));
-      });
+export const getFullDiary = () => {
+  return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
+    const { userEmail } = getState().auth;
+
+    dispatch(setIsAnalysisLoading(true));
+
+    try {
+      const snapshot = await fire.database().ref(`${userEmail}/diary`).get();
+
+      const fullDiary = snapshot.val();
+
+      dispatch(analyzeFullDiary(fullDiary));
+      dispatch(setIsAnalysisLoading(false));
+    } catch (_) {
+      dispatch(setIsAnalysisLoading(false));
+    }
   };
 };
 
@@ -147,21 +147,16 @@ const setAddedProductsListAction = (addedProductsList: AddedProduct[]): Action =
   };
 };
 
-////////////////////////////////////// @@@@@@@@@@@@@@@@@@@@@@222
+export const setAddedProductsList = () => {
+  return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
+    const { userEmail } = getState().auth;
 
-export const setAddedProductsList = (userEmail: string) => {
-  return (dispatch: Dispatch<Action>) => {
-    const modifiedEmail = modifyEmail(userEmail);
-    fire
-      .database()
-      .ref(`${modifiedEmail}/addedProductsList`)
-      .get()
-      .then((snapshot) => {
-        const addedProductsList = snapshot.val() as AddedProduct[];
-        dispatch(setAddedProductsListAction(addedProductsList));
-      })
-      .catch(() => {});
+    try {
+      const snapshot = await fire.database().ref(`${userEmail}/addedProductsList`).get();
+
+      const addedProductsList = snapshot.val() as AddedProduct[];
+
+      dispatch(setAddedProductsListAction(addedProductsList));
+    } catch (_) {}
   };
 };
-
-////////////////////////////////////// @@@@@@@@@@@@@@@@@@@@@@@2 22

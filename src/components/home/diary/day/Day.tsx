@@ -7,11 +7,11 @@ import { useTypedSelector } from '../../../../redux/hooks/useTypedSelector';
 import ModuleMainContentWrapper from './../../../wrappers/moduleMainContentWrapper/ModuleMainContentWrapper';
 
 const Day: React.FC = () => {
-  const { diaryLoading } = useTypedSelector((state) => state.diary);
+  const { isDiaryLoading } = useTypedSelector((state) => state.diary);
 
   return (
     <ModuleMainContentWrapper>
-      {diaryLoading ? (
+      {isDiaryLoading ? (
         <Spinner />
       ) : (
         <React.Fragment>

@@ -9,15 +9,15 @@ import NoDataInfo from '../../../../UI/noDataInfo/NoDataInfo';
 const Products: React.FC = () => {
   const { currentDiary, currentDate } = useTypedSelector((state) => state.diary);
 
-  const areCurrentDateProductsExisting = !!currentDiary[currentDate].products.length;
+  const areCurrentDateProductsExisting = !!currentDiary[currentDate].productsNames.length;
 
   return (
     <div>
       <AddProduct />
       <div className={classes.products}>
         {areCurrentDateProductsExisting ? (
-          currentDiary[currentDate].products.map((productName) => {
-            return <Product name={productName} key={productName} />;
+          currentDiary[currentDate].productsNames.map((name) => {
+            return <Product name={name} key={name} />;
           })
         ) : (
           <NoDataInfo className={classes.noDataInfoAdditional}>You haven't added any products yet.</NoDataInfo>
