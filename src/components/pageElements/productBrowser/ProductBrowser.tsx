@@ -7,7 +7,7 @@ import InputAutoComplete from '../inputAutoComplete/InputAutoComplete';
 
 import classes from './productBrowser.module.scss';
 import { breakpoints } from '../../../utils/breakpoints/breakpoints';
-import useOnClickOutside from './../../../utils/hooks/useOnClickOutside';
+import useOnClickOutside from '../../../utils/hooks/useOnClickOutside';
 
 const { mobileHorizontal } = breakpoints;
 

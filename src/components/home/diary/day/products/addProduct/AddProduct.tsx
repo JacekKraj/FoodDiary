@@ -3,7 +3,7 @@ import React from 'react';
 import classes from './addProduct.module.scss';
 import Button from '../../../../../UI/button/Button';
 import { useActions } from '../../../../../../redux/hooks/useActions';
-import ProductBrowser from '../../../../../UI/productBrowser/ProductBrowser';
+import ProductBrowser from '../../../../../pageElements/productBrowser/ProductBrowser';
 import { modifyProductName } from '../../../../../../utils/helperFunctions/modifyProductName';
 
 const AddProduct: React.FC = () => {

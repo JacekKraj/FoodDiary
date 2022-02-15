@@ -154,7 +154,7 @@ export const getSafeAndDangerousProducts = (analyzedProducts: AnalyzedProducts) 
       ...productValues,
       probability: harmfulnessProbability,
       type,
-      product,
+      name: product,
     };
 
     // if product was eaten less than 5 times it must be considered as safe, because it's too little data to find results reliable

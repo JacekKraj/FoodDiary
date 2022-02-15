@@ -11,18 +11,16 @@ const Products: React.FC = () => {
 
   const areCurrentDateProductsExisting = !!currentDiary[currentDate].productsNames.length;
 
+  const products = currentDiary[currentDate].productsNames.map((name) => {
+    return <Product name={name} key={name} />;
+  });
+
+  const noProductsInfo = <NoDataInfo className={classes.noDataInfoAdditional}>You haven't added any products yet.</NoDataInfo>;
+
   return (
     <div>
       <AddProduct />
-      <div className={classes.products}>
-        {areCurrentDateProductsExisting ? (
-          currentDiary[currentDate].productsNames.map((name) => {
-            return <Product name={name} key={name} />;
-          })
-        ) : (
-          <NoDataInfo className={classes.noDataInfoAdditional}>You haven't added any products yet.</NoDataInfo>
-        )}
-      </div>
+      <div className={classes.products}>{areCurrentDateProductsExisting ? products : noProductsInfo}</div>
     </div>
   );
 };

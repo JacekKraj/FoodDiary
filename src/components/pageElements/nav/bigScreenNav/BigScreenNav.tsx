@@ -1,7 +1,7 @@
 import React from 'react';
 
 import classes from './bigScreenNav.module.scss';
-import Logo from './../../logo/Logo';
+import Logo from '../../../UI/logo/Logo';
 import NavItems from './../navItems/NavItems';
 
 const BigScreenNav: React.FC = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './products.module.scss';
 import ModuleMainContentWrapper from '../../../../wrappers/moduleMainContentWrapper/ModuleMainContentWrapper';
-import ProductBrowser from '../../../../UI/productBrowser/ProductBrowser';
+import ProductBrowser from '../../../../pageElements/productBrowser/ProductBrowser';
 import Conclusion from '../../conclusionsModule/conclusions/conclusion/Conclusion';
 import NoDataInfo from './../../../../UI/noDataInfo/NoDataInfo';
 import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
@@ -18,7 +18,7 @@ const Products: React.FC = () => {
     const matchingAddedProducts = getMatchingAddedProductsNames(inputValue, addedProductsList);
 
     const matchingProducts = [...dangerousProducts, ...safeProducts].filter((product) => {
-      return !!matchingAddedProducts.includes(product.product);
+      return !!matchingAddedProducts.includes(product.name);
     });
 
     return matchingProducts;
@@ -43,13 +43,16 @@ const Products: React.FC = () => {
             }}
             skinCondition={{ timesEaten: 'TE', probability: 'P[%]', improvement: 'I', deterioration: 'D' }}
           />
-          {getMatchingWithInputValueProducts.map((el) => {
-            const { product, timesEaten, type, probability, improvement, deterioration } = el;
+          {getMatchingWithInputValueProducts.map((product) => {
+            const { name, timesEaten, type, probability, improvement, deterioration } = product;
+
+            const isResultReliable = +timesEaten < 5;
+
             return (
               <Conclusion
-                key={product}
+                key={name}
                 product={{
-                  name: product + (+timesEaten < 5 ? '*' : ''),
+                  name: name + (isResultReliable ? '*' : ''),
                   type,
                 }}
                 skinCondition={{

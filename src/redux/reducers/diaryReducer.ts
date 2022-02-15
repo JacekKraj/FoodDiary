@@ -39,7 +39,7 @@ export interface AnalyzedProducts {
 export type ModifiedAnalyzedProduct = {
   type: string;
   probability: string;
-  product: string;
+  name: string;
 } & AnalyzedProduct;
 
 const customDayData = {

@@ -7,17 +7,17 @@
 
 .buttonAdditional {
   font-size: 14px;
-  padding: 0.55em;
+  padding: 0.55em !important;
   max-width: 100px;
   border-radius: 10px;
   margin-left: 0.5em;
 
   @media (min-width: 500px) {
-    padding: 0.6em 1em;
+    padding: 0.6em 1em !important;
   }
 
   @include laptopSm {
-    padding: 0.6em 1.5em;
+    padding: 0.6em 1.5em !important;
     margin-left: 1em;
   }
 }

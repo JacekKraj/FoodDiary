@@ -19,6 +19,7 @@ const Routes: React.FC = () => {
   const routes = !isAuthenticated ? (
     <Switch>
       <Route path='/' exact render={() => <Authentication />} />
+      <Route path='/faq' exact render={() => <Faq />} />
       <Redirect to='/' exact />
     </Switch>
   ) : (

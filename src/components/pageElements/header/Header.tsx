@@ -4,7 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import classes from './header.module.scss';
 import { breakpoints } from '../../../utils/breakpoints/breakpoints';
-import Logo from '../logo/Logo';
+import Logo from '../../UI/logo/Logo';
 
 const { mobileHorizontal, laptopSm } = breakpoints;
 

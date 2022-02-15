@@ -9,18 +9,14 @@ import ModuleMainContentWrapper from './../../../wrappers/moduleMainContentWrapp
 const Day: React.FC = () => {
   const { isDiaryLoading } = useTypedSelector((state) => state.diary);
 
-  return (
-    <ModuleMainContentWrapper>
-      {isDiaryLoading ? (
-        <Spinner />
-      ) : (
-        <React.Fragment>
-          <Products />
-          <Sliders />
-        </React.Fragment>
-      )}
-    </ModuleMainContentWrapper>
+  const diary = (
+    <React.Fragment>
+      <Products />
+      <Sliders />
+    </React.Fragment>
   );
+
+  return <ModuleMainContentWrapper>{isDiaryLoading ? <Spinner /> : diary}</ModuleMainContentWrapper>;
 };
 
 export default Day;

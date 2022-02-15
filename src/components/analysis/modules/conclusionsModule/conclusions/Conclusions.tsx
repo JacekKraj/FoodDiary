@@ -27,9 +27,9 @@ const Conclusions: React.FC = () => {
         }}
         skinCondition={{ timesEaten: 'TE', probability: 'P[%]', improvement: 'I', deterioration: 'D' }}
       />
-      {dangerousProducts.map((el) => {
-        const { product, timesEaten, type, probability, improvement, deterioration } = el;
-        return <Conclusion key={product} product={{ name: product, type }} skinCondition={{ timesEaten, probability, improvement, deterioration }} />;
+      {dangerousProducts.map((product) => {
+        const { name, timesEaten, type, probability, improvement, deterioration } = product;
+        return <Conclusion key={name} product={{ name, type }} skinCondition={{ timesEaten, probability, improvement, deterioration }} />;
       })}
     </div>
   ) : (
