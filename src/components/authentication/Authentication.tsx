@@ -10,15 +10,13 @@ import UsageInstructionStep from './usageInstructionStep/UsageInstructionStep';
 import { useActions } from '../../redux/hooks/useActions';
 import { MODAL_TYPES } from './../../modalMenager/ModalMenager';
 
-const { mobileVertical, laptopSm } = breakpoints;
+const { laptopSm } = breakpoints;
 
 const useStyles = makeStyles(() => ({
   icon: {
     color: '#888',
-    [mobileVertical]: {
-      width: 95,
-      height: 95,
-    },
+    width: 95,
+    height: 95,
     [laptopSm]: {
       width: 105,
       height: 105,

@@ -1,3 +1,5 @@
+@import './../../../../../../scssUtilities/index.module.scss';
+
 .addProduct {
   display: flex;
   align-items: center;
@@ -9,16 +11,12 @@
   max-width: 100px;
   border-radius: 10px;
   margin-left: 0.5em;
-}
 
-@media (min-width: 500px) {
-  .buttonAdditional {
+  @media (min-width: 500px) {
     padding: 0.6em 1em;
   }
-}
 
-@media (min-width: 1000px) {
-  .buttonAdditional {
+  @include laptopSm {
     padding: 0.6em 1.5em;
     margin-left: 1em;
   }

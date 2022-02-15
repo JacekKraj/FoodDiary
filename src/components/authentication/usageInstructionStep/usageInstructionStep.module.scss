@@ -1,6 +1,16 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .useInstructionStep {
   display: flex;
   margin-bottom: 2em;
+
+  @include laptopSm {
+    margin-bottom: 2.5em;
+  }
+
+  @include laptopLg {
+    margin-bottom: 2em;
+  }
 }
 
 .stepNumber {
@@ -11,50 +21,39 @@
   justify-content: center;
   border: 1px solid black;
   border-radius: 50%;
+
+  @include laptopSm {
+    flex-basis: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
 }
 
 .stepDescription {
   flex-basis: calc(100% - 28px);
   padding: 0 0.75em;
+
+  @include laptopSm {
+    flex-basis: calc(100% - 32px);
+  }
 }
 
 .stepTitle {
   font-weight: normal;
-  color: #555;
+  color: $gray-50;
   font-size: 26px;
+
+  @include laptopSm {
+    font-size: 30px;
+  }
 }
 
 .stepText {
   font-size: 14px;
   margin: 0.6em 0;
   font-weight: 300;
-}
 
-@media (min-width: 1000px) and (orientation: landscape) {
-  .useInstructionStep {
-    margin-bottom: 2.2em;
-  }
-  .stepNumber {
-    flex-basis: 32px;
-    height: 32px;
-    font-size: 18px;
-  }
-
-  .stepDescription {
-    flex-basis: calc(100% - 32px);
-  }
-
-  .stepTitle {
-    font-size: 30px;
-  }
-
-  .stepText {
+  @include laptopSm {
     font-size: 16px;
-  }
-}
-
-@media (min-width: 1200px) and (orientation: landscape) {
-  .useInstructionStep {
-    margin-bottom: 1.5em;
   }
 }

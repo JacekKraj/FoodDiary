@@ -1,3 +1,5 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .productBrowser {
   display: flex;
   align-items: center;
@@ -16,12 +18,12 @@
   background-color: transparent;
   margin: 0 0.5em;
   font-size: 14px;
-  color: #555;
+  color: $gray-50;
   align-self: stretch;
   flex-grow: 1;
 }
 
 .focused {
   background-color: #fff;
-  border: 2px solid #0078d4;
+  border: 2px solid $dark-blue;
 }

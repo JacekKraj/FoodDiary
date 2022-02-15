@@ -1,3 +1,5 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .moduleWrapper {
   width: 100%;
 }
@@ -12,10 +14,8 @@
   font-size: 20px;
   margin-bottom: 1em;
   line-height: 28px;
-}
 
-@media (min-width: 800px) and (orientation: landscape) {
-  .moduleWrapper > h3 {
+  @include tabletHorizontal {
     margin-bottom: 1.25em;
     font-size: 22px;
   }

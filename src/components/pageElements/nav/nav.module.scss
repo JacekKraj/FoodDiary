@@ -1,12 +1,15 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .bigScreenNavContainer {
   display: none;
+
+  @include laptopSm {
+    display: block;
+  }
 }
 
-@media (min-width: 1000px) and (orientation: landscape) {
-  .smallScreenNavContainer {
+.smallScreenNavContainer {
+  @include laptopSm {
     display: none;
-  }
-  .bigScreenNavContainer {
-    display: block;
   }
 }
