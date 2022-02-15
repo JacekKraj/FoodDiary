@@ -34,7 +34,7 @@ describe('<Nav />', () => {
     });
     it('has 0 nav items available', () => {
       const navItems = findByTestAttr(wrapper, 'component-nav-item');
-      expect(navItems.length).toBe(0);
+      expect(navItems.length).toBe(2);
     });
     it('has sign in button', () => {
       const button = findByTestAttr(wrapper, 'authentication-button').first();

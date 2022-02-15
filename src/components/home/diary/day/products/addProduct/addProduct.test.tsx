@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import { findByTestAttr, storeFactory } from '../../../../../../utils/tests/testHelperFunction';
 import AddProduct from './AddProduct';
 import { getModifiedDate } from './../../../../../../utils/helperFunctions/getModifiedDate';
-import { DiaryDay, AddedProduct } from './../../../../../../redux/reducers/diaryReducer';
+import { DiaryDays, AddedProduct } from './../../../../../../redux/reducers/diaryReducer';
 
 interface InitialState {
   diary: {
-    currentDiary: DiaryDay;
+    currentDiary: DiaryDays;
     currentDate: string;
     addedProductsList: AddedProduct[];
   };
@@ -18,7 +18,7 @@ const initialState: InitialState = {
   diary: {
     currentDiary: {
       [getModifiedDate()]: {
-        products: [],
+        productsNames: [],
         currentSkinCondition: 50,
         comparedSkinCondition: 50,
       },

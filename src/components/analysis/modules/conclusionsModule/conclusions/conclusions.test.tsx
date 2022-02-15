@@ -39,8 +39,8 @@ describe('<Conculusions />', () => {
       diary: {
         isAnalysisLoading: false,
         dangerousProducts: [
-          { timesEaten: '5', improvement: '0', deterioration: '5', probability: '100', type: 'red', product: 'apple' },
-          { timesEaten: '5', improvement: '1', deterioration: '4', probability: '20', type: 'normal', product: 'banana' },
+          { timesEaten: '5', improvement: '0', deterioration: '5', probability: '100', type: 'red', name: 'apple' },
+          { timesEaten: '5', improvement: '1', deterioration: '4', probability: '20', type: 'normal', name: 'banana' },
         ],
       },
     });

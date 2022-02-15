@@ -26,8 +26,8 @@ const customProduct = (number: string) => {
 const setup = () => {
   const initialState: InitialState = {
     diary: {
-      dangerousProducts: [{ product: 'apple', ...customProduct('5') }],
-      safeProducts: [{ product: 'banana', ...customProduct('1') }],
+      dangerousProducts: [{ name: 'apple', ...customProduct('5') }],
+      safeProducts: [{ name: 'banana', ...customProduct('1') }],
       addedProductsList: [
         { name: 'apple', timesAdded: 1 },
         { name: 'banana', timesAdded: 1 },
@@ -60,7 +60,7 @@ describe('<Products />', () => {
     const addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
     addProductBrowser.simulate('change', { target: { value: 'a' } });
     const conclusionProductName = findByTestAttr(wrapper, 'conclusion-product-name');
-    // finds to product names because first is a header
+    // finds two product names because first is a header
     expect(conclusionProductName.last().text()).toEqual('apple');
   });
 

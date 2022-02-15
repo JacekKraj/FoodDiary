@@ -1,7 +1,7 @@
+import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import firebase from 'firebase/app';
 
 import { storeFactory, findByTestAttr } from '../utils/tests/testHelperFunction';
 import App from './../App';
@@ -36,6 +36,8 @@ describe('<ModalMenager />', () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
+    React.useState = jest.fn().mockReturnValue([false, {}]);
+
     wrapper = setup();
   });
 
