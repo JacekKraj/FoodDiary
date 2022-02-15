@@ -6,7 +6,7 @@ import classes from './smallScreenNav.module.scss';
 import Header from './../../header/Header';
 import Backdrop from './../../../UI/backdrop/Backdrop';
 import NavItems from './../navItems/NavItems';
-import Logo from './../../logo/Logo';
+import Logo from '../../../UI/logo/Logo';
 import CloseIcon from '@material-ui/icons/Close';
 import { breakpoints } from '../../../../utils/breakpoints/breakpoints';
 

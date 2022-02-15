@@ -64,34 +64,32 @@ const Sliders: React.FC = () => {
     setSkin(value as SkinConditionValues, 'comparedSkinCondition');
   };
   return (
-    <React.Fragment>
-      <div className={classes.sliders}>
-        <SliderInput
-          dataTest='slider-current'
-          value={currentDiary[currentDate].currentSkinCondition}
-          marks={currSkinStateMarks}
-          classNames={{
-            slider: classes.slider,
-            sliderContainer: classes.sliderContainer,
-          }}
-          title={'Current skin condition'}
-          steps={currSkinStateMarks.length}
-          onChange={changeCurrentCondition}
-        />
-        <SliderInput
-          dataTest='slider-compared'
-          value={currentDiary[currentDate].comparedSkinCondition}
-          classNames={{
-            slider: classes.slider,
-            sliderContainer: classes.sliderContainer,
-          }}
-          marks={skinStateChangesMarks}
-          title={'Skin condition compared to yesterday'}
-          steps={skinStateChangesMarks.length}
-          onChange={changeComparedCondition}
-        />
-      </div>
-    </React.Fragment>
+    <div className={classes.sliders}>
+      <SliderInput
+        dataTest='slider-current'
+        value={currentDiary[currentDate].currentSkinCondition}
+        marks={currSkinStateMarks}
+        classNames={{
+          slider: classes.slider,
+          sliderContainer: classes.sliderContainer,
+        }}
+        title={'Current skin condition'}
+        steps={currSkinStateMarks.length}
+        onChange={changeCurrentCondition}
+      />
+      <SliderInput
+        dataTest='slider-compared'
+        value={currentDiary[currentDate].comparedSkinCondition}
+        classNames={{
+          slider: classes.slider,
+          sliderContainer: classes.sliderContainer,
+        }}
+        marks={skinStateChangesMarks}
+        title={'Skin condition compared to yesterday'}
+        steps={skinStateChangesMarks.length}
+        onChange={changeComparedCondition}
+      />
+    </div>
   );
 };
 

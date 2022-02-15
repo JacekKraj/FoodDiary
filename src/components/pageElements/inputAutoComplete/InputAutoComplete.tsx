@@ -3,9 +3,9 @@ import axios from 'axios';
 
 import classes from './inputAutoComplete.module.scss';
 import AutoCompleteItem from './autoCompletItem/AutoCompleteItem';
-import { useTypedSelector } from './../../../redux/hooks/useTypedSelector';
+import { useTypedSelector } from '../../../redux/hooks/useTypedSelector';
 import { getMatchingAddedProductsNames } from '../../../utils/helperFunctions/getMatchingAddedProductsNames';
-import { modifyProductName } from './../../../utils/helperFunctions/modifyProductName';
+import { modifyProductName } from '../../../utils/helperFunctions/modifyProductName';
 
 interface Props {
   input: { value: string; setValue: React.Dispatch<React.SetStateAction<string>>; isFocused: boolean };

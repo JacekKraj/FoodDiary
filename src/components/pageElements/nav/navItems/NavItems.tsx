@@ -38,12 +38,9 @@ const NavItems: React.FC<Props> = ({ hideNav }) => {
   return (
     <div className={classes.navItems}>
       <div className={classes.navItemsContainer}>
-        {/* {isAuthenticated && <NavItem path='FAQ' />}
-        {isAuthenticated && <NavItem path='diary' />}
-        {isAuthenticated && <NavItem path='analysis' />} */}
+        <NavItem path='FAQ' />
         {isAuthenticated && (
           <React.Fragment>
-            <NavItem path='FAQ' />
             <NavItem path='diary' />
             <NavItem path='analysis' />
           </React.Fragment>

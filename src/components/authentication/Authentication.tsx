@@ -61,29 +61,27 @@ const Authentication: React.FC = () => {
   };
 
   return (
-    <React.Fragment>
-      <div className={classes.authentication}>
-        <Nav />
-        <div className={classes.authenticationInfo}>
-          <h1>Hi. Let's get Started!</h1>
-          <div className={classes.authenticationMainContent}>
-            <UsageInstructionStep step={stepOne}>
-              <div className={classes.iconContainer}>
-                <AccountCircleOutlinedIcon className={iconStyle.icon} />
-              </div>
-              <Button className={classes.buttonAdditional} onClick={handleShowSignIn} dataTest='sign-in-button'>
-                Sign In
-              </Button>
-              <Button className={classes.buttonAdditional} isTypeLight onClick={handleShowSignUp} dataTest='sign-up-button'>
-                Sign Up
-              </Button>
-            </UsageInstructionStep>
-            <UsageInstructionStep step={stepTwo} />
-            <UsageInstructionStep step={stepThree} />
-          </div>
+    <div className={classes.authentication}>
+      <Nav />
+      <div className={classes.authenticationInfo}>
+        <h1>Hi. Let's get Started!</h1>
+        <div className={classes.authenticationMainContent}>
+          <UsageInstructionStep step={stepOne}>
+            <div className={classes.iconContainer}>
+              <AccountCircleOutlinedIcon className={iconStyle.icon} />
+            </div>
+            <Button className={classes.buttonAdditional} onClick={handleShowSignIn} dataTest='sign-in-button'>
+              Sign In
+            </Button>
+            <Button className={classes.buttonAdditional} isTypeLight onClick={handleShowSignUp} dataTest='sign-up-button'>
+              Sign Up
+            </Button>
+          </UsageInstructionStep>
+          <UsageInstructionStep step={stepTwo} />
+          <UsageInstructionStep step={stepThree} />
         </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
