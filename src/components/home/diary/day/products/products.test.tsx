@@ -27,7 +27,7 @@ const setup = (initialState: InitialState) => {
 describe('<Products />', () => {
   describe('no products added', () => {
     it('displays no products info', () => {
-      const wrapper = setup({ diary: { currentDate: getModifiedDate(), currentDiary: { [getModifiedDate()]: { products: [] } } } });
+      const wrapper = setup({ diary: { currentDate: getModifiedDate(), currentDiary: { [getModifiedDate()]: { productsNames: [] } } } });
       const noProductsInfo = findByTestAttr(wrapper, 'no-data-info');
       expect(noProductsInfo.text()).toEqual("You haven't added any products yet.");
     });
@@ -39,7 +39,7 @@ describe('<Products />', () => {
       wrapper = setup({
         diary: {
           currentDate: getModifiedDate(),
-          currentDiary: { [getModifiedDate()]: { products: ['apple'] }, '2020-09-01': { products: ['banana'] } },
+          currentDiary: { [getModifiedDate()]: { productsNames: ['apple'] }, '2020-09-01': { productsNames: ['banana'] } },
           addedProductsList: [{ name: 'apple', timesAdded: 1 }],
         },
       });

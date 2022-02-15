@@ -4,17 +4,17 @@ import { Provider } from 'react-redux';
 import Diary from './Diary';
 import { findByTestAttr, storeFactory } from '../../../utils/tests/testHelperFunction';
 import { getModifiedDate } from './../../../utils/helperFunctions/getModifiedDate';
-import { AddedProduct } from './../../../redux/reducers/diaryReducer';
+import { AddedProduct, DiaryDays } from './../../../redux/reducers/diaryReducer';
 
-interface Days {
-  [index: string]: { products: string[]; currentSkinCondition: number; comparedSkinCondition: number };
-}
+// interface Days {
+//   [index: string]: { productsNames: string[]; currentSkinCondition: number; comparedSkinCondition: number };
+// }
 
 interface InitialState {
   diary: {
     currentDate: string;
-    currentDiary: Days;
-    downloadedDiary: Days;
+    currentDiary: DiaryDays;
+    downloadedDiary: DiaryDays;
     addedProductsList: AddedProduct[];
   };
 }
@@ -34,7 +34,7 @@ const sampleSkinCondition = {
   comparedSkinCondition: 75,
 };
 
-const sampleDiary = { [getModifiedDate()]: { products: ['apple'], ...sampleSkinCondition } };
+const sampleDiary = { [getModifiedDate()]: { productsNames: ['apple'], ...sampleSkinCondition } };
 
 describe('<Diary />', () => {
   describe('changing date', () => {
@@ -59,8 +59,8 @@ describe('<Diary />', () => {
     });
     it("displays new day's products and new slider's values", () => {
       const diary = {
-        '2021-09-01': { products: ['apple'], ...sampleSkinCondition },
-        '2021-08-31': { products: ['orange'], currentSkinCondition: 75, comparedSkinCondition: 25 },
+        '2021-09-01': { productsNames: ['apple'], ...sampleSkinCondition },
+        '2021-08-31': { productsNames: ['orange'], currentSkinCondition: 75, comparedSkinCondition: 25 },
       };
       const wrapper = setup({ diary: { currentDate: '2021-09-01', currentDiary: diary, downloadedDiary: diary, addedProductsList: [] } });
       simulateClicking(wrapper);
