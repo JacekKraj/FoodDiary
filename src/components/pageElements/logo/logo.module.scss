@@ -1,5 +1,7 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .logo {
   font-family: 'Roboto Condensed', sans-serif;
-  color: #777;
+  color: $gray-40;
   font-weight: bold;
 }

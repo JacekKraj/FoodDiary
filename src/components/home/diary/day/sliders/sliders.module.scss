@@ -1,3 +1,5 @@
+@import './../../../../../scssUtilities/index.module.scss';
+
 .slider {
   width: 80% !important;
   margin: 0 auto !important;
@@ -6,39 +8,29 @@
 
 .slider span {
   font-size: 11px !important;
-}
 
-.sliderContainer {
-  margin: 3em 0 3em;
-}
-
-@media (min-width: 500px) and (orientation: portrait) {
-  .slider span {
+  @include mobileVertical {
     font-size: 12px !important;
   }
-  .sliderContainer {
-    margin: 3em 0 3em;
-  }
-}
 
-@media (min-width: 600px) and (orientation: landscape) {
-  .slider span {
+  @include mobileHorizontal {
     font-size: 13px !important;
   }
 }
 
-@media (min-width: 1000px) and (orientation: landscape) {
-  .sliders {
+.sliderContainer {
+  margin: 3em 0 3em;
+
+  @include laptopSm {
+    margin: 0;
+    flex-basis: 45%;
+  }
+}
+
+.sliders {
+  @include laptopSm {
     display: flex;
     justify-content: space-between;
     margin: 3.75em 0 3em;
-  }
-
-  .sliderContainer {
-    margin: 0;
-  }
-
-  .sliderContainer {
-    flex-basis: 45%;
   }
 }

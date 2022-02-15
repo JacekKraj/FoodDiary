@@ -1,24 +1,26 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .button {
   display: block;
   color: white;
-  background-color: #0078d4;
+  background-color: $dark-blue;
   padding: 0.3em 0;
-  border: 3px solid #0078d4;
+  border: 3px solid $dark-blue;
   cursor: pointer;
   outline: none;
   white-space: nowrap;
 }
 
 .button:hover {
-  background-color: #2493e7;
+  background-color: $light-blue;
 }
 
 .buttonLight {
-  background-color: #ddd;
+  background-color: $gray-10;
   color: black;
-  border: 3px solid #ddd;
+  border: 3px solid $gray-05;
 }
 
 .buttonLight:hover {
-  background-color: #eee;
+  background-color: $gray-10;
 }

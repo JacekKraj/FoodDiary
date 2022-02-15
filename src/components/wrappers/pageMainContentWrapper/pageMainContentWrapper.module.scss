@@ -1,23 +1,19 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .pageMainContentWrapper {
   width: 90%;
   margin: 2em auto;
-}
 
-@media (min-width: 600px) and (orientation: landscape) {
-  .pageMainContentWrapper {
+  @include mobileHorizontal {
     width: 80%;
   }
-}
 
-@media (min-width: 800px) and (orientation: landscape) {
-  .pageMainContentWrapper {
+  @include tabletHorizontal {
     width: 70%;
     margin: 2.5em auto;
   }
-}
 
-@media (min-width: 1000px) and (orientation: landscape) {
-  .pageMainContentWrapper {
+  @include laptopSm {
     max-width: 900px;
   }
 }

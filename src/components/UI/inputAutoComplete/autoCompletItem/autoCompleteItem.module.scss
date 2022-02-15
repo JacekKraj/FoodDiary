@@ -1,11 +1,13 @@
+@import './../../../../scssUtilities/index.module.scss';
+
 .autoCompleteItem {
   list-style: none;
-  color: #555;
+  color: $gray-50;
   margin: 0.25em 0;
   cursor: pointer;
 }
 
 .autoCompleteItem:hover,
 .active {
-  color: #0078d4;
+  color: $dark-blue;
 }

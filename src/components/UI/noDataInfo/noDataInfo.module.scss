@@ -1,11 +1,11 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .noProductsInfo {
   font-size: 14px;
-  color: #555;
+  color: $gray-50;
   font-style: italic;
-}
 
-@media (min-width: 500px) {
-  .noProductsInfo {
+  @media (min-width: 500px) {
     font-size: 16px;
   }
 }

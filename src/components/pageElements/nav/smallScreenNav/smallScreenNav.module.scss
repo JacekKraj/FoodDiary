@@ -1,3 +1,5 @@
+@import './../../../../scssUtilities/index.module.scss';
+
 .smallScreenNav {
   position: fixed;
   top: 0;
@@ -10,12 +12,20 @@
   transition: 0.15s;
   display: flex;
   flex-direction: column;
+
+  @include mobileVertical {
+    max-width: 350px;
+  }
+
+  @include mobileHorizontal {
+    max-width: 450px;
+  }
 }
 
 .active {
   left: 0;
   right: 30%;
-  box-shadow: 4px 0px 6px 0px #eeeeee;
+  box-shadow: 4px 0px 6px 0px $gray-05;
 }
 
 .navHeader {
@@ -23,46 +33,33 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.75em;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid $gray-10;
+
+  @include verticalCustom(400px) {
+    padding: 1em;
+  }
+
+  @include mobileHorizontal {
+    padding: 0.75em 1em;
+  }
+
+  @include tabletHorizontal {
+    padding: 1em 1.5em;
+  }
 }
 
 .logo {
   font-size: 20px;
-}
 
-@media (min-width: 400px) and (orientation: portrait) {
-  .navHeader {
-    padding: 1em;
-  }
-  .logo {
+  @include verticalCustom(400px) {
     font-size: 24px;
   }
-}
 
-@media (min-width: 500px) and (orientation: portrait) {
-  .smallScreenNav {
-    max-width: 350px;
-  }
-}
-
-@media (min-width: 600px) and (orientation: landscape) {
-  .navHeader {
-    padding: 0.75em 1em;
-  }
-  .smallScreenNav {
-    max-width: 450px;
-  }
-  .logo {
+  @include mobileHorizontal {
     font-size: 23px;
   }
-}
 
-@media (min-width: 800px) and (orientation: landscape) {
-  .navHeader {
-    padding: 1em 1.5em;
-  }
-
-  .logo {
+  @include tabletHorizontal {
     font-size: 26px;
   }
 }

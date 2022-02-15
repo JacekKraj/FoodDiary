@@ -1,11 +1,15 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .footerWrapper {
   background-color: #fafafa;
-  border-top: 2px solid #ccc;
+  border-top: 2px solid $gray-15;
   padding: 0.5em 0.5em 0.8em;
-}
+  line-height: 130%;
+  font-size: 13px;
+  color: $gray-35;
+  font-weight: 300;
 
-@media (min-width: 600px) and (orientation: landscape) {
-  .footerWrapper {
+  @include mobileHorizontal {
     display: flex;
     padding: 0.8em;
     justify-content: space-between;

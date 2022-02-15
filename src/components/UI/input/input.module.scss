@@ -1,24 +1,26 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .input {
   border: none;
   outline: none;
   display: block;
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid $gray-60;
   font-size: 17px;
   padding: 0.2em;
-  color: #333;
-  color: rgba(#0078d4, 0.8);
+  color: $gray-60;
+  color: rgba($dark-blue, 0.8);
   background-color: transparent;
 }
 
 .input:focus {
-  border-bottom: 2px solid #0078d4;
+  border-bottom: 2px solid $dark-blue;
 }
 
 .input:focus::placeholder {
-  color: rgba(#0078d4, 0.8);
+  color: rgba($dark-blue, 0.8);
 }
 
 ::placeholder {
-  color: rgba(#0078d4, 0.8);
-  color: #333;
+  color: rgba($dark-blue, 0.8);
+  color: $gray-60;
 }

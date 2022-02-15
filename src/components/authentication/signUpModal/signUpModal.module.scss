@@ -1,9 +1,16 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .header {
   padding: 0.6em 0;
   text-align: center;
   font-size: 18px;
-  border-bottom: 1px solid #ccc;
-  color: #333;
+  border-bottom: 1px solid $gray-15;
+  color: $gray-60;
+
+  @include laptopSm {
+    padding: 0.7em 0;
+    font-size: 19px;
+  }
 }
 
 .form {
@@ -12,6 +19,10 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  @include laptopSm {
+    padding: 0em 2em 2em;
+  }
 }
 
 .buttonAdditional {
@@ -24,36 +35,16 @@
 
 .inputsContainer {
   margin: 0 0 1.5em;
-}
 
-@media (min-width: 500px) and (orientation: portrait) {
-  .form {
-    padding: 0em 3em 1.5em;
+  @include mobileVertical {
+    margin: 0.75em 0 2em;
   }
 
-  .inputsContainer {
-    margin: 1.5em 0 2em;
+  @include mobileHorizontal {
+    margin: 0.75em 0 2em;
   }
-}
 
-@media (min-width: 600px) and (orientation: landscape) {
-  .form {
-    padding: 0em 3em 1.5em;
-  }
-  .inputsContainer {
-    margin: 1em 0 1.5em;
-  }
-}
-
-@media (min-width: 1000px) and (orientation: landscape) {
-  .header {
-    padding: 0.7em 0;
-    font-size: 19px;
-  }
-  .form {
-    padding: 0em 3em 2em;
-  }
-  .inputsContainer {
+  @include laptopSm {
     margin: 2em 0;
   }
 }
