@@ -38,11 +38,11 @@ describe('<AuthModal />', () => {
       wrapper.setProps({});
       return findByTestAttr(wrapper, 'component-spinner');
     };
-    it('shows spinner when <SignUp /> is rendered ', () => {
+    it('shows spinner when <SignUp /> is rendered', () => {
       const spinner = dispatchAction(false);
       expect(spinner.exists()).toBe(true);
     });
-    it('shows spinner when <SignIn /> is rendered ', () => {
+    it('shows spinner when <SignIn /> is rendered', () => {
       const spinner = dispatchAction(true);
       expect(spinner.exists()).toBe(true);
     });
@@ -56,11 +56,11 @@ describe('<AuthModal />', () => {
       wrapper.setProps({});
       return findByTestAttr(wrapper, 'component-error');
     };
-    it('shows spinner when <SignUp /> is rendered ', () => {
+    it('shows spinner when <SignUp /> is rendered', () => {
       const error = dispatchAction(false);
       expect(error.text()).toBe('test error');
     });
-    it('shows spinner when <SignIn /> is rendered ', () => {
+    it('shows spinner when <SignIn /> is rendered', () => {
       const error = dispatchAction(true);
       expect(error.text()).toBe('test error');
     });

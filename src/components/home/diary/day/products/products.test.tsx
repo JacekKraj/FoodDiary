@@ -1,6 +1,7 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
 import moxios from 'moxios';
+import { act } from '@testing-library/react';
 
 import Products from './Products';
 import { findByTestAttr, storeFactory } from '../../../../../utils/tests/testHelperFunction';
@@ -62,9 +63,12 @@ describe('<Products />', () => {
       expect(store.getState().diary.addedProductsList).toEqual([]);
     });
 
-    it('displays 2 products after submitting browser form', () => {
+    it('displays 2 products after submitting browser form', async () => {
       const addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
-      addProductBrowser.simulate('change', { target: { value: 'orange' } });
+      await act(async () => {
+        addProductBrowser.simulate('change', { target: { value: 'orange' } });
+      });
+
       const componentAddProduct = findByTestAttr(wrapper, 'component-add-product');
       componentAddProduct.simulate('submit');
       const product = findByTestAttr(wrapper, 'component-product');

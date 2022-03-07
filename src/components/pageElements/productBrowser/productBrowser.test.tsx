@@ -1,5 +1,6 @@
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { waitFor } from '@testing-library/react';
 
 import ProductBrowser from './ProductBrowser';
 import { findByTestAttr } from '../../../utils/tests/testHelperFunction';
@@ -54,7 +55,7 @@ describe('<ProductBrowser />', () => {
     expect(addProductBrowserContainer.hasClass('focused')).toBe(true);
   });
 
-  it('changes input value on picking items with arrows from autocomplete', (done) => {
+  it('changes input value on picking items with arrows from autocomplete', () => {
     const wrapper = setup();
 
     const input = findByTestAttr(wrapper, 'add-product-browser');
@@ -62,18 +63,19 @@ describe('<ProductBrowser />', () => {
 
     moxios.wait(() => {
       let request = moxios.requests.mostRecent();
-      request
+      return request
         .respondWith({
           status: 200,
           response: ['texta', 'textab'],
         })
-        .then(() => {
+        .then(async () => {
           const event = new KeyboardEvent('keydown', { key: 'ArrowDown' });
           global.dispatchEvent(event);
           wrapper.update();
-          expect(mockSetValue).toHaveBeenCalledWith('texta');
+          await waitFor(() => {
+            expect(mockSetValue).toHaveBeenCalledWith('texta');
+          });
           wrapper.unmount();
-          done();
         });
     });
   });

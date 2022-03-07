@@ -36,7 +36,7 @@ describe('<ModalMenager />', () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
-    React.useState = jest.fn().mockReturnValue([false, {}]);
+    React.useState = jest.fn().mockReturnValue([false, jest.fn()]);
 
     wrapper = setup();
   });
