@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import moxios from 'moxios';
 import { Provider } from 'react-redux';
+import { waitFor } from '@testing-library/react';
 
 import { findByTestAttr, storeFactory } from '../../../utils/tests/testHelperFunction';
 import InputAutoComplete from './InputAutoComplete';
@@ -47,7 +48,7 @@ describe('<InputAutoComplete />', () => {
     setIsTyping: jest.fn(),
   };
 
-  it('shows autocomplete, and displays item from user autocomplitions', (done) => {
+  it('shows autocomplete, and displays item from user autocomplitions', () => {
     const wrapper = setup({
       input: {
         isFocused: true,
@@ -56,21 +57,23 @@ describe('<InputAutoComplete />', () => {
       },
       ...customProps,
     });
-
     moxios.wait(() => {
       let request = moxios.requests.mostRecent();
-      request
+      return request
         .respondWith({
           status: 200,
           response: ['apple'],
         })
-        .then(() => {
+        .then(async () => {
           wrapper.update();
           const autoCompleteItem = findByTestAttr(wrapper, 'component-auto-complete-item');
-          expect(autoCompleteItem.first().text()).toEqual('acai');
-          expect(autoCompleteItem.last().text()).toEqual('apple');
+          await waitFor(() => {
+            expect(autoCompleteItem.first().text()).toEqual('acai');
+          });
+          await waitFor(() => {
+            expect(autoCompleteItem.last().text()).toEqual('apple');
+          });
           wrapper.unmount();
-          done();
         });
     });
   });

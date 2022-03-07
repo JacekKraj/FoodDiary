@@ -6,10 +6,6 @@ import { findByTestAttr, storeFactory } from '../../../utils/tests/testHelperFun
 import { getModifiedDate } from './../../../utils/helperFunctions/getModifiedDate';
 import { AddedProduct, DiaryDays } from './../../../redux/reducers/diaryReducer';
 
-// interface Days {
-//   [index: string]: { productsNames: string[]; currentSkinCondition: number; comparedSkinCondition: number };
-// }
-
 interface InitialState {
   diary: {
     currentDate: string;

@@ -72,9 +72,7 @@ const InputAutoComplete: React.FC<Props> = (props) => {
         });
 
         setAutocomplitions(connectedAutocomplitions.slice(0, 4));
-      } catch (_) {
-        setAutocomplitions(autocomplitinsFromAddedProductsList.slice(0, 4));
-      }
+      } catch (_) {}
     };
 
     updateAutocomplitions();

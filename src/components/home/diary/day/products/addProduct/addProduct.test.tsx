@@ -1,5 +1,6 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
+import { act, waitFor } from '@testing-library/react';
 
 import { findByTestAttr, storeFactory } from '../../../../../../utils/tests/testHelperFunction';
 import AddProduct from './AddProduct';
@@ -42,23 +43,27 @@ const setup = () => {
 describe('<AddProduct />', () => {
   let addProductBrowser: ReactWrapper;
   let wrapper: ReactWrapper;
-  beforeEach(() => {
+  beforeEach(async () => {
     wrapper = setup();
     addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
-    addProductBrowser.simulate('change', { target: { value: 'app' } });
+    await act(async () => {
+      addProductBrowser.simulate('change', { target: { value: 'app' } });
+    });
   });
 
   afterEach(() => {
     wrapper.unmount();
   });
 
-  it('adds product to user autocomplitions', () => {
+  it('adds product to user autocomplitions', async () => {
     const form = findByTestAttr(wrapper, 'component-add-product');
-    form.simulate('submit');
+    await act(async () => {
+      form.simulate('submit');
+    });
     expect(store.getState().diary.addedProductsList[0].name).toEqual('app');
   });
 
-  it('still has a focus after clicking submit button', () => {
+  it('still has a focus after clicking submit button', async () => {
     addProductBrowser.simulate('focus');
     const submitButton = findByTestAttr(wrapper, 'submit-button');
     submitButton.simulate('click');
