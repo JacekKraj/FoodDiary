@@ -1,6 +1,6 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
-import { act, waitFor } from '@testing-library/react';
+import { act } from '@testing-library/react';
 
 import { findByTestAttr, storeFactory } from '../../../../../../utils/tests/testHelperFunction';
 import AddProduct from './AddProduct';
