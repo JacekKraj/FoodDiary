@@ -11,9 +11,11 @@
   max-width: 100px;
   border-radius: 10px;
   margin-left: 0.5em;
+  display: none;
 
   @media (min-width: 500px) {
     padding: 0.6em 1em !important;
+    display: block;
   }
 
   @include laptopSm {
