@@ -1,18 +1,14 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 
-import classes from './signUp.module.scss';
-import AuthModal from './../authModal/AuthModal';
-import Input from './../../UI/input/Input';
-import MyFormikInput from './../../../utils/myFormikInput/MyFormikInput';
-import Button from './../../UI/button/Button';
-import { useActions } from './../../../redux/hooks/useActions';
-import Error from './../../UI/error/Error';
-import { useTypedSelector } from './../../../redux/hooks/useTypedSelector';
-
-interface Props {
-  handleShowSignUp: () => void;
-}
+import classes from './signUpModal.module.scss';
+import AuthModal from '../authModal/AuthModal';
+import Input from '../../UI/input/Input';
+import MyFormikInput from '../../../utils/myFormikInput/MyFormikInput';
+import Button from '../../UI/button/Button';
+import { useActions } from '../../../redux/hooks/useActions';
+import Error from '../../UI/error/Error';
+import { useTypedSelector } from '../../../redux/hooks/useTypedSelector';
 
 export interface FormValues {
   email: string;
@@ -21,20 +17,22 @@ export interface FormValues {
   repeatPassword: string;
 }
 
-export const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
-  const { unsetError, register, registerFail } = useActions();
+export const SignUp: React.FC = () => {
+  const { register, registerFail, hideModal } = useActions();
   const { error } = useTypedSelector((state) => state.auth);
 
-  const handleSubmit = (formValues: FormValues) => {
-    if (formValues.email === formValues.repeatEmail) {
-      if (formValues.password === formValues.repeatPassword) {
-        register(formValues.email, formValues.password, handleShowSignUp);
-      } else {
-        registerFail('Both passwords must be indentical');
-      }
-    } else {
+  const submitForm = (formValues: FormValues) => {
+    if (formValues.email !== formValues.repeatEmail) {
       registerFail('Both emails must be indentical');
+      return;
     }
+
+    if (formValues.password !== formValues.repeatPassword) {
+      registerFail('Both passwords must be indentical');
+      return;
+    }
+
+    register({ email: formValues.email, password: formValues.password }, hideModal);
   };
 
   const initialValues: FormValues = {
@@ -44,21 +42,11 @@ export const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
     repeatPassword: '',
   };
   return (
-    <AuthModal
-      onClick={() => {
-        handleShowSignUp();
-        unsetError();
-      }}
-    >
+    <AuthModal>
       <h3 className={classes.header} data-test='component-sign-up'>
         Sign Up
       </h3>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
-          handleSubmit({ ...values });
-        }}
-      >
+      <Formik initialValues={initialValues} onSubmit={submitForm}>
         {() => {
           return (
             <Form className={classes.form} data-test='sign-up-form'>
@@ -67,9 +55,9 @@ export const SignUp: React.FC<Props> = ({ handleShowSignUp }) => {
                 <MyFormikInput className={classes.inputAdditional} name='repeatEmail' type='email' placeholder='Repeat email address' as={Input} />
                 <MyFormikInput className={classes.inputAdditional} name='password' type='password' placeholder='Password' as={Input} />
                 <MyFormikInput className={classes.inputAdditional} name='repeatPassword' type='password' placeholder='Repeat password' as={Input} />
-                {error && <Error errorMessage={error} />}
+                {error && <Error message={error} />}
               </div>
-              <Button className={classes.buttonAdditional} typeLight dataTest='submit-button'>
+              <Button className={classes.buttonAdditional} isTypeLight dataTest='submit-button'>
                 Create account
               </Button>
             </Form>

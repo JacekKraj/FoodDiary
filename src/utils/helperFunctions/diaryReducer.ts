@@ -1,83 +1,168 @@
-import { DiaryDay, Day, SkinConditionValues, ModifiedAnalyzedProduct, AnalyzedProducts } from '../../redux/reducers/diaryReducer';
+import {
+  DiaryDays,
+  SingleDayData,
+  SkinConditionValues,
+  ModifiedAnalyzedProduct,
+  AnalyzedProducts,
+  AddedProduct,
+} from '../../redux/reducers/diaryReducer';
 import { getModifiedDate } from './getModifiedDate';
-import { sortProducts } from './sortProducts';
+import { getSortedProducts } from './sortProducts';
 
-export const sortFullDiary = (fullDiary: DiaryDay) => {
-  const sortedFullDiary: Day[] = [];
-  for (let day in fullDiary) {
-    if (fullDiary[day].products?.length) {
-      const nextDay = new Date(day);
-      nextDay.setDate(nextDay.getDate() + 1);
-      const nextDayDiary = fullDiary[getModifiedDate(nextDay)];
-      if (nextDayDiary) {
-        const sortedDiary = {
-          products: fullDiary[day].products,
-          comparedSkinCondition: nextDayDiary.comparedSkinCondition,
-          currentSkinCondition: nextDayDiary.currentSkinCondition,
-        };
-        sortedFullDiary.push(sortedDiary);
-      }
-    }
+interface Product {
+  name: string;
+  isExisting: boolean;
+  operation: 'add' | 'remove';
+}
+
+const getUpdatedAddedProductAndIndex = (addedProductsList: AddedProduct[], product: Product) => {
+  const addedProductIndex = addedProductsList.findIndex((addedProduct) => addedProduct.name === product.name);
+
+  const updatedAddedProduct = addedProductsList[addedProductIndex] || {
+    name: product.name,
+    timesAdded: 0,
+  };
+
+  updatedAddedProduct.timesAdded = product.operation === 'add' ? updatedAddedProduct.timesAdded + 1 : updatedAddedProduct.timesAdded - 1;
+
+  let updatedIndex = addedProductIndex;
+
+  if (updatedAddedProduct.timesAdded === 0) {
+    updatedIndex = -1;
   }
+
+  if (addedProductIndex < 0) {
+    updatedIndex = addedProductsList.length;
+  }
+
+  return { updatedAddedProduct, updatedIndex };
+};
+
+export const getUpdatedAddedProductsList = (product: Product, currentAddedProductsList: AddedProduct[]) => {
+  let newAddedProductsList = [...currentAddedProductsList];
+
+  if (product.isExisting && product.operation === 'add') return currentAddedProductsList;
+
+  const { updatedAddedProduct, updatedIndex } = getUpdatedAddedProductAndIndex(newAddedProductsList, product);
+
+  if (updatedIndex >= 0) {
+    newAddedProductsList[updatedIndex] = updatedAddedProduct;
+  } else {
+    newAddedProductsList = newAddedProductsList.filter((addedProduct) => addedProduct.name !== product.name);
+  }
+
+  return newAddedProductsList;
+};
+
+const getNextSingleDayData = (fullDiary: DiaryDays, currentDayDate: string) => {
+  const nextDayDate = new Date(currentDayDate);
+  nextDayDate.setDate(nextDayDate.getDate() + 1);
+  const nextSingleDayData = fullDiary[getModifiedDate(nextDayDate)];
+  return nextSingleDayData;
+};
+
+// fuction makes objects that contains one day's products a the next they skin condition
+export const getSortedFullDiary = (fullDiary: DiaryDays) => {
+  const sortedFullDiary: SingleDayData[] = [];
+
+  for (let date in fullDiary) {
+    if (!fullDiary[date].productsNames?.length) continue;
+
+    const nextSingleDayData = getNextSingleDayData(fullDiary, date);
+
+    if (!nextSingleDayData) continue;
+
+    const sortedSingleDayData = {
+      productsNames: fullDiary[date].productsNames,
+      comparedSkinCondition: nextSingleDayData.comparedSkinCondition,
+      currentSkinCondition: nextSingleDayData.currentSkinCondition,
+    };
+
+    sortedFullDiary.push(sortedSingleDayData);
+  }
+
   return sortedFullDiary;
 };
 
-export const analyzeProducts = (sortedData: Day[]) => {
-  let analyzedProducts: AnalyzedProducts = {};
-  sortedData.forEach((el) => {
-    let deteriorated = 0;
-    let improved = 0;
+const getDeteriorationAndImprovementValues = (singleDayData: SingleDayData) => {
+  const { comparedSkinCondition, currentSkinCondition } = singleDayData;
 
-    if (el.comparedSkinCondition === SkinConditionValues.lower || el.comparedSkinCondition === SkinConditionValues.low) {
-      deteriorated = 1;
-    } else if (el.comparedSkinCondition === SkinConditionValues.higher || el.comparedSkinCondition === SkinConditionValues.high) {
-      improved = 1;
-    } else {
-      if (el.currentSkinCondition === SkinConditionValues.higher || el.currentSkinCondition === SkinConditionValues.high) {
-        improved = 1;
-      } else {
-        deteriorated = 1;
-      }
-    }
+  const deteriorated = {
+    deteriorated: 1,
+    improved: 0,
+  };
 
-    el.products.forEach((product) => {
-      const { timesEaten, deterioration, improvement } = analyzedProducts[product] || { timesEaten: 0, deterioration: 0, improvement: 0 };
-      analyzedProducts[product] = {
-        timesEaten: (+timesEaten + 1).toString(),
-        deterioration: (+deterioration + deteriorated).toString(),
-        improvement: (+improvement + improved).toString(),
-      };
-    });
+  const improved = {
+    deteriorated: 0,
+    improved: 1,
+  };
+
+  if (comparedSkinCondition === SkinConditionValues.lower || comparedSkinCondition === SkinConditionValues.low) return { ...deteriorated };
+
+  if (comparedSkinCondition === SkinConditionValues.higher || comparedSkinCondition === SkinConditionValues.high) return { ...improved };
+
+  if (currentSkinCondition === SkinConditionValues.higher || currentSkinCondition === SkinConditionValues.high) return { ...improved };
+
+  return { ...deteriorated };
+};
+
+const customAnalyzedPorduct = { timesEaten: 0, deterioration: 0, improvement: 0 };
+
+const buildAnalyzedProduct = (singleDayData: SingleDayData, analyzedProducts: AnalyzedProducts) => {
+  const { deteriorated, improved } = getDeteriorationAndImprovementValues(singleDayData);
+
+  singleDayData.productsNames.forEach((product) => {
+    const { timesEaten, deterioration, improvement } = analyzedProducts[product] || customAnalyzedPorduct;
+
+    analyzedProducts[product] = {
+      timesEaten: (+timesEaten + 1).toString(),
+      deterioration: (+deterioration + deteriorated).toString(),
+      improvement: (+improvement + improved).toString(),
+    };
   });
+};
+
+export const getAnalyzedProducts = (sortedFullDiary: SingleDayData[]) => {
+  let analyzedProducts: AnalyzedProducts = {};
+
+  sortedFullDiary.forEach((singleDayData) => {
+    buildAnalyzedProduct(singleDayData, analyzedProducts);
+  });
+
   return analyzedProducts;
 };
 
-export const modifyAnalyzedProducts = (analyzedProducts: AnalyzedProducts) => {
-  const dangerousProducts: ModifiedAnalyzedProduct[] = [];
-  const safeProducts: ModifiedAnalyzedProduct[] = [];
+const getProductType = (harmfulnessProbability: string) => {
+  if (+harmfulnessProbability >= 85) return 'red';
+
+  if (+harmfulnessProbability >= 70) return 'orange';
+
+  return 'yellow';
+};
+
+export const getSafeAndDangerousProducts = (analyzedProducts: AnalyzedProducts) => {
+  const dangerousProducts: ModifiedAnalyzedProduct[] = [],
+    safeProducts: ModifiedAnalyzedProduct[] = [];
+
   for (let product in analyzedProducts) {
     const productValues = analyzedProducts[product];
-    const probability = ((+productValues.deterioration / +productValues.timesEaten) * 100).toFixed();
-    let type = 'normal';
-    if (+probability >= 85) {
-      type = 'red';
-    } else if (+probability >= 70) {
-      type = 'orange';
-    } else if (+probability > 50) {
-      type = 'yellow';
-    }
+    const harmfulnessProbability = ((+productValues.deterioration / +productValues.timesEaten) * 100).toFixed();
+
+    const type = getProductType(harmfulnessProbability);
 
     const modifiedAnalyzedProduct = {
       ...productValues,
-      probability,
+      probability: harmfulnessProbability,
       type,
-      product,
+      name: product,
     };
-    // if product has more than 50% of probability it's considered as dangerous
-    // if product was eaten less than 5 times it must be considered as safe, because it's to little data to find results reliable
-    let products = +probability > 50 && +modifiedAnalyzedProduct.timesEaten >= 5 ? dangerousProducts : safeProducts;
+
+    // if product was eaten less than 5 times it must be considered as safe, because it's too little data to find results reliable
+    const isProductDangerous = +harmfulnessProbability > 50 && +modifiedAnalyzedProduct.timesEaten >= 5;
+
+    const products = isProductDangerous ? dangerousProducts : safeProducts;
     products.push(modifiedAnalyzedProduct);
   }
   // sortProducts ranks products in order of probability (from low to high)
-  return { safeProducts: sortProducts(safeProducts), dangerousProducts: sortProducts(dangerousProducts) };
+  return { safeProducts: getSortedProducts(safeProducts), dangerousProducts: getSortedProducts(dangerousProducts) };
 };

@@ -1,6 +1,8 @@
+@import './../../../../../scssUtilities/index.module.scss';
+
 .navItem {
   display: block;
-  color: #777;
+  color: $gray-50;
   font-weight: 300;
   font-size: 18px;
   padding: 0.3em 0em;
@@ -9,38 +11,31 @@
   margin: 0.5em 0;
   text-transform: capitalize;
   white-space: nowrap;
+
+  @include verticalCustom(400px) {
+    font-size: 22px;
+  }
+
+  @include tabletHorizontal {
+    font-size: 22px;
+  }
+
+  @include laptopSm {
+    margin: 0;
+    padding: 0 0.75em;
+  }
 }
 
 .navItem:hover,
 .activeClassName {
   background-color: rgb(240, 240, 240);
-  color: #555;
+  color: $gray-50;
   border-radius: 8px;
   padding: 0.3em 0.75em;
-}
 
-@media (min-width: 400px) and (orientation: portrait) {
-  .navItem {
-    font-size: 22px;
-  }
-}
-
-@media (min-width: 800px) and (orientation: landscape) {
-  .navItem {
-    font-size: 22px;
-  }
-}
-
-@media (min-width: 1000px) and (orientation: landscape) {
-  .navItem {
-    margin: 0;
-    padding: 0 0.75em;
-  }
-
-  .navItem:hover,
-  .activeClassName {
+  @include laptopSm {
     padding: 0 0.75em;
     background-color: transparent;
-    color: #0078d4;
+    color: $dark-blue;
   }
 }

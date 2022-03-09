@@ -8,7 +8,7 @@ import Spinner from './../../../../UI/spinner/Spinner';
 import { useTypedSelector } from '../../../../../redux/hooks/useTypedSelector';
 
 const Conclusions: React.FC = () => {
-  const { analysisLoading, dangerousProducts } = useTypedSelector((state) => state.diary);
+  const { isAnalysisLoading, dangerousProducts } = useTypedSelector((state) => state.diary);
 
   const noConclusionsInfo = (
     <NoDataInfo className={classes.noDataInfoAdditional}>
@@ -20,23 +20,26 @@ const Conclusions: React.FC = () => {
   const conclusions = dangerousProducts.length ? (
     <div className={classes.conclusions}>
       <Conclusion
-        header
-        productName='Product'
-        type='normal'
+        isHeader
+        product={{
+          name: 'Product',
+          type: 'normal',
+        }}
         skinCondition={{ timesEaten: 'TE', probability: 'P[%]', improvement: 'I', deterioration: 'D' }}
       />
-      {dangerousProducts.map((el) => {
-        const { product, timesEaten, type, probability, improvement, deterioration } = el;
-        return <Conclusion key={product} productName={product} type={type} skinCondition={{ timesEaten, probability, improvement, deterioration }} />;
+      {dangerousProducts.map((product) => {
+        const { name, timesEaten, type, probability, improvement, deterioration } = product;
+        return <Conclusion key={name} product={{ name, type }} skinCondition={{ timesEaten, probability, improvement, deterioration }} />;
       })}
     </div>
   ) : (
     noConclusionsInfo
   );
+
   return (
     <ModuleMainContentWrapper className={classes.moduleMainContentAdditional}>
       <h3 className={classes.title}>Products that seem to be bad for your skin:</h3>
-      {!analysisLoading ? conclusions : <Spinner />}
+      {!isAnalysisLoading ? conclusions : <Spinner />}
     </ModuleMainContentWrapper>
   );
 };

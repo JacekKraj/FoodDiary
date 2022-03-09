@@ -1,20 +1,14 @@
 import { ActionTypes } from '../actionTypes/actionTypes';
-import { Day, SkinConditionValues, DiaryDay, UserAutocomplition } from './../reducers/diaryReducer';
-
-interface ChangeDate {
-  type: ActionTypes.CHANGE_DATE;
-  date: string;
-  loading: boolean;
-}
+import { SingleDayData, SkinConditionValues, DiaryDays, AddedProduct } from './../reducers/diaryReducer';
 
 interface AddProduct {
   type: ActionTypes.ADD_PRODUCT;
-  product: string;
+  name: string;
 }
 
 interface RemoveProduct {
   type: ActionTypes.REMOVE_PRODUCT;
-  product: string;
+  name: string;
 }
 
 export type SkinConditonTypes = 'currentSkinCondition' | 'comparedSkinCondition';
@@ -34,34 +28,33 @@ interface ClearDiary {
 }
 
 interface SetDiary {
-  type: ActionTypes.SET_DIARY;
-  day: Day | null;
+  type: ActionTypes.SET_SINGLE_DIARY_DAY;
+  data: SingleDayData | null;
   date: string;
 }
 
 interface ChangeDate {
   type: ActionTypes.CHANGE_DATE;
   date: string;
-  loading: boolean;
 }
 
-interface AnalyzeDiary {
-  type: ActionTypes.ANALYZE_DIARY;
-  fullDiary: DiaryDay;
+interface AnalyzeFullDiary {
+  type: ActionTypes.ANALYZE_FULL_DIARY;
+  fullDiary: DiaryDays;
 }
 
-interface SetAnalysisLoading {
+interface SetIsAnalysisLoading {
   type: ActionTypes.SET_ANALYSIS_LOADING;
-  loading: boolean;
+  isLoading: boolean;
 }
 
-interface SetUserAutocomplitions {
-  type: ActionTypes.SET_USER_AUTOCOMPLITIONS;
-  autocomplitions: UserAutocomplition[];
+interface SetAddedProductsList {
+  type: ActionTypes.SET_ADDED_PRODUCTS_LIST;
+  addedProductsList: AddedProduct[];
 }
 
 export type Action =
-  | SetUserAutocomplitions
+  | SetAddedProductsList
   | AddProduct
   | ChangeDate
   | RemoveProduct
@@ -69,5 +62,5 @@ export type Action =
   | SaveDiary
   | ClearDiary
   | SetDiary
-  | AnalyzeDiary
-  | SetAnalysisLoading;
+  | AnalyzeFullDiary
+  | SetIsAnalysisLoading;

@@ -4,14 +4,15 @@ import TextField from '@material-ui/core/TextField';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import classnames from 'classnames';
 
 import classes from './controlBar.module.scss';
-import { theme } from '../../../../utils/breakpoints/breakpoints';
+import { breakpoints } from '../../../../utils/breakpoints/breakpoints';
 import IconLabelContainer from '../../../UI/iconLabelContainer/IconLabelContainer';
 import { useActions } from '../../../../redux/hooks/useActions';
 import { getModifiedDate } from '../../../../utils/helperFunctions/getModifiedDate';
 import { useTypedSelector } from '../../../../redux/hooks/useTypedSelector';
+
+const { mobileHorizontal, tabletHorizontal, laptopLg } = breakpoints;
 
 const useStyles = makeStyles(() => ({
   active: { color: '#0078d4', cursor: 'pointer' },
@@ -24,18 +25,18 @@ const useStyles = makeStyles(() => ({
     marginRight: '0.5em',
   },
 
-  [theme.breakpoints.up('sm')]: {
+  [mobileHorizontal]: {
     remove: {
       fontSize: 30,
       marginRight: '0.75em',
     },
   },
-  [theme.breakpoints.up('md')]: {
+  [tabletHorizontal]: {
     remove: {
       marginRight: '1em',
     },
   },
-  [theme.breakpoints.up('xl')]: {
+  [laptopLg]: {
     dateInput: {
       marginLeft: '1.5em',
     },
@@ -43,34 +44,42 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ControlBar: React.FC = () => {
-  const iconStyle = useStyles();
-
-  const { currentDiary, currentDate } = useTypedSelector((state) => state.diary);
+  const { currentDate } = useTypedSelector((state) => state.diary);
   const { clearDiary, changeDate } = useActions();
 
   const [date, setDate] = React.useState(currentDate || getModifiedDate());
 
-  const handleChangeDate = (newDate: string) => {
-    setDate(newDate);
-    const loading = currentDiary[newDate] ? false : true;
-    changeDate(newDate, loading);
+  const iconStyle = useStyles();
+
+  const isCurrentDate = date !== getModifiedDate();
+
+  const getNewDate = (type: '-' | '+') => {
+    const newDate = new Date(date);
+    newDate.setDate(type === '-' ? newDate.getDate() - 1 : newDate.getDate() + 1);
+    const newDateModified = getModifiedDate(newDate);
+    return newDateModified;
   };
 
-  const countNewDate = (type: '-' | '+') => {
-    const otherDay = new Date(date);
-    otherDay.setDate(type === '-' ? otherDay.getDate() - 1 : otherDay.getDate() + 1);
-    return getModifiedDate(otherDay);
+  const handleChangeDate = (date: string) => {
+    setDate(date);
+    changeDate(date);
   };
 
-  const isCurrentDate = React.useMemo(() => {
-    return date !== getModifiedDate();
-  }, [date, getModifiedDate()]);
+  const clickArrowBack = () => {
+    handleChangeDate(getNewDate('-'));
+  };
+
+  const clickArrowForward = () => {
+    if (isCurrentDate) {
+      handleChangeDate(getNewDate('+'));
+    }
+  };
 
   return (
     <div className={classes.controlBar}>
       <div className={classes.controlLeftSide}>
         <IconLabelContainer text='Previous day'>
-          <ArrowBackIcon className={iconStyle.active} data-test='arrow-back' onClick={() => handleChangeDate(countNewDate('-'))} />
+          <ArrowBackIcon className={iconStyle.active} data-test='arrow-back' onClick={clickArrowBack} />
         </IconLabelContainer>
         <TextField
           inputProps={{ max: getModifiedDate() }}
@@ -88,10 +97,8 @@ const ControlBar: React.FC = () => {
         <IconLabelContainer text='Next day'>
           <ArrowForwardIcon
             data-test={`arrow-forward-${isCurrentDate ? 'active' : 'disabled'}`}
-            onClick={() => {
-              isCurrentDate && handleChangeDate(countNewDate('+'));
-            }}
-            className={classnames(isCurrentDate ? iconStyle.active : iconStyle.disabled)}
+            onClick={clickArrowForward}
+            className={isCurrentDate ? iconStyle.active : iconStyle.disabled}
           />
         </IconLabelContainer>
       </div>

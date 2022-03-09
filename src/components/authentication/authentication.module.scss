@@ -1,85 +1,67 @@
+@import './../../scssUtilities/index.module.scss';
+
 .authenticationInfo {
-  padding: 1.5em 1em;
+  padding: 2.5em 1em 1em;
+  max-width: 500px;
+  margin: 0 auto;
+
+  @include laptopSm {
+    padding: 0em 1em;
+  }
 }
 
 .authenticationInfo > h1 {
   font-size: 34px;
   font-weight: 300;
   text-align: center;
-  color: #555;
+  color: $gray-50;
+
+  @include tabletHorizontal {
+    font-size: 38px;
+  }
+
+  @include laptopSm {
+    font-size: 40px;
+  }
 }
 
 .authenticationMainContent {
-  padding: 2em 2.5em 0;
+  padding: 3em 2.5em 0;
+
+  @include mobileHorizontal {
+    padding: 3em 0 0;
+  }
+
+  @include laptopSm {
+    padding: 3.25em 0 0;
+  }
 }
 
 .title {
   font-weight: normal;
-  color: #555;
+  color: $gray-50;
   font-size: 26px;
 }
 
 .iconContainer {
   margin: 1em 0;
+
+  @include mobileHorizontal {
+    margin: 0.75em 0;
+  }
+
+  @include laptopSm {
+    margin: 1.5em 0;
+  }
 }
 
 .buttonAdditional {
   width: 150px;
   font-size: 15px;
   margin: 0.5em 0;
-}
 
-@media (min-width: 600px) and (orientation: landscape) {
-  .authenticationInfo {
-    max-width: 350px;
-    margin: 0 auto;
-  }
-
-  .authenticationMainContent {
-    padding: 2em 1.5em 0;
-  }
-
-  .iconContainer {
-    margin: 0.75em 0;
-  }
-}
-
-@media (min-width: 800px) and (orientation: landscape) {
-  .authenticationInfo {
-    max-width: 400px;
-  }
-
-  .authenticationInfo > h1 {
-    font-size: 38px;
-  }
-}
-
-@media (min-width: 1000px) and (orientation: landscape) {
-  .authenticationInfo {
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  .authenticationInfo > h1 {
-    font-size: 40px;
-  }
-
-  .authenticationMainContent {
-    padding: 3em 2em 0;
-  }
-
-  .iconContainer {
-    margin: 1.5em 0;
-  }
-
-  .buttonAdditional {
+  @include laptopSm {
     width: 180px;
     font-size: 16px;
-  }
-}
-
-@media (min-width: 1000px) and (orientation: landscape) {
-  .authenticationInfo {
-    padding: 0.5em 1em;
   }
 }

@@ -1,29 +1,27 @@
+@import './../../../../scssUtilities/index.module.scss';
+
 .reminderContainer {
   display: flex;
   margin-bottom: 1em;
+
+  @include mobileHorizontal {
+    margin-bottom: unset;
+    flex-basis: 65%;
+  }
 }
 
 .reminder {
-  font-size: 12px;
   margin-left: 0.5em;
-  color: #999;
-  font-weight: 300;
 }
 
 .buttonAdditional {
-  width: 35%;
+  padding-left: 1em;
+  padding-right: 1em;
   margin: 0 auto;
   max-width: 150px;
-}
 
-@media (min-width: 600px) and (orientation: landscape) {
-  .buttonAdditional {
+  @include mobileHorizontal {
     margin: unset;
     flex-basis: 25%;
-  }
-
-  .reminderContainer {
-    margin-bottom: unset;
-    flex-basis: 65%;
   }
 }

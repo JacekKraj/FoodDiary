@@ -1,16 +1,17 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { Provider } from 'react-redux';
+import { act } from '@testing-library/react';
 
 import { findByTestAttr, storeFactory } from '../../../../../../utils/tests/testHelperFunction';
 import AddProduct from './AddProduct';
 import { getModifiedDate } from './../../../../../../utils/helperFunctions/getModifiedDate';
-import { DiaryDay, UserAutocomplition } from './../../../../../../redux/reducers/diaryReducer';
+import { DiaryDays, AddedProduct } from './../../../../../../redux/reducers/diaryReducer';
 
 interface InitialState {
   diary: {
-    currentDiary: DiaryDay;
+    currentDiary: DiaryDays;
     currentDate: string;
-    userAutocomplitions: UserAutocomplition[];
+    addedProductsList: AddedProduct[];
   };
 }
 
@@ -18,13 +19,13 @@ const initialState: InitialState = {
   diary: {
     currentDiary: {
       [getModifiedDate()]: {
-        products: [],
+        productsNames: [],
         currentSkinCondition: 50,
         comparedSkinCondition: 50,
       },
     },
     currentDate: getModifiedDate(),
-    userAutocomplitions: [],
+    addedProductsList: [],
   },
 };
 
@@ -42,23 +43,27 @@ const setup = () => {
 describe('<AddProduct />', () => {
   let addProductBrowser: ReactWrapper;
   let wrapper: ReactWrapper;
-  beforeEach(() => {
+  beforeEach(async () => {
     wrapper = setup();
     addProductBrowser = findByTestAttr(wrapper, 'add-product-browser');
-    addProductBrowser.simulate('change', { target: { value: 'app' } });
+    await act(async () => {
+      addProductBrowser.simulate('change', { target: { value: 'app' } });
+    });
   });
 
   afterEach(() => {
     wrapper.unmount();
   });
 
-  it('adds product to user autocomplitions', () => {
+  it('adds product to user autocomplitions', async () => {
     const form = findByTestAttr(wrapper, 'component-add-product');
-    form.simulate('submit');
-    expect(store.getState().diary.userAutocomplitions[0].product).toEqual('app');
+    await act(async () => {
+      form.simulate('submit');
+    });
+    expect(store.getState().diary.addedProductsList[0].name).toEqual('app');
   });
 
-  it('still has a focus after clicking submit button', () => {
+  it('still has a focus after clicking submit button', async () => {
     addProductBrowser.simulate('focus');
     const submitButton = findByTestAttr(wrapper, 'submit-button');
     submitButton.simulate('click');

@@ -1,3 +1,5 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .inputAutoComplete {
   position: absolute;
   left: 0;
@@ -5,7 +7,7 @@
   right: 0;
   display: block;
   padding: 0.25em 0.75em;
-  border: 2px solid #0078d4;
+  border: 2px solid $dark-blue;
   background-color: #fff;
   border-radius: 10px;
 }

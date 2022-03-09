@@ -1,59 +1,37 @@
 import React, { Suspense } from 'react';
-import { Redirect, Switch } from 'react-router';
-import { Route } from 'react-router';
 import { toast } from 'react-toastify';
 
 import { fire } from './fireConfig';
-import Home from './components/home/Home';
 import { useTypedSelector } from './redux/hooks/useTypedSelector';
 import { useActions } from './redux/hooks/useActions';
-import Authentication from './components/authentication/Authentication';
 import classes from './app.module.scss';
 import Spinner from './components/UI/spinner/Spinner';
+import './index.css';
+import Routes from './routes/Routes';
+import ModalMenager from './modalMenager/ModalMenager';
 
 const App = () => {
-  const { isAuthenticated, userEmail } = useTypedSelector((state) => state.auth);
+  const { userEmail } = useTypedSelector((state) => state.auth);
 
-  const { signOut, authenticationEnd, getUserAutocomplitions } = useActions();
-  const [loading, setLoading] = React.useState(true);
+  const { signOut, authenticationEnd, setAddedProductsList, hideModal } = useActions();
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     toast.configure();
     fire.auth().onAuthStateChanged((authUser) => {
       if (authUser && fire.auth().currentUser?.emailVerified) {
+        hideModal();
         authenticationEnd(fire.auth().currentUser?.email as string);
       } else {
         signOut();
       }
-      setLoading(false);
+      setIsLoading(false);
     });
   }, []);
 
   React.useEffect(() => {
-    getUserAutocomplitions(userEmail);
+    setAddedProductsList();
   }, [userEmail]);
-
-  const Analysis = React.lazy(() => {
-    return import('./components/analysis/Analysis');
-  });
-
-  const Faq = React.lazy(() => {
-    return import('./components/faq/Faq');
-  });
-
-  const routes = !isAuthenticated ? (
-    <Switch>
-      <Route path='/' exact render={() => <Authentication />} />
-      <Redirect to='/' exact />
-    </Switch>
-  ) : (
-    <Switch>
-      <Route path='/faq' exact render={() => <Faq />} />
-      <Route path='/diary' exact render={() => <Home />} />
-      <Route path='/analysis' exact render={() => <Analysis />} />
-      <Redirect to='/diary' exact />
-    </Switch>
-  );
 
   const spinnerContainer = (
     <div className={classes.spinnerContainer}>
@@ -62,9 +40,10 @@ const App = () => {
   );
 
   return (
-    <div>
-      <Suspense fallback={spinnerContainer}>{loading ? spinnerContainer : routes}</Suspense>
-    </div>
+    <React.Fragment>
+      <Suspense fallback={spinnerContainer}>{isLoading ? spinnerContainer : <Routes />}</Suspense>
+      <ModalMenager />
+    </React.Fragment>
   );
 };
 

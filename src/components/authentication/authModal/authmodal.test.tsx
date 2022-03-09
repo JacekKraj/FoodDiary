@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 
 import AuthModal from './AuthModal';
 import { storeFactory, findByTestAttr } from '../../../utils/tests/testHelperFunction';
-import SignUp from './../signUp/SignUp';
-import SignIn from './../signIn/SignIn';
+import SignUp from '../signUpModal/SignUpModal';
+import SignIn from '../signInModal/SignInModal';
 import * as actionCreators from './../../../redux/actionCreators/index';
 
 interface InitialState {
@@ -17,7 +17,7 @@ let store: any;
 const setup = (initialState: InitialState = {}, isSignIn: boolean) => {
   store = storeFactory(initialState);
 
-  const children = isSignIn ? <SignIn handleShowSignIn={jest.fn()} /> : <SignUp handleShowSignUp={jest.fn()} />;
+  const children = isSignIn ? <SignIn /> : <SignUp />;
 
   const props = {
     onClick: () => {},
@@ -38,11 +38,11 @@ describe('<AuthModal />', () => {
       wrapper.setProps({});
       return findByTestAttr(wrapper, 'component-spinner');
     };
-    it('shows spinner when <SignUp /> is rendered ', () => {
+    it('shows spinner when <SignUp /> is rendered', () => {
       const spinner = dispatchAction(false);
       expect(spinner.exists()).toBe(true);
     });
-    it('shows spinner when <SignIn /> is rendered ', () => {
+    it('shows spinner when <SignIn /> is rendered', () => {
       const spinner = dispatchAction(true);
       expect(spinner.exists()).toBe(true);
     });
@@ -56,11 +56,11 @@ describe('<AuthModal />', () => {
       wrapper.setProps({});
       return findByTestAttr(wrapper, 'component-error');
     };
-    it('shows spinner when <SignUp /> is rendered ', () => {
+    it('shows spinner when <SignUp /> is rendered', () => {
       const error = dispatchAction(false);
       expect(error.text()).toBe('test error');
     });
-    it('shows spinner when <SignIn /> is rendered ', () => {
+    it('shows spinner when <SignIn /> is rendered', () => {
       const error = dispatchAction(true);
       expect(error.text()).toBe('test error');
     });

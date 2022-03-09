@@ -1,8 +1,26 @@
+@import './../../../../../../scssUtilities/index.module.scss';
+
 .conclusion {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   padding: 0.4em 1em;
+
+  @include mobileVertical {
+    padding: 0.4em 1.25em;
+  }
+
+  @include mobileHorizontal {
+    padding: 0.4em 1.5em;
+  }
+
+  @include tabletHorizontal {
+    padding: 0.4em 2em;
+  }
+
+  @include laptopSm {
+    padding: 0.5em 2em;
+  }
 }
 
 .conclusion:last-child {
@@ -27,6 +45,10 @@
 .skinCondition {
   display: flex;
   flex-basis: 65%;
+
+  @include mobileHorizontal {
+    flex-basis: 60%;
+  }
 }
 
 .skinCondition > li {
@@ -40,6 +62,10 @@
   font-weight: 300;
   color: rgba(0, 0, 0, 0.54);
   font-size: 14px;
+
+  @include laptopSm {
+    font-size: 15px;
+  }
 }
 
 .productName {
@@ -48,6 +74,10 @@
   overflow: hidden;
   white-space: nowrap;
   font-weight: normal;
+
+  @include mobileHorizontal {
+    flex-basis: 35%;
+  }
 }
 
 .header > .productName {
@@ -58,49 +88,12 @@
 .header .productName {
   font-weight: bold;
   font-size: 12px;
+
+  @include laptopSm {
+    font-size: 13px;
+  }
 }
 
 .conclusion ul > li:last-child {
   font-weight: bold;
-}
-
-@media (min-width: 500px) and (orientation: portrait) {
-  .conclusion {
-    padding: 0.4em 1.25em;
-  }
-}
-
-@media (min-width: 600px) and (orientation: landscape) {
-  .conclusion {
-    padding: 0.4em 1.5em;
-  }
-
-  .productName {
-    flex-basis: 35%;
-  }
-
-  .skinCondition {
-    flex-basis: 60%;
-  }
-}
-
-@media (min-width: 800px) and (orientation: landscape) {
-  .conclusion {
-    padding: 0.4em 2em;
-  }
-}
-
-@media (min-width: 1000px) and (orientation: landscape) {
-  .conclusion {
-    padding: 0.5em 2em;
-  }
-  .skinCondition > li,
-  .productName {
-    font-size: 15px;
-  }
-
-  .header li,
-  .header .productName {
-    font-size: 13px;
-  }
 }

@@ -5,20 +5,21 @@ import NavItem from './navItem/NavItem';
 import { useTypedSelector } from '../../../../redux/hooks/useTypedSelector';
 import { useActions } from './../../../../redux/hooks/useActions';
 import Button from './../../../UI/button/Button';
+import { MODAL_TYPES } from './../../../../modalMenager/ModalMenager';
 
 interface Props {
-  handleShowSignIn: () => void;
-  handleShowNav?: () => void;
+  hideNav?: () => void;
 }
 
-const NavItems: React.FC<Props> = ({ handleShowSignIn, handleShowNav }) => {
+const NavItems: React.FC<Props> = ({ hideNav }) => {
   const { isAuthenticated } = useTypedSelector((state) => state.auth);
-  const { signOut } = useActions();
+  const { signOut, showModal } = useActions();
 
   const showSignIn = () => {
-    handleShowSignIn();
-    if (handleShowNav) {
-      handleShowNav();
+    showModal(MODAL_TYPES.SIGN_IN);
+
+    if (!!hideNav) {
+      hideNav();
     }
   };
 
@@ -33,12 +34,17 @@ const NavItems: React.FC<Props> = ({ handleShowSignIn, handleShowNav }) => {
       </Button>
     );
   }, [isAuthenticated]);
+
   return (
     <div className={classes.navItems}>
       <div className={classes.navItemsContainer}>
-        {isAuthenticated && <NavItem path='FAQ' />}
-        {isAuthenticated && <NavItem path='diary' />}
-        {isAuthenticated && <NavItem path='analysis' />}
+        <NavItem path='FAQ' />
+        {isAuthenticated && (
+          <React.Fragment>
+            <NavItem path='diary' />
+            <NavItem path='analysis' />
+          </React.Fragment>
+        )}
       </div>
       {renderButton}
     </div>

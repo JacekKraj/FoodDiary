@@ -1,3 +1,5 @@
+@import './../../../../../../scssUtilities/index.module.scss';
+
 .addProduct {
   display: flex;
   align-items: center;
@@ -5,21 +7,19 @@
 
 .buttonAdditional {
   font-size: 14px;
-  padding: 0.55em;
+  padding: 0.55em !important;
   max-width: 100px;
   border-radius: 10px;
   margin-left: 0.5em;
-}
+  display: none;
 
-@media (min-width: 500px) {
-  .buttonAdditional {
-    padding: 0.6em 1em;
+  @media (min-width: 500px) {
+    padding: 0.6em 1em !important;
+    display: block;
   }
-}
 
-@media (min-width: 1000px) {
-  .buttonAdditional {
-    padding: 0.6em 1.5em;
+  @include laptopSm {
+    padding: 0.6em 1.5em !important;
     margin-left: 1em;
   }
 }

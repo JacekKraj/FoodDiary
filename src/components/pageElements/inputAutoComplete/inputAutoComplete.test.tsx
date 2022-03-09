@@ -1,26 +1,30 @@
 import { mount } from 'enzyme';
 import moxios from 'moxios';
-import axios from 'axios';
 import { Provider } from 'react-redux';
+import { waitFor } from '@testing-library/react';
 
 import { findByTestAttr, storeFactory } from '../../../utils/tests/testHelperFunction';
 import InputAutoComplete from './InputAutoComplete';
 
 interface DefaultProps {
   pickItem: (value: string) => void;
-  value: string;
-  focus: boolean;
-  typed: boolean;
-  activeSuggestion: number;
-  setValue: () => void;
-  setActiveSuggestion: () => void;
-  setTyped: () => void;
+  input: {
+    value: string;
+    setValue: () => void;
+    isFocused: boolean;
+  };
+  isTyping: boolean;
+  setIsTyping: () => void;
+  activeSuggestion: {
+    index: number;
+    setIndex: () => void;
+  };
 }
 
 let store: any;
 
 const setup = (defaultProps: DefaultProps) => {
-  store = storeFactory({ diary: { userAutocomplitions: [{ product: 'acai', timesUsed: 1 }] } });
+  store = storeFactory({ diary: { addedProductsList: [{ name: 'acai', timesAdded: 1 }] } });
   return mount(
     <Provider store={store}>
       <InputAutoComplete {...defaultProps} />
@@ -38,36 +42,51 @@ describe('<InputAutoComplete />', () => {
   });
 
   const customProps = {
-    typed: true,
-    activeSuggestion: 0,
+    isTyping: true,
+    activeSuggestion: { index: 0, setIndex: jest.fn() },
     pickItem: jest.fn(),
-    setValue: jest.fn(),
-    setActiveSuggestion: jest.fn(),
-    setTyped: jest.fn(),
+    setIsTyping: jest.fn(),
   };
 
-  it('shows autocomplete, and displays item from user autocomplitions', (done) => {
-    const wrapper = setup({ focus: true, value: 'a', ...customProps });
+  it('shows autocomplete, and displays item from user autocomplitions', () => {
+    const wrapper = setup({
+      input: {
+        isFocused: true,
+        value: 'a',
+        setValue: jest.fn(),
+      },
+      ...customProps,
+    });
     moxios.wait(() => {
       let request = moxios.requests.mostRecent();
-      request
+      return request
         .respondWith({
           status: 200,
           response: ['apple'],
         })
-        .then(() => {
+        .then(async () => {
           wrapper.update();
           const autoCompleteItem = findByTestAttr(wrapper, 'component-auto-complete-item');
-          expect(autoCompleteItem.first().text()).toEqual('acai');
-          expect(autoCompleteItem.last().text()).toEqual('apple');
+          await waitFor(() => {
+            expect(autoCompleteItem.first().text()).toEqual('acai');
+          });
+          await waitFor(() => {
+            expect(autoCompleteItem.last().text()).toEqual('apple');
+          });
           wrapper.unmount();
-          done();
         });
     });
   });
 
   it("doesn't show autocomplete when no value comes", () => {
-    const wrapper = setup({ focus: false, value: '', ...customProps });
+    const wrapper = setup({
+      input: {
+        isFocused: false,
+        value: '',
+        setValue: jest.fn(),
+      },
+      ...customProps,
+    });
     const autoCompleteItem = findByTestAttr(wrapper, 'component-auto-complete-item');
     expect(autoCompleteItem.exists()).toBe(false);
   });

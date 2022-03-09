@@ -1,0 +1,50 @@
+@import './../../../scssUtilities/index.module.scss';
+
+.header {
+  padding: 0.6em 0;
+  text-align: center;
+  font-size: 18px;
+  border-bottom: 1px solid $gray-15;
+  color: $gray-60;
+
+  @include laptopSm {
+    padding: 0.7em 0;
+    font-size: 19px;
+  }
+}
+
+.form {
+  padding: 1em 2em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  @include laptopSm {
+    padding: 0em 2em 2em;
+  }
+}
+
+.buttonAdditional {
+  font-size: 16px;
+}
+
+.inputAdditional {
+  width: 100% !important;
+}
+
+.inputsContainer {
+  margin: 0 0 1.5em;
+
+  @include mobileVertical {
+    margin: 0.75em 0 2em;
+  }
+
+  @include mobileHorizontal {
+    margin: 0.75em 0 2em;
+  }
+
+  @include laptopSm {
+    margin: 2em 0;
+  }
+}

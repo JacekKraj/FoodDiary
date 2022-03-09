@@ -10,7 +10,7 @@ const setup = () => {
   return mount(
     <Provider store={store}>
       <BrowserRouter>
-        <SmallScreenNav handleShowSignIn={jest.fn()} />
+        <SmallScreenNav />
       </BrowserRouter>
     </Provider>
   );

@@ -1,33 +1,26 @@
+@import './../../../scssUtilities/index.module.scss';
+
 .questions {
   margin: 1.5em auto;
   width: 85%;
-}
 
-@media (min-width: 500px) and (orientation: portrait) {
-  .questions {
+  @include mobileVertical {
     margin: 2.5em auto;
     width: 80%;
   }
-}
 
-@media (min-width: 600px) and (orientation: landscape) {
-  .questions {
+  @include mobileHorizontal {
     margin: 2em auto;
-    width: 75%;
-  }
-}
-
-@media (min-width: 800px) and (orientation: landscape) {
-  .questions {
-    margin: 2.5em auto;
     width: 70%;
-  }
-}
-
-@media (min-width: 1000px) and (orientation: landscape) {
-  .questions {
-    margin: 3em auto;
-    width: 65%;
     max-width: 750px;
+  }
+
+  @include tabletHorizontal {
+    margin: 2.5em auto;
+  }
+
+  @include laptopSm {
+    margin: 3em auto;
+    max-width: 800px;
   }
 }

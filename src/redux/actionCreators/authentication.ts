@@ -29,24 +29,29 @@ export const authenticationEnd = (userEmail: string): Action => {
 export const authenticationFail = (error: string): Action => {
   return {
     type: ActionTypes.AUTHENTICATION_FAIL,
-    error: error,
+    error,
   };
 };
 
-export const authenticate = (emailAddress: string, password: string) => {
-  return (dispatch: Dispatch<Action>) => {
+export const authenticate = (email: string, password: string) => {
+  return async (dispatch: Dispatch<Action>) => {
     dispatch(authenticationStart());
-    fire
-      .auth()
-      .signInWithEmailAndPassword(emailAddress, password)
-      .then(() => {
-        if (!fire.auth().currentUser?.emailVerified) {
-          dispatch(authenticationFail("This email address hasn't been verified yet."));
-        }
-      })
-      .catch((error) => {
-        dispatch(authenticationFail(error.message));
-      });
+
+    try {
+      await fire.auth().signInWithEmailAndPassword(email, password);
+
+      if (!fire.auth().currentUser?.emailVerified) {
+        dispatch(authenticationFail("This email address hasn't been verified yet."));
+      }
+    } catch (error) {
+      let message = 'Unknown error.';
+
+      if (error instanceof Error) {
+        message = error.message;
+      }
+
+      dispatch(authenticationFail(message));
+    }
   };
 };
 
@@ -69,26 +74,27 @@ export const registerFail = (error: string): any => {
   };
 };
 
-export const register = (emailAddress: string, password: string, hideModal: () => void) => {
-  return (dispatch: any) => {
+export const register = (data: { email: string; password: string }, hideModal: () => void) => {
+  return async (dispatch: Dispatch<Action>) => {
     dispatch(registerStart());
-    fire
-      .auth()
-      .createUserWithEmailAndPassword(emailAddress, password)
-      .then(() => {
-        fire
-          .auth()
-          .currentUser?.sendEmailVerification()
-          .then(() => {
-            const message = 'Your account has been created. Please verify your email to sign in.';
-            successToast(message);
-            hideModal();
-            dispatch(registerEnd());
-          });
-      })
-      .catch((error) => {
-        dispatch(registerFail(error.message));
-      });
+
+    try {
+      await fire.auth().createUserWithEmailAndPassword(data.email, data.password);
+
+      await fire.auth().currentUser?.sendEmailVerification();
+
+      successToast('Your account has been created. Please verify your email to sign in.');
+      hideModal();
+      dispatch(registerEnd());
+    } catch (error) {
+      let message = 'Unknown error.';
+
+      if (error instanceof Error) {
+        message = error.message;
+      }
+
+      dispatch(authenticationFail(message));
+    }
   };
 };
 
