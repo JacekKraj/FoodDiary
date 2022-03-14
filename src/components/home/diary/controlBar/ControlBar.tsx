@@ -86,6 +86,7 @@ const ControlBar: React.FC = () => {
           label='Date'
           type='date'
           value={date}
+          required
           onChange={(e) => handleChangeDate(e.target.value)}
           className={iconStyle.dateInput}
         />
